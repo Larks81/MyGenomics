@@ -1,0 +1,144 @@
+﻿<style>
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        width: 960px;
+        text-align: left;
+    }    
+</style>
+
+<div ng-show="!ReadyToLoad">
+    <img src="../../Content/themes/base/images/loading.gif" />
+</div>
+<div ng-init="getQuestionnaires()" class="center">
+    <wizard on-finish="finishedWizard()" ng-show="ReadyToLoad && !QuestionnaireFinished">
+        <wz-step title="Generalita">
+            <div class="panel panel-default">
+                <div class="panel-heading">Questionario GenoTest</div>
+                <div class="panel-body" style="padding-left: 25px;">
+                    <h3>Generalita</h3>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="tbFirstName">Nome</label>
+                            <input id="tbFirstName" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.FirstName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tbLastName">Cognome</label>
+                            <input id="tbLastName" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.LastName" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tbGender">Sesso</label>
+                            <select ng-options="gender.id as gender.label for gender in Genders" ng-model="PersonQuestionnaireToFill.Person.Gender" />                                
+                        </div>
+                    </form>
+                    <br />
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="tbCity">Città di Residenza</label><br />
+                            <input id="tbCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.City" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tbAddress">Indirizzo</label><br />
+                            <input style="width:310px;" id="tbAddress" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Address" />
+                        </div>
+                    </form>
+                    <br />
+                    <form class="form-inline">
+                        <div class="form-group" style="width:200px;">
+                            <label for="tbBirthDate">Data di nascita</label>
+                            <input ng- id="tbBirthDate" type="text" ng-click="open($event)" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="PersonQuestionnaireToFill.Person.BirthDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+
+                        </div>
+                        <div class="form-group">
+                            <label for="tbBirthCity">Città di nascita</label><br />
+                            <input style="width:305px;" id="tbBirthCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.BirthCity" />
+                        </div>
+                    </form>
+                    <br />
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="tbPhoneNumber">Numero di telefono</label><br />
+                            <input id="tbPhoneNumber" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PhoneNumber" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tbEmail">Email</label><br />
+                            <input style="width:310px;" id="tbEmail" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Email" />
+                        </div>
+                    </form>
+                    <br />
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="tbPersonalDoctor">Medico curante</label><br />
+                            <input style="width:510px;" id="tbPersonalDoctor" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PersonalDoctor" />
+                        </div>
+                    </form>
+                    <label style="color:Red;">{{PersonErrorText}}</label>
+                    <br />
+                    <br />
+                    <input class="btn btn-primary btn-lg" type="submit" value="Continua" style="margin:0 auto;" ng-click="validatePerson(PersonQuestionnaireToFill.Person)" />
+                </div>
+            </div>
+        </wz-step>
+
+        <wz-step title="{{category}}" ng-repeat-start="(category, questionsInCategory) in PersonQuestionnaireToFill.Answers | groupBy: 'QuestionCategory'">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Questionario GenoTest</div>
+                <div class="panel-body" style="padding-left: 25px;">
+                    <h3>{{category}}</h3>
+                    <br />
+                    <table>
+                        <tr ng-repeat="question in questionsInCategory">
+                            <td>
+                                {{question.QuestionText}}
+                                <ul>
+                                    <li ng-repeat="possibleAnswer in question.PossibileAnswers">
+                                        <input type="checkbox" ng-model="PersonQuestionnaireToFill.Answers[question.QuestionIndex].AnswerId" ng-true-value="{{possibleAnswer.Id}}" ng-false-value="null">
+                                        {{possibleAnswer.Text}}
+                                        <div ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==1">
+                                            <input type="text" style="width:300px;"
+                                                   ng-disabled="possibleAnswer.Id!=PersonQuestionnaireToFill.Answers[question.QuestionIndex].AnswerId"
+                                                   ng-model="PersonQuestionnaireToFill.Answers[question.QuestionIndex].AdditionalInfo"
+                                                   ng-model-options="{ updateOn: 'blur' }" />
+                                        </div>
+                                        <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==2">
+                                            (da {{possibleAnswer.MinValueNumericAdditionalInfo}} a {{possibleAnswer.MaxValueNumericAdditionalInfo}})
+                                            <br/>
+                                            <input type="text" style="width:100px;"                                                   
+                                                   ng-disabled="possibleAnswer.Id!=PersonQuestionnaireToFill.Answers[question.QuestionIndex].AnswerId"
+                                                   ng-model="PersonQuestionnaireToFill.Answers[question.QuestionIndex].AdditionalInfo"
+                                                   ng-model-options="{ updateOn: 'blur' }" />
+                                        </span>
+                                    </li>
+                                </ul>
+                                <label style="color:Red;">{{question.ErrorText}}</label>
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" ng-click="validateAnswers(questionsInCategory)" class="btn btn-primary btn-lg" value="Continua" />
+                </div>
+            </div>
+        </wz-step>
+        <wz-step ng-if="$index % TotStep == 0" ng-repeat-end title="Conferma">
+            <div class="panel panel-default">
+                <div class="panel-heading">Questionario GenoTest</div>
+                <div class="panel-body" style="text-align: center;">
+                    <div>
+                        <h1>Il questionario è finito!</h1>
+                        <p>Conferma i dati inseriti premento il pulsante Conferma</p>
+                    </div>
+                    <br />
+                    <br />
+                    <input type="submit" class="btn btn-primary btn-lg" ng-click="submit()" value="Conferma" />
+                </div>
+            </div>
+        </wz-step>
+    </wizard>
+    <div class="jumbotron" ng-show="QuestionnaireFinished">
+        <h1>Grazie!</h1>
+        <p>La contatteremo al più presto</p>
+    </div>
+</div>
+<br /><br /><br /><br />
+

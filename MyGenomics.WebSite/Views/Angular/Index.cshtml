@@ -1,0 +1,225 @@
+﻿@{
+    ViewBag.Title = "Questionario per GenoTest";
+}
+<head>
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/reset.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/text.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/960.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/fonts/font2.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/mygenomics.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/nivo-slider.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/jquery-ui-1.10.0.custom.css" />
+    <link rel="stylesheet" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/stylesheets/style_pricelist.css" />
+    <link rel="stylesheet" href="~/Content/themes/base/css" />
+    <link rel="icon" href="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/images/favicon.png" type="image/png" />
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/cufon-yui.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/Ideal_Sans_Medium_350.font.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/jquery.columnizer.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/jquery.expander.min.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/jquery.custom_radio_checkbox.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/jquery.animate-shadow.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+    <script src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/javascript/jquery.scrollTo-1.4.3.1-min.js" type="text/javascript"></script>
+    
+
+    <script type="text/javascript">
+        Cufon.replace('.cufon'); // Requires a selector engine for IE 6-7, see above
+        Cufon.replace('side h5');
+    </script>
+
+    <!--Start of Zopim Live Chat Script-->
+    <script type="text/javascript">
+        window.$zopim || (function (d, s) {
+            var z = $zopim = function (c) { z._.push(c) }, $ = z.s =
+                                                               d.createElement(s), e = d.getElementsByTagName(s)[0]; z.set = function (o) {
+                z.set.
+                    _.push(o)
+            }; z._ = []; z.set._ = []; $.async = !0; $.setAttribute('charset', 'utf-8');
+            $.src = '//cdn.zopim.com/?107vT7brZ0izLRurlkrq4ZC4gqVldTtR'; z.t = +new Date; $.
+                type = 'text/javascript'; e.parentNode.insertBefore($, e)
+        })(document, 'script');
+    </script>
+
+</head>
+
+<header class="header container_12">
+    <hgroup class="grid_4">
+        <a href="/" title="logo"><img src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/images/logo.png" title="logo" alt="logo" /></a>
+    </hgroup>
+    <nav class="grid_8" style="color:black;">
+        <ul id="mainmenu" class="cufon">
+            <li class=""><a href="http://www.mygenomics.eu/" style="font-size: 11px; color: black;">Home</a></li>
+            <li class=""><a href="http://www.mygenomics.eu/chi-siamo" style="font-size: 11px; color: black;">Chi siamo</a></li>
+            <li class=""><a href="http://www.mygenomics.eu/genotest" style="font-size: 11px; color: black;">genotest</a></li>
+            <li class=""><a href="http://www.mygenomics.eu/come-funziona" style="font-size: 11px; color: black;">come funziona</a></li>
+            <li class="selected"><a href="/questionario" style="font-size: 10px; color: black;">questionario</a></li>
+            <li class=""><a href="http://www.mygenomics.eu/ordina" style="font-size: 11px; color: black;">ordina</a></li>
+            <li class=""><a href="http://www.mygenomics.eu/news" style="font-size: 11px; color: black;">news</a></li>
+        </ul>
+    </nav>
+    <div class="lang" style="float: right; position: relative; right: 15px; top: -20px;">
+
+        <div class="language" id="inglese"><a style="display:block; height:100%;" href="http://www.mygenomics.eu/en/about-us" title="English"><img src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/images/gb.png" /></a></div>
+    </div>
+    <div class="login-logout">
+
+        <a class="login" target="_blank" href="http://areariservata.mygenomics.eu/"><span style="color: black;">Log in area riservata</span> <label>&nbsp;</label></a>
+
+
+    </div>
+</header>
+
+<div id="bodyContainer" ng-app="MyGenomicsApp">    
+    <div ng-view></div>    
+</div>
+
+<div class="clear"></div>
+
+<footer class="container_12">
+    <div class="separatore grid_12"></div>
+    <div class="col1 grid_3">
+        <img src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/images/logofooter.png" />
+        <br /><br />
+        <div class="fb-like" data-href="https://www.facebook.com/MyGenomics" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+
+        <a target="_blank" style="font-size:9px; margin-top:26px; display:block;" href="http://www.internetsm.com/" alt="creazione siti web rimini">Credits : <img src="http://www.mygenomics.eu/extension/ezwebin/design/ezwebin/images/INTERNET.SM.jpg" /></a>
+
+    </div>
+    <div class="col2 grid_3">
+        <span class="menutitolo cufon">MENU</span>
+        <ul class="cufon">
+            <li><a href="http://www.mygenomics.eu/">HOME</a></li>
+            <li><a href="http://www.mygenomics.eu/chi-siamo">CHI SIAMO</a></li>
+            <li><a href="http://www.mygenomics.eu/genotest">GENOTEST</a></li>
+            <li><a href="http://www.mygenomics.eu/come-funziona">COME FUNZIONA</a></li>
+            <li><a href="http://www.mygenomics.eu/ordina">ORDINA</a></li>
+        </ul>
+    </div>
+    <div class="col3 grid_3">
+        <span class="menutitolo cufon">APPROFONDIMENTI</span>
+        <ul class="cufon">
+            <li><a href="http://www.mygenomics.eu/la-ricerca">LA RICERCA</a></li>
+            <li><a href="http://www.mygenomics.eu/laboratorio">LABORATORIO</a></li>
+            <li><a href="http://www.mygenomics.eu/domande-frequenti">DOMANDE FREQUENTI</a></li>
+            <li><a href="http://www.mygenomics.eu/aspetti-legali">ASPETTI LEGALI</a></li>
+            <li><a href="http://www.mygenomics.eu/news">NEWS</a></li>
+        </ul>
+    </div>
+    <div class="col5 grid_3">
+        <span class="menutitolo cufon">CONTATTI</span>
+        <ul class="cufon">
+            <li><a href="http://www.mygenomics.eu/contatti">CONTATTACI</a></li>
+            <li><a href="http://www.mygenomics.eu/info-medici">LAVORA CON NOI</a></li>
+            <li style="cursor:pointer;" class="newsletter"><a>NEWSLETTER</a></li>
+            <li style="margin-top:5px;">
+
+                <a target="_blank" href="http://areariservata.mygenomics.eu/"><img src="http://www.mygenomics.eu/ezwebin/images/area_riservata_active.png" title="" /></a>
+
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div id="dialog-form" title="Iscriviti alla Newsletter">
+        <form>
+            <fieldset>
+                <label style="display:block; float:left; width:70px; margin-bottom:10px;" for="name">Nome</label>
+                <input type="text" name="name" id="namenl" class="text ui-widget-content ui-corner-all" />
+                <div class="clear"></div>
+                <label style="display:block; float:left; width:70px;" for="email">Email</label>
+                <input type="text" name="email" id="emailnl" value="" class="text ui-widget-content ui-corner-all" />
+            </fieldset>
+        </form>
+    </div>
+</footer>
+<script>
+
+
+    var listId = 287;
+    $('#dialog-form').dialog({
+        autoOpen: false,
+        width: 350,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        },
+        buttons: {
+            "Iscriviti": function () {
+                var email = $("#emailnl").val();
+                var name = $("#namenl").val();
+                $.ajax({
+                    url: "/proxy.php",
+                    dataType: 'json',
+                    data: { act: 'addNewsletter', list: listId, email: email, name: name },
+                    success: function (data) {
+                        if (data.status == "KO") {
+                            alert(data.msg);
+                        } else {
+                            alert("Grazie per esserti iscritto");
+                            $("#dialog-form").dialog("close");
+                        }
+                    },
+                    error: function () {
+                        alert("Chiamata fallita!!!");
+                    }
+                });
+            }
+        }
+    });
+
+
+    $('.newsletter').click(function () {
+        $("#dialog-form").dialog("open");
+    });
+
+</script>
+
+<script type="text/javascript">
+
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36322185-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+
+
+<script type="text/javascript">
+
+    var clicky = { log: function () { return; }, goal: function () { return; } };
+    var clicky_site_id = 100548074;
+    (function () {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = (document.location.protocol == 'https:' ? 'https://static.getclicky.com/js' : 'http://static.getclicky.com/js');
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(s);
+    })();
+
+</script>
+
+<script type="text/javascript">
+
+    setTimeout(function () {
+        var a = document.createElement("script");
+        var b = document.getElementsByTagName("script")[0];
+        a.src = document.location.protocol + "//dnn506yrbagrg.cloudfront.net/pages/scripts/0011/3072.js?" + Math.floor(new Date().getTime() / 3600000);
+        a.async = true; a.type = "text/javascript"; b.parentNode.insertBefore(a, b)
+    }, 1);
+
+</script>
+<script type="text/javascript">window.NREUM || (NREUM = {}); NREUM.info = { "beacon": "beacon-2.newrelic.com", "licenseKey": "e238d58d87", "applicationID": "3224672", "transactionName": "YgdaY0tTXUUEAEFcXFtNbUVQHVpYAQZNG0NdEg==", "queueTime": 0, "applicationTime": 486, "ttGuid": "", "agentToken": "", "userAttributes": "", "errorBeacon": "bam.nr-data.net", "agent": "js-agent.newrelic.com\/nr-476.min.js" }</script>

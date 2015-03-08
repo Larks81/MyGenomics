@@ -21,7 +21,8 @@ namespace MyGenomics.Controllers
 
         // GET api/personquestionnaires/5
         public PersonQuestionnaire Get(int id)
-        {           
+        {
+            //OnlineServices.MailService.SendMail("lele-pinkfloyd@libero.it","manuele.pagliarani@gmail.com","TestMail","porova");
             return _personQuestionnairesService.Get(id);
         }
 

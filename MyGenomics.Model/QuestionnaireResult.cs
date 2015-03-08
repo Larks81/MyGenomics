@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyGenomics.Model
 {
-    public class QuestionnaireResult
-    {
-        public int Id { get; set; }        
+    public class QuestionnaireResult : ModelBase
+    {        
         public int PersonQuestionnaireId { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public int ProductCategoryId { get; set; }

@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace MyGenomics.Model
 {
     public enum AdditionalInfoType { Text = 1, Numeric=2 }
-    public class Answer
-    {
-        public int Id { get; set; }
+    public class Answer : ModelBase
+    {        
         public string Text { get; set; }
         public bool HasAdditionalInfo { get; set; }
         public AdditionalInfoType AdditionalInfoType { get; set; }

@@ -49,6 +49,7 @@
     <Compile Include="Answer.cs" />
     <Compile Include="AnswerWeight.cs" />
     <Compile Include="Language.cs" />
+    <Compile Include="ModelBase.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonAnswer.cs" />
     <Compile Include="PersonQuestionnaire.cs" />

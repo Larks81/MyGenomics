@@ -230,6 +230,10 @@
       <Project>{8866fbaa-dfed-4ecc-b91a-6b8f20da3e8e}</Project>
       <Name>MyGenomics.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyGenomics.OnlineServices\MyGenomics.OnlineServices.csproj">
+      <Project>{cbbcb658-5556-4c10-972d-4414cbdff865}</Project>
+      <Name>MyGenomics.OnlineServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

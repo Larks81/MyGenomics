@@ -26,20 +26,20 @@ namespace MyGenomics.Data.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        AnswerId = c.Int(nullable: false),
                         PersonTypeId = c.Int(nullable: false),
                         ProductCategoryId = c.Int(nullable: false),
                         FromNumericAdditionalInfo = c.Int(nullable: false),
                         ToNumericAdditionalInfo = c.Int(nullable: false),
                         Value = c.Int(nullable: false),
-                        Answer_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.PersonTypes", t => t.PersonTypeId, cascadeDelete: true)
                 .ForeignKey("dbo.ProductCategories", t => t.ProductCategoryId, cascadeDelete: true)
-                .ForeignKey("dbo.Answers", t => t.Answer_Id)
+                .ForeignKey("dbo.Answers", t => t.AnswerId, cascadeDelete: true)
+                .Index(t => t.AnswerId)
                 .Index(t => t.PersonTypeId)
-                .Index(t => t.ProductCategoryId)
-                .Index(t => t.Answer_Id);
+                .Index(t => t.ProductCategoryId);
             
             CreateTable(
                 "dbo.PersonTypes",
@@ -78,6 +78,7 @@ namespace MyGenomics.Data.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         FirstName = c.String(),
                         LastName = c.String(),
+                        Gender = c.Int(nullable: false),
                         City = c.String(),
                         Address = c.String(),
                         BirthDate = c.DateTime(nullable: false),
@@ -85,8 +86,11 @@ namespace MyGenomics.Data.Migrations
                         PhoneNumber = c.String(),
                         Email = c.String(),
                         PersonalDoctor = c.String(),
+                        PersonTypeId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PersonTypes", t => t.PersonTypeId, cascadeDelete: true)
+                .Index(t => t.PersonTypeId);
             
             CreateTable(
                 "dbo.PersonAnswers",
@@ -159,10 +163,28 @@ namespace MyGenomics.Data.Migrations
                 .ForeignKey("dbo.Languages", t => t.LanguageId, cascadeDelete: true)
                 .Index(t => t.LanguageId);
             
+            CreateTable(
+                "dbo.QuestionnaireResults",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        PersonQuestionnaireId = c.Int(nullable: false),
+                        ProductCategoryId = c.Int(nullable: false),
+                        Result = c.Double(nullable: false),
+                        NumberOfAnswer = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PersonQuestionnaires", t => t.PersonQuestionnaireId, cascadeDelete: true)
+                .ForeignKey("dbo.ProductCategories", t => t.ProductCategoryId, cascadeDelete: true)
+                .Index(t => t.PersonQuestionnaireId)
+                .Index(t => t.ProductCategoryId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.QuestionnaireResults", "ProductCategoryId", "dbo.ProductCategories");
+            DropForeignKey("dbo.QuestionnaireResults", "PersonQuestionnaireId", "dbo.PersonQuestionnaires");
             DropForeignKey("dbo.PersonQuestionnaires", "QuestionnaireId", "dbo.Questionnaires");
             DropForeignKey("dbo.Questions", "Questionnaire_Id", "dbo.Questionnaires");
             DropForeignKey("dbo.Questionnaires", "LanguageId", "dbo.Languages");
@@ -172,9 +194,12 @@ namespace MyGenomics.Data.Migrations
             DropForeignKey("dbo.Questions", "CategoryId", "dbo.QuestionCategories");
             DropForeignKey("dbo.Answers", "Question_Id", "dbo.Questions");
             DropForeignKey("dbo.PersonAnswers", "AnswerId", "dbo.Answers");
-            DropForeignKey("dbo.AnswerWeights", "Answer_Id", "dbo.Answers");
+            DropForeignKey("dbo.People", "PersonTypeId", "dbo.PersonTypes");
+            DropForeignKey("dbo.AnswerWeights", "AnswerId", "dbo.Answers");
             DropForeignKey("dbo.AnswerWeights", "ProductCategoryId", "dbo.ProductCategories");
             DropForeignKey("dbo.AnswerWeights", "PersonTypeId", "dbo.PersonTypes");
+            DropIndex("dbo.QuestionnaireResults", new[] { "ProductCategoryId" });
+            DropIndex("dbo.QuestionnaireResults", new[] { "PersonQuestionnaireId" });
             DropIndex("dbo.Questionnaires", new[] { "LanguageId" });
             DropIndex("dbo.PersonQuestionnaires", new[] { "PersonId" });
             DropIndex("dbo.PersonQuestionnaires", new[] { "QuestionnaireId" });
@@ -183,10 +208,12 @@ namespace MyGenomics.Data.Migrations
             DropIndex("dbo.PersonAnswers", new[] { "PersonQuestionnaire_Id" });
             DropIndex("dbo.PersonAnswers", new[] { "AnswerId" });
             DropIndex("dbo.PersonAnswers", new[] { "QuestionId" });
-            DropIndex("dbo.AnswerWeights", new[] { "Answer_Id" });
+            DropIndex("dbo.People", new[] { "PersonTypeId" });
             DropIndex("dbo.AnswerWeights", new[] { "ProductCategoryId" });
             DropIndex("dbo.AnswerWeights", new[] { "PersonTypeId" });
+            DropIndex("dbo.AnswerWeights", new[] { "AnswerId" });
             DropIndex("dbo.Answers", new[] { "Question_Id" });
+            DropTable("dbo.QuestionnaireResults");
             DropTable("dbo.Questionnaires");
             DropTable("dbo.PersonQuestionnaires");
             DropTable("dbo.QuestionCategories");

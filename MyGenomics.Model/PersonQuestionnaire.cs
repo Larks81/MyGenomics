@@ -15,5 +15,6 @@ namespace MyGenomics.Model
         public List<PersonAnswer> Answers { get; set; }
         public Person Person { get; set; }
         public int PersonId { get; set; }
+        public List<QuestionnaireResult> Results { get; set; }
     }
 }

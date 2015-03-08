@@ -20,16 +20,17 @@ namespace MyGenomics.Controllers
         }
 
         // GET api/personquestionnaires/5
-        public string Get(int id)
-        {
-            return "value";
+        public PersonQuestionnaire Get(int id)
+        {           
+            return _personQuestionnairesService.Get(id);
         }
 
         // POST api/personquestionnaires
-        public void Post([FromBody]PersonQuestionnaire value)
+        public PersonQuestionnaire Post([FromBody]PersonQuestionnaire value)
         {
             value.CreatedDate = DateTime.Now;            
             _personQuestionnairesService.Insert(value);
+            return value;
         }
 
         // PUT api/personquestionnaires/5

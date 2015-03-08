@@ -40,7 +40,7 @@ namespace MyGenomics.Data.Migrations
                 Gender = Gender.Male,
                 AgeFrom = 0,
                 AgeTo = 40,
-                Description = "YoungMan"
+                Description = "Uomo giovane (1-40)"
             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -49,7 +49,7 @@ namespace MyGenomics.Data.Migrations
                 Gender = Gender.Male,
                 AgeFrom = 41,
                 AgeTo = 120,
-                Description = "OldMan"
+                Description = "Uomo anziano (41-120)"
             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -58,7 +58,7 @@ namespace MyGenomics.Data.Migrations
                 Gender = Gender.Female,
                 AgeFrom = 0,
                 AgeTo = 40,
-                Description = "YoungWoman"
+                Description = "Donna giovane (1-40)"
             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -67,7 +67,7 @@ namespace MyGenomics.Data.Migrations
                 Gender = Gender.Female,
                 AgeFrom = 41,
                 AgeTo = 120,
-                Description = "OldWoman"
+                Description = "Donna anziana (41-120)"
             });
 
             context.ProductCategories.AddOrUpdate(new ProductCategory()

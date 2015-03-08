@@ -24,5 +24,6 @@ namespace MyGenomics.Data.Context
         public DbSet<AnswerWeight> AnswerWeights { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<PersonType> PersonTypes { get; set; }
+        public DbSet<QuestionnaireResult> QuestionnaireResults { get; set; }
     }
 }

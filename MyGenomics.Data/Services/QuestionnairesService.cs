@@ -16,7 +16,7 @@ namespace MyGenomics.Data.Services
             using (var context = new MyGenomicsContext())
             {
                 var result = context.Questionnaires
-                    .Include(i=>i.Questions.Select(a=>a.Anwers))
+                    .Include(i => i.Questions.Select(a=>a.Anwers))
                     .Include(i => i.Questions.Select(a => a.Category))
                     .Include(i => i.Questions.Select(q => q.Anwers.Select(a => a.AnswerWeight)))                    
                     .FirstOrDefault(q=>q.Id==id);
@@ -34,5 +34,30 @@ namespace MyGenomics.Data.Services
                     .ToList();
             }
         }
+
+        public Answer GetAnswerAndWeightsByAnswerId(int answerId, int personTypeId)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                var answer = context.Answers
+                    .FirstOrDefault(a => a.Id == answerId);
+
+                answer.AnswerWeight = context.AnswerWeights
+                    .Where(aw => aw.AnswerId == answerId && aw.PersonTypeId == personTypeId)
+                    .ToList();
+
+                return answer;
+            }
+        }
+        public List<ProductCategory> GetProductCategories()
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                return context.ProductCategories.ToList();                    
+            }
+        }
+
+
+
     }
 }

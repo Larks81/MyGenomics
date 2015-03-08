@@ -9,7 +9,8 @@ namespace MyGenomics.Model
     public class AnswerWeight
     {
         public int Id { get; set; }
-        public PersonType PersonType { get; set; }
+        public PersonType PersonType { get; set; }        
+        public int AnswerId { get; set; }
         public int PersonTypeId { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public int ProductCategoryId { get; set; }

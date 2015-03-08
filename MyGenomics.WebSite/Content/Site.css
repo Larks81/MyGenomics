@@ -13,52 +13,25 @@ header, footer, nav, section {
     text-align: center;
 }
 
-/* Styles for basic forms
------------------------------------------------------------
-fieldset {
-    border: 1px solid #ddd;
-    padding: 0 1.4em 1.4em 1.4em;
-    margin: 0 0 1.5em 0;
+.green-circle {    
+    background: green;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin: 0;
+    vertical-align: central;
 }
-
-legend {
-    font-size: 1.2em;
-    font-weight: bold;
+.yellow-circle {    
+    background: gold;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin: 0;    
 }
-
-textarea {
-    min-height: 75px;
+.red-circle {   
+    background: red;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin: 0;    
 }
-
-.editor-label {
-    margin: 1em 0 0 0;
-}
-
-.editor-field {
-    margin: 0.5em 0 0 0;
-}
-
-
- Styles for validation helpers
------------------------------------------------------------
-.field-validation-error {
-    color: #f00;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-.input-validation-error {
-    border: 1px solid #f00;
-    background-color: #fee;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: #f00;
-}
-
-.validation-summary-valid {
-    display: none;
-}*/

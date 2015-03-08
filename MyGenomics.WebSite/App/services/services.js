@@ -4,8 +4,7 @@ appServices.factory('Questionnaire', [
     '$resource', 'configs',
     function ($resource, configs) {
         return $resource(configs.baseWebApiUrl + 'api/questionnaire/:id', {}, {
-            query: { method: 'GET', isArray: true },
-            //get: { method: 'GET', isArray: false, params: { id: '@id' } }
+            query: { method: 'GET', isArray: true }            
         });
     }
 ]);
@@ -13,7 +12,8 @@ appServices.factory('Questionnaire', [
 appServices.factory('PersonQuestionnaire', [
     '$resource', 'configs',
     function ($resource, configs) {
-        return $resource(configs.baseWebApiUrl + 'api/PersonQuestionnaires/', {}, {            
+        return $resource(configs.baseWebApiUrl + 'api/PersonQuestionnaires/:id', {}, {
+            get: { method: 'GET', params: { id: '@id' }, isArray: false }
         });
     }
 ]);

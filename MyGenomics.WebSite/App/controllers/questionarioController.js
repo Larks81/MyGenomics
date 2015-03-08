@@ -5,10 +5,12 @@
         $scope.Questionnaires = null;
         $scope.SelectedQuestionnaire = null;
         $scope.PersonQuestionnaireToFill = null;
+        $scope.PersonQuestionnaire = null;
         $scope.TotStep = null;
         $scope.ReadyToLoad = false;
         $scope.PersonErrorText = "";
         $scope.QuestionnaireFinished = false;
+        $scope.PersonQuestionnaireCalculated = false;
         $scope.Genders = [{
             id: 1,
             label: 'Maschio',            
@@ -17,13 +19,12 @@
             label: 'Femmina',            
         }];
 
-
-        $scope.getQuestionnaires = function () {
+       
+        $scope.getQuestionnaires = function () {            
             Questionnaire.query( function (data) {
                 $scope.Questionnaires = data;
                 $scope.selectQuestionnaire($scope.Questionnaires[0]);
-            });            
-            
+            });                        
         };
 
         $scope.selectQuestionnaire = function (questionnaire) {            
@@ -55,10 +56,24 @@
         };
 
         $scope.submit = function() {
-            PersonQuestionnaire.save($scope.PersonQuestionnaireToFill);
-            $scope.QuestionnaireFinished = true;
-        };        
+            PersonQuestionnaire.save($scope.PersonQuestionnaireToFill).$promise
+            .then(function (data) {
+                var idInserted = data.Id;
+                $scope.getQuestionnaireResult(idInserted)
+                .then(function(result) {
+                    $scope.PersonQuestionnaire = result;
+                    $scope.PersonQuestionnaireCalculated = true;
+                });
+                $scope.QuestionnaireFinished = true;
+            })
+            .catch(function (data) {
+                alert("error");
+            });                          
+        };
 
+        $scope.getQuestionnaireResult = function(id) {
+            return PersonQuestionnaire.get({id : id}).$promise;
+        };
 
         //--------------------------------------------------------------------
         //--------------Validation functions----------------------------------

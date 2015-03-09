@@ -96,28 +96,29 @@
 
         $scope.validatePerson = function (person) {
 
-            //var fieldInvalid = false;
+            var fieldInvalid = false;
             
-            //if ((typeof (person) === "undefined") ||
-            //    (person.FirstName == "" || typeof (person.FirstName) === "undefined") ||
-            //    (person.LastName == "" || typeof (person.LastName) === "undefined") ||
-            //    (person.City == "" || typeof (person.City) === "undefined") ||
-            //    (person.Address == "" || typeof (person.Address) === "undefined") ||
-            //    (person.BirthDate == "" || typeof (person.BirthDate) === "undefined") ||
-            //    (person.BirthCity == "" || typeof (person.BirthCity) === "undefined") ||
-            //    (person.PhoneNumber == "" || typeof (person.PhoneNumber) === "undefined") ||
-            //    (person.Email == "" || typeof (person.Email) === "undefined") ||
-            //    (person.PersonalDoctor == "" || typeof (person.PersonalDoctor) === "undefined"))
-            //{
-            //    fieldInvalid = true;                
-            //}
+            if ((typeof (person) === "undefined") ||
+                //(person.FirstName == "" || typeof (person.FirstName) === "undefined") ||
+                //(person.LastName == "" || typeof (person.LastName) === "undefined") ||
+                //(person.City == "" || typeof (person.City) === "undefined") ||
+                //(person.Address == "" || typeof (person.Address) === "undefined") ||
+                (person.BirthDate == "" || typeof (person.BirthDate) === "undefined") ||
+                //(person.BirthCity == "" || typeof (person.BirthCity) === "undefined") ||
+                //(person.PhoneNumber == "" || typeof (person.PhoneNumber) === "undefined") ||
+                (person.Email == "" || typeof (person.Email) === "undefined") ||
+                (person.Gender == "" || typeof (person.Gender) === "undefined"))
+                //(person.PersonalDoctor == "" || typeof (person.PersonalDoctor) === "undefined"))
+            {
+                fieldInvalid = true;                
+            }
                 
-            //if (!fieldInvalid) {
+            if (!fieldInvalid) {
                 WizardHandler.wizard().next();
                 $scope.PersonErrorText = "";
-            //} else {
-            //    $scope.PersonErrorText = "* è necessario compilare tutti i campi";
-            //}
+            } else {
+                $scope.PersonErrorText = "* è necessario compilare i campi obbligatori";
+            }
         };
 
         //--------------------------------------------------------------------

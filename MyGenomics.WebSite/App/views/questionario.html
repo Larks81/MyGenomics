@@ -27,7 +27,7 @@
                             <input id="tbLastName" style="width:190px;"  class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.LastName" />
                         </div>
                         <div class="form-group">
-                            <label for="cbGender">Sesso</label><br />
+                            <label for="cbGender">Sesso <a style="color:Red">*</a></label><br />
                             <select id="cbGender" class="form-control" ng-options="gender.id as gender.label for gender in Genders" ng-model="PersonQuestionnaireToFill.Person.Gender" />                                
                         </div>
                     </form>
@@ -45,7 +45,7 @@
                     <br />
                     <form class="form-inline">
                         <div class="form-group" style="width:200px;">
-                            <label for="tbBirthDate">Data di nascita</label>
+                            <label for="tbBirthDate">Data di nascita <a style="color:Red">*</a></label>
                             <input ng- id="tbBirthDate" type="text" ng-click="open($event)" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="PersonQuestionnaireToFill.Person.BirthDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
 
                         </div>
@@ -61,7 +61,7 @@
                             <input id="tbPhoneNumber" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PhoneNumber" />
                         </div>
                         <div class="form-group">
-                            <label for="tbEmail">Email</label><br />
+                            <label for="tbEmail">Email <a style="color:Red">*</a></label><br />
                             <input style="width:310px;" id="tbEmail" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Email" />
                         </div>
                     </form>

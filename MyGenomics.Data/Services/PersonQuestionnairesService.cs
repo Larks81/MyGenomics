@@ -17,8 +17,7 @@ namespace MyGenomics.Data.Services
         {
             using (var context = new MyGenomicsContext())
             {
-                return context.PersonQuestionnaires
-                    //.Include(i => i.Person)
+                return context.PersonQuestionnaires                    
                     .Include(i => i.Questionnaire)
                     .Include(i => i.Questionnaire.Questions.Select(q=>q.Anwers))
                     .Include(i => i.Answers)
@@ -31,14 +30,12 @@ namespace MyGenomics.Data.Services
         public int Insert(PersonQuestionnaire personQuestionnaire)
         {
             var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
-
             if (personType != null)
             {
                 personQuestionnaire.Person.PersonTypeId = personType.Id;
             }
 
             personQuestionnaire.Results = CalculateQuestionnaireResult(personQuestionnaire);
-
             using (var context = new MyGenomicsContext())
             {
                 context.PersonQuestionnaires.Add(personQuestionnaire);
@@ -108,6 +105,43 @@ namespace MyGenomics.Data.Services
                 .ToList()
                 .ForEach(q => q.Result = q.Result/q.NumberOfAnswer);
             return questionnaireResult;
+        }
+
+        public string GetHtmlResultOfPersonQuestionnaire(PersonQuestionnaire personQuestionnaire)
+        {
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine("<h3>Grazie " + personQuestionnaire.Person.FirstName + "</h3>");                  
+            strBuilder.AppendLine("<p>Queste sono le risposte che hai dato</p>");
+            strBuilder.AppendLine("<ul>");
+
+            foreach (var answer in personQuestionnaire.Answers)
+            {
+                strBuilder.AppendLine("<li>"+answer.Question.Text+" <b>"+answer.Answer.Text+"</b> "+answer.AdditionalInfo+"</li>");
+            }
+            
+            strBuilder.AppendLine("</ul><br/>");
+            strBuilder.AppendLine("<p>Questi sono i risultati:</p>");
+            strBuilder.AppendLine("<ul>");
+
+            foreach (var result in personQuestionnaire.Results)
+            {
+                if (result.Result <= 3)
+                {
+                    strBuilder.AppendLine("<li><b>" + result.ProductCategory.Name + ":</b> Non necessario</li>");
+                }
+                else if (result.Result > 3 && result.Result <= 6)
+                {
+                    strBuilder.AppendLine("<li><b>" + result.ProductCategory.Name + ":</b> Consigliato</li>");
+                }
+                else
+                {
+                    strBuilder.AppendLine("<li><b>" + result.ProductCategory.Name + ":</b> Altamente Consigliato</li>");
+                }
+            }
+            
+            strBuilder.AppendLine("</ul><br/>");
+
+            return strBuilder.ToString();
         }
 
     }

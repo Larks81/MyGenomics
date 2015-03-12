@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyGenomics.Model;
+using MyGenomics.DataModel;
 
 namespace MyGenomics.Data.Context
 {

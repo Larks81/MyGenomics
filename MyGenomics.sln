@@ -5,13 +5,19 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.WebApi", "MyGenomics.WebApi\MyGenomics.WebApi.csproj", "{D0797987-00AD-4A2C-916A-6A78F4FEFE97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.Model", "MyGenomics.Model\MyGenomics.Model.csproj", "{8866FBAA-DFED-4ECC-B91A-6B8F20DA3E8E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.Data", "MyGenomics.Data\MyGenomics.Data.csproj", "{EA022E0D-F6FC-4D16-9FA0-15153AD57F53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.WebSite", "MyGenomics.WebSite\MyGenomics.WebSite.csproj", "{E16AAB73-B3C9-49AD-B1F5-A9A1BA162C55}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.OnlineServices", "MyGenomics.OnlineServices\MyGenomics.OnlineServices.csproj", "{CBBCB658-5556-4C10-972D-4414CBDFF865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.DomainModel", "MyGenomics.DomainModel\MyGenomics.DomainModel.csproj", "{9F3E2B37-5D61-4043-93C1-EF8CC6B0ABDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.DataModel", "MyGenomics.DataModel\MyGenomics.DataModel.csproj", "{2168D311-1D01-4B0D-9D47-6FB3B02570ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.Services", "MyGenomics.Services\MyGenomics.Services.csproj", "{15812E4C-A62F-4C73-9480-7A968BEC4258}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.Common", "MyGenomics.Common\MyGenomics.Common.csproj", "{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +29,6 @@ Global
 		{D0797987-00AD-4A2C-916A-6A78F4FEFE97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0797987-00AD-4A2C-916A-6A78F4FEFE97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0797987-00AD-4A2C-916A-6A78F4FEFE97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8866FBAA-DFED-4ECC-B91A-6B8F20DA3E8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8866FBAA-DFED-4ECC-B91A-6B8F20DA3E8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8866FBAA-DFED-4ECC-B91A-6B8F20DA3E8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8866FBAA-DFED-4ECC-B91A-6B8F20DA3E8E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA022E0D-F6FC-4D16-9FA0-15153AD57F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA022E0D-F6FC-4D16-9FA0-15153AD57F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA022E0D-F6FC-4D16-9FA0-15153AD57F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +41,22 @@ Global
 		{CBBCB658-5556-4C10-972D-4414CBDFF865}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBBCB658-5556-4C10-972D-4414CBDFF865}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBBCB658-5556-4C10-972D-4414CBDFF865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F3E2B37-5D61-4043-93C1-EF8CC6B0ABDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F3E2B37-5D61-4043-93C1-EF8CC6B0ABDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F3E2B37-5D61-4043-93C1-EF8CC6B0ABDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F3E2B37-5D61-4043-93C1-EF8CC6B0ABDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2168D311-1D01-4B0D-9D47-6FB3B02570ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2168D311-1D01-4B0D-9D47-6FB3B02570ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2168D311-1D01-4B0D-9D47-6FB3B02570ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2168D311-1D01-4B0D-9D47-6FB3B02570ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15812E4C-A62F-4C73-9480-7A968BEC4258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15812E4C-A62F-4C73-9480-7A968BEC4258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15812E4C-A62F-4C73-9480-7A968BEC4258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15812E4C-A62F-4C73-9480-7A968BEC4258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

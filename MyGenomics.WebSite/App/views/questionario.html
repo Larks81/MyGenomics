@@ -45,10 +45,20 @@
                     <br />
                     <form class="form-inline">
                         <div class="form-group" style="width:200px;">
-                            <label for="tbBirthDate">Data di nascita <a style="color:Red">*</a></label>
-                            <input ng- id="tbBirthDate" type="text" ng-click="open($event)" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="PersonQuestionnaireToFill.Person.BirthDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <label for="tbBirthDate">Data di nascita<a style="color:Red">*</a></label>
+                            <!--<input ng- id="tbBirthDate" type="text" ng-click="open($event)" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="PersonQuestionnaireToFill.Person.BirthDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+                            
+                            <input type="date" id="exampleInput" name="input" ng-model="PersonQuestionnaireToFill.Person.BirthDate" placeholder="yyyy-MM-dd" class="form-control" required />
+                            
+                                <!--<input type="date" id="tbBirthDate" name="tbBirthDate"
+               class="form-control" data-datepicker-popup="MM/dd/yyyy"
+               ng-model="dataff" data-is-open="opened"
+               data-show-weeks="false" required />
 
-                        </div>
+            -->
+
+
+                            </div>
                         <div class="form-group">
                             <label for="tbBirthCity">Città di nascita</label><br />
                             <input style="width:305px;" id="tbBirthCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.BirthCity" />
@@ -79,33 +89,32 @@
                 </div>
             </div>
         </wz-step>
-
-        <wz-step title="{{category}}" ng-repeat-start="(category, questionsInCategory) in PersonQuestionnaireToFill.Answers | groupBy: 'QuestionCategory'">
+        <wz-step ng-repeat-start="category in PersonQuestionnaireToFill.QuestionsCategories">
 
             <div class="panel panel-default">
                 <div class="panel-heading">Questionario GenoTest</div>
                 <div class="panel-body" style="padding-left: 25px;">
-                    <h3>{{category}}</h3>
+                    <h3>{{category.Name}}</h3>
                     <br />
                     <table>
-                        <tr ng-repeat="question in questionsInCategory">
+                        <tr ng-repeat="question in category.Questions">
                             <td>
-                                {{question.QuestionText}}
+                                {{question.Text}}
                                 <ul>
-                                    <li ng-repeat="possibleAnswer in question.PossibileAnswers">
-                                        <input type="checkbox" ng-model="PersonQuestionnaireToFill.Answers[question.QuestionIndex].AnswerId" ng-true-value="{{possibleAnswer.Id}}" ng-false-value="null">
+                                    <li ng-repeat="possibleAnswer in question.Anwers">
+                                        <input type="checkbox" ng-model="question.GivenAnswerId" ng-true-value="{{possibleAnswer.Id}}" ng-false-value="null">
                                         {{possibleAnswer.Text}}
                                         <div ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==1">
                                             <input type="text" style="width:300px;"
-                                                   ng-disabled="possibleAnswer.Id!=PersonQuestionnaireToFill.Answers[question.QuestionIndex].AnswerId"
-                                                   ng-model="PersonQuestionnaireToFill.Answers[question.QuestionIndex].AdditionalInfo"
+                                                   ng-disabled="possibleAnswer.Id!=question.GivenAnswerId"
+                                                   ng-model="question.AdditionalInfo"
                                                    ng-model-options="{ updateOn: 'blur' }" />
                                         </div>
-                                        <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==2">                                            
-                                            <br/>
-                                            <input type="text" style="width:100px;"                                                   
-                                                   ng-disabled="possibleAnswer.Id!=PersonQuestionnaireToFill.Answers[question.QuestionIndex].AnswerId"
-                                                   ng-model="PersonQuestionnaireToFill.Answers[question.QuestionIndex].AdditionalInfo"
+                                        <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==2">
+                                            <br />
+                                            <input type="text" style="width:100px;"
+                                                   ng-disabled="possibleAnswer.Id!=question.GivenAnswerId"
+                                                   ng-model="question.AdditionalInfo"
                                                    ng-model-options="{ updateOn: 'blur' }" />
                                             (da {{possibleAnswer.MinValueNumericAdditionalInfo}} a {{possibleAnswer.MaxValueNumericAdditionalInfo}})
                                         </span>
@@ -116,10 +125,10 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="submit" ng-click="validateAnswers(questionsInCategory)" class="btn btn-primary btn-lg" value="Continua" />
+                    <input type="submit" ng-click="validateAnswers(category)" class="btn btn-primary btn-lg" value="Continua" />
                 </div>
             </div>
-        </wz-step>
+        </wz-step>        
         <wz-step ng-if="$index % TotStep == 0" ng-repeat-end title="Conferma">
             <div class="panel panel-default">
                 <div class="panel-heading">Questionario GenoTest</div>
@@ -137,26 +146,26 @@
     </wizard>
     <div ng-show="QuestionnaireFinished">
         <div class="jumbotron">
-            <h1>Grazie {{PersonQuestionnaire.Person.FirstName}}!</h1>
+            <h1>Grazie {{PersonQuestionnaireResult.Person.FirstName}}!</h1>
             <p>Questo il risultato del suo test:</p>
         </div>
         <div ng-show="!PersonQuestionnaireCalculated">
             <img src="../../Content/themes/base/images/loading.gif" />
         </div>
         <div ng-show="PersonQuestionnaireCalculated">
-            <p>Sei stato identificato come: <b>{{PersonQuestionnaire.Person.PersonType.Description}}</b> </p>
+            <p>Sei stato identificato come: <b>{{PersonQuestionnaireResult.Person.PersonType.Description}}</b> </p>
             <p><u><b>Le sue Risposte alle domande</b></u></p>
             <ul>
-                <li ng-repeat="answer in PersonQuestionnaire.Answers">
-                    {{answer.Question.Text}} : <b>{{answer.Answer.Text}}</b> {{answer.AdditionalInfo}}
+                <li ng-repeat="answer in PersonQuestionnaireResult.Answers">
+                    {{answer.QuestionText}} : <b>{{answer.AnswerText}}</b> {{answer.AdditionalInfo}}
                 </li>
             </ul>
             <br />
             <p><u><b>Test Consigliati</b></u></p>
             <table>
-                <tr ng-repeat="result in PersonQuestionnaire.Results">
+                <tr ng-repeat="result in PersonQuestionnaireResult.Results">
                     <td style="width:100px;">
-                        <b>{{result.ProductCategory.Name}}:</b>
+                        <b>{{result.ProductCategoryName}}:</b>
                     </td>
                     <td>
                         <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>

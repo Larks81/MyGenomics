@@ -4,8 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using MyGenomics.Data.Services;
-using MyGenomics.Model;
+using MyGenomics.DomainModel;
+using MyGenomics.Services;
+
 
 namespace MyGenomics.Controllers
 {
@@ -21,8 +22,7 @@ namespace MyGenomics.Controllers
 
         // GET api/questionnaire/5
         public Questionnaire Get(int id)
-        {
-            var a = _questionnairesService.Get(id);
+        {            
             return _questionnairesService.Get(id);
         }
 

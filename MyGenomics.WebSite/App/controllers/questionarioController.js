@@ -11,6 +11,7 @@
         $scope.PersonErrorText = "";
         $scope.QuestionnaireFinished = false;
         $scope.PersonQuestionnaireCalculated = false;
+
         $scope.Genders = [{
             id: 1,
             label: 'Maschio',            
@@ -18,7 +19,6 @@
             id: 2,
             label: 'Femmina',            
         }];
-
        
         $scope.getQuestionnaires = function () {            
             Questionnaire.query( function (data) {
@@ -35,34 +35,49 @@
         };
 
         $scope.buildPersonQuestionnaire = function (questionnaire) {
-            var personQuestionnaire = new PersonQuestionnaire();
-            personQuestionnaire.QuestionnaireId = questionnaire.Id;
-            personQuestionnaire.Answers = new Array();            
-            for (var k = 0 ; k < questionnaire.Questions.length ; k++) {
-                var personAnswer = new Object();
-                personAnswer.QuestionIndex = k;
-                personAnswer.QuestionId = questionnaire.Questions[k].Id;
-                personAnswer.QuestionText = questionnaire.Questions[k].Text;
-                personAnswer.QuestionCategory = questionnaire.Questions[k].Category.Name;
-                personAnswer.PossibileAnswers = questionnaire.Questions[k].Anwers;
-                personAnswer.AnswerId = 0;
-                personAnswer.IsRequired = questionnaire.Questions[k].IsRequired;
-                personAnswer.ErrorText = "";
-                personQuestionnaire.Answers.push(personAnswer);
+            //questionnaire.Person = new Object();
+            //questionnaire.Person.BirthDate = new Date('2014-10-07');
+
+            for (var cat = 0; cat < questionnaire.QuestionsCategories.length; cat++) {
+                for (var quest = 0; quest < questionnaire.QuestionsCategories[cat].Questions.length; quest++) {
+                    questionnaire.QuestionsCategories[cat].Questions[quest].GivenAnswerId = 0;
+                    questionnaire.QuestionsCategories[cat].Questions[quest].AdditionalInfo = "";
+                    questionnaire.QuestionsCategories[cat].Questions[quest].ErrorText = "";
+                }
             }
-            $scope.TotStep = GetTotStepInPersonQuestionnaire(personQuestionnaire);
-            $scope.PersonQuestionnaireToFill = personQuestionnaire;
-            $scope.ReadyToLoad = true;
+
+            $scope.PersonQuestionnaireToFill = questionnaire;
+            $scope.TotStep = questionnaire.QuestionsCategories.length;
+            $scope.ReadyToLoad = true;            
         };
 
-        $scope.submit = function() {
-            PersonQuestionnaire.save($scope.PersonQuestionnaireToFill).$promise
+        $scope.submit = function () {
+
+            var personQuestionnaire = new PersonQuestionnaire();
+            questionnaire = $scope.PersonQuestionnaireToFill;
+            personQuestionnaire.QuestionnaireId = questionnaire.Id;
+            personQuestionnaire.Person = questionnaire.Person;            
+            personQuestionnaire.GivenAnswers = new Array();
+            
+            var nQuestion = 0;
+            for (var cat = 0; cat < questionnaire.QuestionsCategories.length; cat++) {
+                for (var quest = 0; quest < questionnaire.QuestionsCategories[cat].Questions.length; quest++) {
+
+                    personQuestionnaire.GivenAnswers[nQuestion] = new Object();
+                    personQuestionnaire.GivenAnswers[nQuestion].QuestionId = questionnaire.QuestionsCategories[cat].Questions[quest].Id;
+                    personQuestionnaire.GivenAnswers[nQuestion].AnswerId = questionnaire.QuestionsCategories[cat].Questions[quest].GivenAnswerId;
+                    personQuestionnaire.GivenAnswers[nQuestion].AdditionalInfo = questionnaire.QuestionsCategories[cat].Questions[quest].AdditionalInfo;
+                    nQuestion++;
+                }
+            }
+
+            PersonQuestionnaire.save(personQuestionnaire).$promise
             .then(function (data) {
-                var idInserted = data.Id;
+                var idInserted = data.idInserted;
                 $scope.getQuestionnaireResult(idInserted)
                 .then(function(result) {
-                    $scope.PersonQuestionnaire = result;
-                    $scope.PersonQuestionnaireCalculated = true;
+                    $scope.PersonQuestionnaireResult = result;
+                   $scope.PersonQuestionnaireCalculated = true;
                 });
                 $scope.QuestionnaireFinished = true;
             })
@@ -103,7 +118,7 @@
                 //(person.LastName == "" || typeof (person.LastName) === "undefined") ||
                 //(person.City == "" || typeof (person.City) === "undefined") ||
                 //(person.Address == "" || typeof (person.Address) === "undefined") ||
-                (person.BirthDate == "" || typeof (person.BirthDate) === "undefined") ||
+                (person.BirthDate == "" || typeof (person.BirthDate) === "undefined" || $('#tbBirthDate').$invalid) ||
                 //(person.BirthCity == "" || typeof (person.BirthCity) === "undefined") ||
                 //(person.PhoneNumber == "" || typeof (person.PhoneNumber) === "undefined") ||
                 (person.Email == "" || typeof (person.Email) === "undefined") ||
@@ -125,48 +140,32 @@
         //--------------Datepicker functions----------------------------------
         //--------------------------------------------------------------------
 
-        $scope.clear = function () {
-            $scope.dt = null;
-        };
+        //$scope.clear = function () {
+        //    $scope.dt = null;
+        //};
 
-        // Disable weekend selection
-        $scope.disabled = function (date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        };
+        //// Disable weekend selection
+        //$scope.disabled = function (date, mode) {
+        //    return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+        //};
 
-        $scope.toggleMin = function () {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+        //$scope.toggleMin = function () {
+        //    $scope.minDate = $scope.minDate ? null : new Date();
+        //};
+        //$scope.toggleMin();
 
-        $scope.open = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.opened = true;
-            setTimeout(function() {
-            $scope.opened = false;
-        }, 10);
-        };
+        //$scope.open = function ($event) {
+        //    $event.preventDefault();
+        //    $event.stopPropagation();
+        //    $scope.opened = true;
+        //    setTimeout(function() {
+        //    $scope.opened = false;
+        //}, 10);
+        //};
 
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
-        };
-
-        //--------------------------------------------------------------------
-        //--------------Helper Functions--------------------------------------
-        //--------------------------------------------------------------------
-
-        function GetTotStepInPersonQuestionnaire(personQuestionnaire) {
-            var totStep = 0;
-            var currentStep = "";
-            for (var k = 0 ; k < personQuestionnaire.Answers.length ; k++) {
-                if (personQuestionnaire.Answers[k].QuestionCategory != currentStep) {
-                    currentStep = personQuestionnaire.Answers[k].QuestionCategory;
-                    totStep++;
-                }
-            }
-            return totStep;
-        }
+        //$scope.dateOptions = {
+        //    formatYear: 'yy',
+        //    startingDay: 1
+        //};        
 
     }]);

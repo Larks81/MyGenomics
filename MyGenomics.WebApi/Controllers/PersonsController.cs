@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using MyGenomics.Data.Services;
-using MyGenomics.Model;
+using MyGenomics.DomainModel;
+using MyGenomics.Services;
 
 namespace MyGenomics.Controllers
 {
@@ -14,14 +10,14 @@ namespace MyGenomics.Controllers
         private readonly PersonsService _personService = new PersonsService();
         // GET api/pesrons
         public IEnumerable<Person> Get()
-        {            
-            return _personService.GetAll();
+        {
+            return null;
         }
 
         // GET api/pesrons/5
         public string Get(int id)
         {
-            return "value";
+            return null;
         }
 
         // POST api/pesrons

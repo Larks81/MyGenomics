@@ -6,7 +6,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using MyGenomics.Data.Context;
+using MyGenomics.Services;
+
 
 namespace MyGenomics
 {
@@ -31,8 +32,9 @@ namespace MyGenomics
             // Per disabilitare la funzionalità di traccia nell'applicazione, impostare come commento o rimuovere la seguente riga di codice
             // Per ulteriori informazioni, visitare: http://www.asp.net/web-api
             //config.EnableSystemDiagnosticsTracing();
+            
+            BaseDataService.InitializeServices();
 
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyGenomicsContext,MyGenomics.Data.Migrations.Configuration>());
             //config.EnableSystemDiagnosticsTracing();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }

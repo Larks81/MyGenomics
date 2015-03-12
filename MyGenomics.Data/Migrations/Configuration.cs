@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using MyGenomics.Model;
+using MyGenomics.Common.enums;
+using MyGenomics.DataModel;
 
 namespace MyGenomics.Data.Migrations
 {
@@ -37,7 +38,7 @@ namespace MyGenomics.Data.Migrations
             context.PersonTypes.AddOrUpdate(new PersonType()
             {
                 Id = 1,
-                Gender = Gender.Male,
+                Gender = Enums.Male,
                 AgeFrom = 0,
                 AgeTo = 40,
                 Description = "Uomo giovane (1-40)"
@@ -46,7 +47,7 @@ namespace MyGenomics.Data.Migrations
             context.PersonTypes.AddOrUpdate(new PersonType()
             {
                 Id = 2,
-                Gender = Gender.Male,
+                Gender = Enums.Male,
                 AgeFrom = 41,
                 AgeTo = 120,
                 Description = "Uomo anziano (41-120)"
@@ -55,7 +56,7 @@ namespace MyGenomics.Data.Migrations
             context.PersonTypes.AddOrUpdate(new PersonType()
             {
                 Id = 3,
-                Gender = Gender.Female,
+                Gender = Enums.Female,
                 AgeFrom = 0,
                 AgeTo = 40,
                 Description = "Donna giovane (1-40)"
@@ -64,7 +65,7 @@ namespace MyGenomics.Data.Migrations
             context.PersonTypes.AddOrUpdate(new PersonType()
             {
                 Id = 4,
-                Gender = Gender.Female,
+                Gender = Enums.Female,
                 AgeFrom = 41,
                 AgeTo = 120,
                 Description = "Donna anziana (41-120)"

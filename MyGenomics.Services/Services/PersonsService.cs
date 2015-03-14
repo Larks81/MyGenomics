@@ -18,8 +18,8 @@ namespace MyGenomics.Services
             using (var context = new MyGenomicsContext())
             {
                 dataPerson = context.People
-                    .FirstOrDefault(p=>
-                        p.UserName.ToUpper()==username.ToUpper() &&
+                    .FirstOrDefault(p =>
+                        p.UserName.ToUpper() == username.ToUpper() &&
                         p.Password == cryptedPassword);
             }
 
@@ -32,7 +32,7 @@ namespace MyGenomics.Services
 
         public DomainModel.Person Get(int id)
         {
-            Person dataPerson;            
+            Person dataPerson;
             using (var context = new MyGenomicsContext())
             {
                 dataPerson = context.People
@@ -79,6 +79,20 @@ namespace MyGenomics.Services
             }
 
             return retPersonType;
+        }
+
+        public void MigrateCrmContacts()
+        {
+            MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
+
+            string sugarToken = sugarClient.Authenticate();
+            var crmContacts = sugarClient.GetContacts(sugarToken);
+
+            using (var context = new MyGenomicsContext())
+            {
+                context.People.AddRange(crmContacts.Where(p => !context.People.Any(c => c.UserName == p.UserName)));
+                context.SaveChanges();
+            }
         }
     }
 }

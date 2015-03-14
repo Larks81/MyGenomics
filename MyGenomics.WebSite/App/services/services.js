@@ -1,14 +1,5 @@
 ﻿var appServices = angular.module('appServices', ['ngResource']);
 
-appServices.factory('Person', [
-    '$resource', 'configs',
-    function ($resource, configs) {
-        return $resource(configs.baseWebApiUrl + 'api/person', {}, {
-            login: { method: 'GET', isArray: false }
-        });
-    }
-]);
-
 appServices.factory('Questionnaire', [
     '$resource', 'configs',
     function ($resource, configs) {

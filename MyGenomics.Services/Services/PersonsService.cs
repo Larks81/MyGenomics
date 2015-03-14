@@ -1,62 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using MyGenomics.Data.Context;
 using MyGenomics.DataModel;
 using MyGenomics.DomainModel;
-using Person = MyGenomics.DataModel.Person;
 
 namespace MyGenomics.Services
 {
     public class PersonsService
-    {
-        public DomainModel.Person GetPersonByLogin(string username, string password)
-        {
-            Person dataPerson;
-            string cryptedPassword = CryptPassword(password);
-            using (var context = new MyGenomicsContext())
-            {
-                dataPerson = context.People
-                    .FirstOrDefault(p=>
-                        p.UserName.ToUpper()==username.ToUpper() &&
-                        p.Password == cryptedPassword);
-            }
-
-            if (dataPerson != null)
-            {
-                return Mapper.Map<DataModel.Person, DomainModel.Person>(dataPerson);
-            }
-            return null;
-        }
-
-        public DomainModel.Person Get(int id)
-        {
-            Person dataPerson;            
-            using (var context = new MyGenomicsContext())
-            {
-                dataPerson = context.People
-                    .FirstOrDefault(p =>
-                        p.Id == id);
-            }
-
-            if (dataPerson != null)
-            {
-                return Mapper.Map<DataModel.Person, DomainModel.Person>(dataPerson);
-            }
-            return null;
-        }
-
-        private string CryptPassword(string password)
-        {
-            return password;
-        }
-
+    {                
         public DomainModel.PersonType GetPersonTypeByPerson(DomainModel.Person person)
         {
             var retPersonType = new DomainModel.PersonType();
             DataModel.PersonType personType;
-            var today = DateTime.Today;
+            DateTime today = DateTime.Today;
             int personAge = today.Year - person.BirthDate.Year;
             if (person.BirthDate > today.AddYears(-personAge))
             {

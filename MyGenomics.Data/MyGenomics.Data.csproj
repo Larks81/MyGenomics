@@ -53,10 +53,6 @@
     <Compile Include="Migrations\201503081733000_initial.Designer.cs">
       <DependentUpon>201503081733000_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503131944543_patch1.cs" />
-    <Compile Include="Migrations\201503131944543_patch1.Designer.cs">
-      <DependentUpon>201503131944543_patch1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,9 +65,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201503081733000_initial.resx">
       <DependentUpon>201503081733000_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503131944543_patch1.resx">
-      <DependentUpon>201503131944543_patch1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

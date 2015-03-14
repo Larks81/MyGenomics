@@ -10,8 +10,7 @@ namespace MyGenomics.DomainModel
     {                
         public int QuestionnaireId { get; set; }
         public List<PersonGivenAnswer> GivenAnswers { get; set; }
-        public Person Person { get; set; }
-        public int PersonId { get; set; }      
+        public Person Person { get; set; }                
     }
     
 }

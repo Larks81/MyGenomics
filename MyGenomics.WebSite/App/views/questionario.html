@@ -16,76 +16,99 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Questionario GenoTest</div>
                 <div class="panel-body" style="padding-left: 25px;">
-                    <h3>Generalita</h3>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="tbFirstName">Nome</label><br />
-                            <input id="tbFirstName" style="width:200px;" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.FirstName" />
-                        </div>
-                        <div class="form-group">
-                            <label for="tbLastName">Cognome</label><br />
-                            <input id="tbLastName" style="width:190px;"  class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.LastName" />
-                        </div>
-                        <div class="form-group">
-                            <label for="cbGender">Sesso <a style="color:Red">*</a></label><br />
-                            <select id="cbGender" class="form-control" ng-options="gender.id as gender.label for gender in Genders" ng-model="PersonQuestionnaireToFill.Person.Gender" />                                
-                        </div>
-                    </form>
-                    <br />
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="tbCity">Città di Residenza</label><br />
-                            <input id="tbCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.City" />
-                        </div>
-                        <div class="form-group">
-                            <label for="tbAddress">Indirizzo</label><br />
-                            <input style="width:310px;" id="tbAddress" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Address" />
-                        </div>
-                    </form>
-                    <br />
-                    <form class="form-inline">
-                        <div class="form-group" style="width:200px;">
-                            <label for="tbBirthDate">Data di nascita<a style="color:Red">*</a></label>
-                            <!--<input ng- id="tbBirthDate" type="text" ng-click="open($event)" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="PersonQuestionnaireToFill.Person.BirthDate" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
-                            
-                            <input type="date" id="exampleInput" name="input" ng-model="PersonQuestionnaireToFill.Person.BirthDate" placeholder="yyyy-MM-dd" class="form-control" required />
-                            
-                                <!--<input type="date" id="tbBirthDate" name="tbBirthDate"
-               class="form-control" data-datepicker-popup="MM/dd/yyyy"
-               ng-model="dataff" data-is-open="opened"
-               data-show-weeks="false" required />
+                    
+                    <div class="row">
+                        <div class="col-md-7">
+                            <fieldset>
+                                <legend>Generalità</legend>
 
-            -->
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tbFirstName">Nome</label><br />
+                                        <input id="tbFirstName" style="width:200px;" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.FirstName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tbLastName">Cognome</label><br />
+                                        <input id="tbLastName" style="width:190px;" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.LastName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cbGender">Sesso <a style="color:Red">*</a></label><br />
+                                        <select id="cbGender" class="form-control" ng-options="gender.id as gender.label for gender in Genders" ng-model="PersonQuestionnaireToFill.Person.Gender" />
+                                    </div>
+                                </form>
+                                <br />
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tbCity">Città di Residenza</label><br />
+                                        <input id="tbCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.City" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tbAddress">Indirizzo</label><br />
+                                        <input style="width:310px;" id="tbAddress" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Address" />
+                                    </div>
+                                </form>
+                                <br />
+                                <form class="form-inline">
+                                    <div class="form-group" style="width:200px;">
+                                        <label for="tbBirthDate">Data di nascita<a style="color:Red">*</a></label>
+                                        <input type="date" id="exampleInput" name="input" ng-model="PersonQuestionnaireToFill.Person.BirthDate" placeholder="yyyy-MM-dd" class="form-control" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tbBirthCity">Città di nascita</label><br />
+                                        <input style="width:305px;" id="tbBirthCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.BirthCity" />
+                                    </div>
+                                </form>
+                                <br />
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tbPhoneNumber">Numero di telefono</label><br />
+                                        <input id="tbPhoneNumber" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PhoneNumber" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tbEmail">Email <a style="color:Red">*</a></label><br />
+                                        <input style="width:310px;" id="tbEmail" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Email" />
+                                    </div>
+                                </form>
+                                <br />
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tbPersonalDoctor">Medico curante</label><br />
+                                        <input style="width:510px;" id="tbPersonalDoctor" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PersonalDoctor" />
+                                    </div>
+                                </form>
+                                <label style="color:Red;">{{PersonErrorText}}</label>                                
+                                <br />
+                                <br />
+                                <input class="btn btn-primary btn-lg" type="submit" value="Continua" style="margin:0 auto;" ng-click="validatePerson(PersonQuestionnaireToFill.Person)" />
 
+                            </fieldset>
+                        </div>
+                        <div class="col-md-5">
+                            <fieldset>
+                                <legend>Sei già nostro cliente?</legend>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tbUsername">UserName</label><br />
+                                        <input id="tbUsername" style="width:300px;" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.UserName" />
+                                    </div>
+                                </form>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="tbPassword">Password</label><br />
+                                        <input id="tbPassword" style="width:300px;" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Password" />
+                                    </div>
+                                </form>   
+                                <label style="color:Red;">{{PersonLoginErrorText}}</label>                                 
+                                <br />
+                                <br />
+                                <input class="btn btn-primary btn-lg" type="submit" value="Continua" style="margin:0 auto;" ng-click="validateLogin(PersonQuestionnaireToFill.Person)" />
 
-                            </div>
-                        <div class="form-group">
-                            <label for="tbBirthCity">Città di nascita</label><br />
-                            <input style="width:305px;" id="tbBirthCity" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.BirthCity" />
+                            </fieldset>
                         </div>
-                    </form>
-                    <br />
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="tbPhoneNumber">Numero di telefono</label><br />
-                            <input id="tbPhoneNumber" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PhoneNumber" />
-                        </div>
-                        <div class="form-group">
-                            <label for="tbEmail">Email <a style="color:Red">*</a></label><br />
-                            <input style="width:310px;" id="tbEmail" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Email" />
-                        </div>
-                    </form>
-                    <br />
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="tbPersonalDoctor">Medico curante</label><br />
-                            <input style="width:510px;" id="tbPersonalDoctor" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.PersonalDoctor" />
-                        </div>
-                    </form>
-                    <label style="color:Red;">{{PersonErrorText}}</label>
-                    <br />
-                    <br />
-                    <input class="btn btn-primary btn-lg" type="submit" value="Continua" style="margin:0 auto;" ng-click="validatePerson(PersonQuestionnaireToFill.Person)" />
+                    </div>
+
+                    
+                    
                 </div>
             </div>
         </wz-step>

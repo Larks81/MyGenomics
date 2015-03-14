@@ -5,7 +5,7 @@ using MyGenomics.Services;
 
 namespace MyGenomics.Controllers
 {
-    public class PersonsController : ApiController
+    public class PersonController : ApiController
     {
         private readonly PersonsService _personService = new PersonsService();
         // GET api/pesrons
@@ -15,9 +15,9 @@ namespace MyGenomics.Controllers
         }
 
         // GET api/pesrons/5
-        public string Get(int id)
+        public Person Get(string username, string password)
         {
-            return null;
+            return _personService.GetPersonByLogin(username, password);
         }
 
         // POST api/pesrons

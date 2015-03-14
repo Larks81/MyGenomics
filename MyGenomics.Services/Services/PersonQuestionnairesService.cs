@@ -40,15 +40,25 @@ namespace MyGenomics.Services
         public int Insert(SubmitPersonQuestionnaire personQuestionnaire)
         {
             var personQuestionnaireToInsert = new DataModel.PersonQuestionnaire();
-            var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
-            if (personType != null)
+            var personTypeId=0;
+
+            if (personQuestionnaire.PersonId > 0)
             {
-                personQuestionnaire.Person.PersonTypeId = personType.Id;
+                personTypeId = _personService.Get(personQuestionnaire.PersonId).PersonTypeId;
             }
-            
+            else
+            {
+                var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
+                if (personType != null)
+                {
+                    personQuestionnaire.Person.PersonTypeId = personType.Id;
+                    personTypeId = personType.Id;
+                }
+            }
+
             personQuestionnaireToInsert = Mapper.Map<DomainModel.SubmitPersonQuestionnaire, DataModel.PersonQuestionnaire>(personQuestionnaire);
-            personQuestionnaireToInsert.CreatedDate = DateTime.Now;           
-            personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert);
+            personQuestionnaireToInsert.CreatedDate = DateTime.Now;
+            personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
 
             using (var context = new MyGenomicsContext())
             {
@@ -58,10 +68,9 @@ namespace MyGenomics.Services
             }            
         }
 
-        private List<DataModel.QuestionnaireResult> CalculateQuestionnaireResult(DataModel.PersonQuestionnaire personQuestionnaire)
+        private List<DataModel.QuestionnaireResult> CalculateQuestionnaireResult(DataModel.PersonQuestionnaire personQuestionnaire, int personTypeId)
         {
-            var questionnaireResult = new List<DataModel.QuestionnaireResult>();
-            int personTypeId = personQuestionnaire.Person.PersonTypeId;
+            var questionnaireResult = new List<DataModel.QuestionnaireResult>();            
             var productcategories = _questionnairesService.GetProductCategories();
 
             foreach (var productcategory in productcategories)

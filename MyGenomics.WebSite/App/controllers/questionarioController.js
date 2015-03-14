@@ -1,6 +1,6 @@
 ﻿angular.module('MyGenomicsApp')
-.controller('questionarioController', ['$scope', 'Questionnaire','PersonQuestionnaire','WizardHandler',
-    function ($scope, Questionnaire, PersonQuestionnaire, WizardHandler) {
+.controller('questionarioController', ['$scope', 'Questionnaire','PersonQuestionnaire','Person','WizardHandler',
+    function ($scope, Questionnaire, PersonQuestionnaire,Person, WizardHandler) {
 
         $scope.Questionnaires = null;
         $scope.SelectedQuestionnaire = null;
@@ -9,6 +9,7 @@
         $scope.TotStep = null;
         $scope.ReadyToLoad = false;
         $scope.PersonErrorText = "";
+        $scope.PersonLoginErrorText = "";
         $scope.QuestionnaireFinished = false;
         $scope.PersonQuestionnaireCalculated = false;
 
@@ -35,9 +36,7 @@
         };
 
         $scope.buildPersonQuestionnaire = function (questionnaire) {
-            //questionnaire.Person = new Object();
-            //questionnaire.Person.BirthDate = new Date('2014-10-07');
-
+            
             for (var cat = 0; cat < questionnaire.QuestionsCategories.length; cat++) {
                 for (var quest = 0; quest < questionnaire.QuestionsCategories[cat].Questions.length; quest++) {
                     questionnaire.QuestionsCategories[cat].Questions[quest].GivenAnswerId = 0;
@@ -56,7 +55,13 @@
             var personQuestionnaire = new PersonQuestionnaire();
             questionnaire = $scope.PersonQuestionnaireToFill;
             personQuestionnaire.QuestionnaireId = questionnaire.Id;
-            personQuestionnaire.Person = questionnaire.Person;            
+
+            if (questionnaire.PersonId > 0) {
+                personQuestionnaire.PersonId = questionnaire.PersonId;
+            } else {
+                personQuestionnaire.Person = questionnaire.Person;
+            }
+                        
             personQuestionnaire.GivenAnswers = new Array();
             
             var nQuestion = 0;
@@ -90,6 +95,10 @@
             return PersonQuestionnaire.get({id : id}).$promise;
         };
 
+        $scope.makeLogin = function (username,password) {
+            return Person.login({ username: username, password: password }).$promise;
+        };
+
         //--------------------------------------------------------------------
         //--------------Validation functions----------------------------------
         //--------------------------------------------------------------------
@@ -113,17 +122,10 @@
 
             var fieldInvalid = false;
             
-            if ((typeof (person) === "undefined") ||
-                //(person.FirstName == "" || typeof (person.FirstName) === "undefined") ||
-                //(person.LastName == "" || typeof (person.LastName) === "undefined") ||
-                //(person.City == "" || typeof (person.City) === "undefined") ||
-                //(person.Address == "" || typeof (person.Address) === "undefined") ||
+            if ((typeof (person) === "undefined") ||                
                 (person.BirthDate == "" || typeof (person.BirthDate) === "undefined" || $('#tbBirthDate').$invalid) ||
-                //(person.BirthCity == "" || typeof (person.BirthCity) === "undefined") ||
-                //(person.PhoneNumber == "" || typeof (person.PhoneNumber) === "undefined") ||
                 (person.Email == "" || typeof (person.Email) === "undefined") ||
-                (person.Gender == "" || typeof (person.Gender) === "undefined"))
-                //(person.PersonalDoctor == "" || typeof (person.PersonalDoctor) === "undefined"))
+                (person.Gender == "" || typeof (person.Gender) === "undefined"))               
             {
                 fieldInvalid = true;                
             }
@@ -136,36 +138,34 @@
             }
         };
 
-        //--------------------------------------------------------------------
-        //--------------Datepicker functions----------------------------------
-        //--------------------------------------------------------------------
+        $scope.validateLogin = function (person) {
 
-        //$scope.clear = function () {
-        //    $scope.dt = null;
-        //};
+            var fieldInvalid = false;
 
-        //// Disable weekend selection
-        //$scope.disabled = function (date, mode) {
-        //    return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        //};
+            if ((typeof (person) === "undefined") ||                
+                (person.UserName == "" || typeof (person.UserName) === "undefined") ||
+                (person.Password == "" || typeof (person.Password) === "undefined"))                
+            {
+                fieldInvalid = true;
+            }
 
-        //$scope.toggleMin = function () {
-        //    $scope.minDate = $scope.minDate ? null : new Date();
-        //};
-        //$scope.toggleMin();
-
-        //$scope.open = function ($event) {
-        //    $event.preventDefault();
-        //    $event.stopPropagation();
-        //    $scope.opened = true;
-        //    setTimeout(function() {
-        //    $scope.opened = false;
-        //}, 10);
-        //};
-
-        //$scope.dateOptions = {
-        //    formatYear: 'yy',
-        //    startingDay: 1
-        //};        
+            if (fieldInvalid == false) {
+                $scope.makeLogin(person.UserName, person.Password)
+                    .then(function (result) {
+                        if (result.Id != "" && result.Id > 0) {
+                            $scope.PersonQuestionnaireToFill.PersonId = result.Id;
+                            WizardHandler.wizard().next();
+                        } else {
+                            $scope.PersonLoginErrorText = "* Login non valida!";
+                        }
+                        
+                    }, function (reason) {
+                        $scope.PersonLoginErrorText = "* Login non valida!";
+                    });
+            } else {
+                $scope.PersonLoginErrorText = "* Login non valida!";
+            }
+            
+        };
 
     }]);

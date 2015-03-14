@@ -21,6 +21,8 @@ namespace MyGenomics.DataModel
         public string PersonalDoctor { get; set; }
         public PersonType PersonType { get; set; }
         public int PersonTypeId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
 
     }
 }

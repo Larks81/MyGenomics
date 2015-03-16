@@ -85,14 +85,76 @@ namespace MyGenomics.Services
         {
             MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
 
-            string sugarToken = sugarClient.Authenticate();
-            var crmContacts = sugarClient.GetContacts(sugarToken);
+            string sugarSession = sugarClient.Authenticate();
+            var crmContacts = sugarClient.GetContacts(sugarSession);
 
+            
             using (var context = new MyGenomicsContext())
             {
+                // Faccio la migrazione degli utenti non presenti
                 context.People.AddRange(crmContacts.Where(p => !context.People.Any(c => c.UserName == p.UserName)));
                 context.SaveChanges();
             }
+
+            // TO DO: Allineare eventuali modifiche (es. pwd)?
+
+        }
+
+        public DomainModel.Person AuthenticateInCrm(string username, string password)
+        {
+            // Prima cerco se la persona è già presente a DB
+            DomainModel.Person result = GetPersonByLogin(username, password);
+            if (result == null)
+            {
+                MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
+
+                string sugarSession = sugarClient.Authenticate();
+                var crmContact = sugarClient.GetContact(sugarSession, sugarSession);
+
+
+                if (crmContact.UserName == username && crmContact.Password == password)
+                {
+                    using (var context = new MyGenomicsContext())
+                    {
+                        // Se l'utente non è presente, lo aggiungo prima di tornare l'anagrafica
+                        if (!context.People.Any(p => p.UserName == username))
+                        {
+                            context.People.Add(crmContact);
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            // l'utente è presente ma la pwd è stata modificata, lo leggo e lo allineo 
+                            UpdatePerson(context.People.First(p => p.UserName == username), crmContact);
+                            context.SaveChanges();
+                        }
+                    }
+
+                    if (crmContact != null)
+                    {
+                        return Mapper.Map<DataModel.Person, DomainModel.Person>(crmContact);
+                    }
+                }
+            }
+            return result;
+        }
+
+        private void UpdatePerson(Person contextPerson, Person crmContact)
+        {
+            // Allinea tutto tranne UserName e Id
+            contextPerson.Address = crmContact.Address;
+            contextPerson.BirthCity = crmContact.BirthCity;
+            contextPerson.BirthDate = crmContact.BirthDate;
+            contextPerson.City = crmContact.City;
+            contextPerson.Email = crmContact.Email;
+            contextPerson.FirstName = crmContact.FirstName;
+            contextPerson.Gender = crmContact.Gender;
+            contextPerson.LastName = crmContact.LastName;
+            contextPerson.Password = crmContact.Password;
+            contextPerson.PersonalDoctor = crmContact.PersonalDoctor;
+            contextPerson.PersonType = crmContact.PersonType;
+            contextPerson.PersonTypeId = crmContact.PersonTypeId;
+            contextPerson.PhoneNumber = crmContact.PhoneNumber;
         }
     }
 }

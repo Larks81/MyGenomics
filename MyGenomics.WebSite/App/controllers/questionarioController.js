@@ -55,12 +55,9 @@
             var personQuestionnaire = new PersonQuestionnaire();
             questionnaire = $scope.PersonQuestionnaireToFill;
             personQuestionnaire.QuestionnaireId = questionnaire.Id;
-
-            if (questionnaire.PersonId > 0) {
-                personQuestionnaire.PersonId = questionnaire.PersonId;
-            } else {
-                personQuestionnaire.Person = questionnaire.Person;
-            }
+            
+            personQuestionnaire.PersonId = questionnaire.PersonId;
+            personQuestionnaire.Person = questionnaire.Person;
                         
             personQuestionnaire.GivenAnswers = new Array();
             
@@ -154,6 +151,7 @@
                     .then(function (result) {
                         if (result.Id != "" && result.Id > 0) {
                             $scope.PersonQuestionnaireToFill.PersonId = result.Id;
+                            $scope.PersonQuestionnaireToFill.Person = result;
                             WizardHandler.wizard().next();
                         } else {
                             $scope.PersonLoginErrorText = "* Login non valida!";
@@ -167,5 +165,10 @@
             }
             
         };
+
+        $scope.continueWithoutLogin = function() {
+            WizardHandler.wizard().next();
+        };
+
 
     }]);

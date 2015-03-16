@@ -60,8 +60,17 @@ namespace MyGenomics.Services
             personQuestionnaireToInsert.CreatedDate = DateTime.Now;
             personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
 
+
+
             using (var context = new MyGenomicsContext())
             {
+                if (personQuestionnaireToInsert.PersonId > 0 &&
+                    personQuestionnaireToInsert.Person.Id == personQuestionnaireToInsert.PersonId)
+                {
+                    context.People.Attach(personQuestionnaireToInsert.Person);
+                    personQuestionnaireToInsert.Person = null;
+                }
+               
                 context.PersonQuestionnaires.Add(personQuestionnaireToInsert);
                 context.SaveChanges();
                 return personQuestionnaireToInsert.Id;

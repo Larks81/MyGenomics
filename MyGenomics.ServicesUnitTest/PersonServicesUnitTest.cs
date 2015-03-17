@@ -51,10 +51,42 @@ namespace MyGenomics.ServicesUnitTest
                         .ToList()
                         .ForEach(c => service.Remove(c.Id));
                 }
-
             }
+        }
 
+        [TestMethod]
+        public void AuthenticateInCrm()
+        {
+            Person dbContact = null;
+            Person crmContact = null;
 
+            BaseDataService.InitializeServices();
+            PersonsService service = new PersonsService();
+
+            try
+            {
+                string userName = "demo";
+                string pwd = "demo";
+                // Verifico se il contatto è stato trovato
+                crmContact = service.AuthenticateInCrm(userName, pwd);
+                Assert.IsTrue(crmContact != null, "");
+
+                // Verifico che il contatto sia stato aggiunto a DB
+                dbContact = service.GetPersonByLogin(userName, pwd);
+                Assert.IsTrue(dbContact != null, "");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Test fallito a causa di una eccezione:" + Environment.NewLine + e.Message + Environment.NewLine + e.InnerException);
+            }
+            finally
+            {
+                // Perform the test clean up
+                if (dbContact != null && crmContact != null)
+                {
+                    service.Remove(dbContact.Id);
+                }
+            }
 
         }
     }

@@ -145,7 +145,7 @@ namespace MyGenomics.Services
                 MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
 
                 string sugarSession = sugarClient.Authenticate();
-                var crmContact = sugarClient.GetContact(sugarSession, sugarSession);
+                var crmContact = sugarClient.GetContact(username, sugarSession);
 
 
                 if (crmContact.UserName == username && crmContact.Password == password)
@@ -155,6 +155,8 @@ namespace MyGenomics.Services
                         // Se l'utente non è presente, lo aggiungo prima di tornare l'anagrafica
                         if (!context.People.Any(p => p.UserName == username))
                         {
+                            // Se aggiungo l'utente lo salvo con la pwd Criptata
+                            crmContact.Password = CryptPassword(password);
                             context.People.Add(crmContact);
                             context.SaveChanges();
                         }

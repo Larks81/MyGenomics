@@ -62,7 +62,7 @@ namespace MyGenomics.Data.SugarCRM
             var json = _serializer.Serialize(new
             {
                 session = sessionId,
-                module_name = "contacts",
+                module_name = "Contacts",
                 query = "area_riservata_uid_c = '" + userName + "'",
                 order_by = "",
                 offset = "0",
@@ -98,7 +98,7 @@ namespace MyGenomics.Data.SugarCRM
             var json = _serializer.Serialize(new
             {
                 session = sessionId,
-                module_name = "contacts",
+                module_name = "Contacts",
                 order_by = "",
                 offset = "0",
                 select_fields = "",
@@ -132,6 +132,10 @@ namespace MyGenomics.Data.SugarCRM
 
         private Person MapContact(dynamic item)
         {
+            DateTime birthDate;
+            if (!DateTime.TryParse(item["birthdate"]["value"].ToString(), out birthDate))
+                birthDate = new DateTime(1900, 1, 1);
+
             return new Person()
             {
                 //alt_address_city
@@ -173,7 +177,7 @@ namespace MyGenomics.Data.SugarCRM
 
                 Address = item["primary_address_street"]["value"],
                 //BirthCity = 
-                BirthDate = item["birthdate"]["value"],
+                BirthDate = birthDate,
                 City = item["primary_address_city"]["value"],
                 Email = item["email1"]["value"],
                 FirstName = item["first_name"]["value"],

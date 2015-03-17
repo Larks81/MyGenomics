@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201503131944543_patch1.Designer.cs">
       <DependentUpon>201503131944543_patch1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503171217149_pathPTNull.cs" />
+    <Compile Include="Migrations\201503171217149_pathPTNull.Designer.cs">
+      <DependentUpon>201503171217149_pathPTNull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -74,6 +78,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503131944543_patch1.resx">
       <DependentUpon>201503131944543_patch1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503171217149_pathPTNull.resx">
+      <DependentUpon>201503171217149_pathPTNull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -47,6 +47,31 @@ namespace MyGenomics.Services
             return null;
         }
 
+        public List<DomainModel.Person> GetAll()
+        {
+            List<DomainModel.Person> result = new List<DomainModel.Person>();
+            using (var context = new MyGenomicsContext())
+            {
+                context.People
+                    .ToList()
+                    .ForEach(p => result.Add(Mapper.Map<DataModel.Person, DomainModel.Person>(p)));
+            }
+            return result;
+        }
+
+        public void Remove(int id)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                var personToRemove = context.People.First(p => p.Id == id );
+                if (personToRemove != null)
+                {
+                    context.People.Remove(personToRemove);
+                    context.SaveChanges();
+                }
+            }
+        }
+
         private string CryptPassword(string password)
         {
             return password;
@@ -88,7 +113,6 @@ namespace MyGenomics.Services
             string sugarSession = sugarClient.Authenticate();
             var crmContacts = sugarClient.GetContacts(sugarSession);
 
-            
             using (var context = new MyGenomicsContext())
             {
                 // Faccio la migrazione degli utenti non presenti
@@ -97,7 +121,19 @@ namespace MyGenomics.Services
             }
 
             // TO DO: Allineare eventuali modifiche (es. pwd)?
+        }
 
+        public List<DomainModel.Person> GetAllCrmContacts()
+        {
+            List<DomainModel.Person> result = new List<DomainModel.Person>();
+
+            MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
+
+            string sugarSession = sugarClient.Authenticate();
+            sugarClient.GetContacts(sugarSession)
+                .ForEach(p => result.Add(Mapper.Map<DataModel.Person, DomainModel.Person>(p)));
+
+            return result;
         }
 
         public DomainModel.Person AuthenticateInCrm(string username, string password)
@@ -150,7 +186,7 @@ namespace MyGenomics.Services
             contextPerson.FirstName = crmContact.FirstName;
             contextPerson.Gender = crmContact.Gender;
             contextPerson.LastName = crmContact.LastName;
-            contextPerson.Password = crmContact.Password;
+            contextPerson.Password = CryptPassword(crmContact.Password);
             contextPerson.PersonalDoctor = crmContact.PersonalDoctor;
             contextPerson.PersonType = crmContact.PersonType;
             contextPerson.PersonTypeId = crmContact.PersonTypeId;

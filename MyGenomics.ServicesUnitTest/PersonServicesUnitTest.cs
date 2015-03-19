@@ -69,11 +69,11 @@ namespace MyGenomics.ServicesUnitTest
                 string pwd = "demo";
                 // Verifico se il contatto è stato trovato
                 crmContact = service.AuthenticateInCrm(userName, pwd);
-                Assert.IsTrue(crmContact != null, "");
+                Assert.IsTrue(crmContact != null, "Caricamento contatto dal CRM");
 
                 // Verifico che il contatto sia stato aggiunto a DB
                 dbContact = service.GetPersonByLogin(userName, pwd);
-                Assert.IsTrue(dbContact != null, "");
+                Assert.IsTrue(dbContact != null, "Aggiunta contatto nel DB");
             }
             catch (Exception e)
             {
@@ -88,6 +88,58 @@ namespace MyGenomics.ServicesUnitTest
                 }
             }
 
+        }
+
+
+        [TestMethod]
+        public void UpdateCrmContact()
+        {
+            Person crmContact = null;
+            Person updContact = null;
+            string oldEmail = null;
+            string newEmail = "demo.demo@demo.com";
+            string userName = "demo";
+
+            BaseDataService.InitializeServices();
+            PersonsService service = new PersonsService();
+
+            try
+            {
+                // Leggo un contatto che so esistere nel CRM
+                crmContact = service.GetContactFromCrm(userName);
+                Assert.IsTrue(crmContact != null, "Caricamento contatto dal CRM");
+
+                // Modifico una voce del contatto
+                oldEmail = crmContact.Email;
+                crmContact.Email = newEmail;
+                
+                // Faccio l'update sul CRM del nuovo contatto
+                service.UpdateCrmContact(crmContact);
+
+                // Rileggo il contatto e verifico che sia stata cambiata l'email
+                updContact = service.GetContactFromCrm(userName);
+                Assert.IsTrue(updContact.Email == newEmail, "Verifica email");
+
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Test fallito a causa di una eccezione:" + Environment.NewLine + e.Message + Environment.NewLine + e.InnerException);
+            }
+            finally
+            {
+                if (updContact != null)
+                {
+                    // Resetto l'email a crm al valore precedente
+                    updContact.Email = oldEmail;
+                    service.UpdateCrmContact(updContact);
+                }
+                else if (crmContact != null && oldEmail != null)
+                {
+                    // Resetto l'email a crm al valore precedente
+                    crmContact.Email = oldEmail;
+                    service.UpdateCrmContact(crmContact);
+                }
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Security.Cryptography;
 using MyGenomics.Data.Context;
+using SugarCRM = MyGenomics.Data.SugarCRM;
 
 namespace MyGenomics.Data.SugarCRM
 {
@@ -125,6 +126,101 @@ namespace MyGenomics.Data.SugarCRM
             return result;
         }
 
+
+        public void UpdateExistingContact(Person contact, string sessionId)
+        {
+            string userId = null;
+
+            // Occorre caricare il contatto con username specificato per avere l'Id di Sugar
+            Dictionary<string, string> user = new Dictionary<string, string>();
+
+            // Leggo il contatto per avere l'ID
+            var json = _serializer.Serialize(new
+            {
+                session = sessionId,
+                module_name = "Contacts",
+                query = "area_riservata_uid_c = '" + contact.UserName + "'",
+                order_by = "",
+                offset = "0",
+                select_fields = "",
+                link_name_to_fields_array = "",
+                max_results = "100",
+                deleted = 0
+            });
+
+            var values = new NameValueCollection();
+            values = new NameValueCollection();
+            values["method"] = "get_entry_list";
+            values["input_type"] = "json";
+            values["response_type"] = "json";
+            values["rest_data"] = json;
+
+            var response = _client.UploadValues(_sugarUrl, values);
+            var responseString = Encoding.Default.GetString(response);
+
+            var contacts = _serializer.Deserialize<Dictionary<string, dynamic>>(responseString);
+            if (contacts["result_count"] > 0)
+            {
+                userId = contacts["entry_list"][0]["name_value_list"]["id"]["value"];
+            }
+
+            if (userId == null)
+
+                throw new Exception("Existing contact: " + contact.UserName + " not found in CRM");
+
+            // update
+            json = _serializer.Serialize(new
+            {
+                session = sessionId,
+                module_name = "Contacts",
+                name_value_list = new
+                {
+                    //Address = item["primary_address_street"]["value"],
+                    ////BirthCity = 
+                    //BirthDate = birthDate,
+                    //City = item["primary_address_city"]["value"],
+                    //Email = item["email1"]["value"],
+                    //FirstName = item["first_name"]["value"],
+                    ////Gender
+                    //LastName = item["last_name"]["value"],
+                    //Password = item["area_riservata_psw_c"]["value"],
+                    ////PersonalDoctor = 
+                    ////PersonType =
+                    //PhoneNumber = item["phone_mobile"]["value"],
+                    //UserName = item["area_riservata_uid_c"]["value"],
+
+                    id = userId,
+                    primary_address_street = contact.Address,
+                    birthdate = contact.BirthDate.Year + "-"
+                        + contact.BirthDate.Month + "-"
+                        + contact.BirthDate.Day,
+                    email1 = contact.Email,
+                    first_name = contact.FirstName,
+                    last_name = contact.LastName,
+                    // area_riservata_psw_c  - per ora on posso modificare la pwd
+                    phone_mobile = contact.PhoneNumber,
+                }
+            });
+
+
+            values = new NameValueCollection();
+            values["method"] = "set_entry";
+            values["input_type"] = "json";
+            values["response_type"] = "json";
+            values["rest_data"] = json;
+
+            response = _client.UploadValues(_sugarUrl, values);
+            responseString = Encoding.Default.GetString(response);
+            var result = _serializer.Deserialize<Dictionary<string, dynamic>>(responseString);
+            // TO DO: Check if there was an error    
+        }
+
+        public void SetQuestionnaireResult(Person contact, List<ProductCategory> recommendedAnalysis, string sessionId)
+        {
+            // TO DO: Da implementare sulla base di ciò che deve essere salvato nel CRM
+        }
+
+
         #endregion
 
 
@@ -133,7 +229,15 @@ namespace MyGenomics.Data.SugarCRM
         private Person MapContact(dynamic item)
         {
             DateTime birthDate;
-            if (!DateTime.TryParse(item["birthdate"]["value"].ToString(), out birthDate))
+
+            // Conversione data
+            if (item["birthdate"]["value"] is string &&
+                !String.IsNullOrEmpty(item["birthdate"]["value"]))
+            {
+                string[] date = item["birthdate"]["value"].Split('-');
+                birthDate = new DateTime(Convert.ToInt32(date[0]), Convert.ToInt32(date[1]), Convert.ToInt32(date[2]));
+            }
+            else
                 birthDate = new DateTime(1900, 1, 1);
 
             return new Person()

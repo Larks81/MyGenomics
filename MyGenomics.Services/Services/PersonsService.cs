@@ -6,11 +6,14 @@ using MyGenomics.Data.Context;
 using MyGenomics.DataModel;
 using MyGenomics.DomainModel;
 using Person = MyGenomics.DataModel.Person;
+using SugarCRM = MyGenomics.Data.SugarCRM;
 
 namespace MyGenomics.Services
 {
     public class PersonsService
     {
+        #region EF Services
+        
         public DomainModel.Person GetPersonByLogin(string username, string password)
         {
             Person dataPerson;
@@ -59,24 +62,6 @@ namespace MyGenomics.Services
             return result;
         }
 
-        public void Remove(int id)
-        {
-            using (var context = new MyGenomicsContext())
-            {
-                var personToRemove = context.People.First(p => p.Id == id );
-                if (personToRemove != null)
-                {
-                    context.People.Remove(personToRemove);
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        private string CryptPassword(string password)
-        {
-            return password;
-        }
-
         public DomainModel.PersonType GetPersonTypeByPerson(DomainModel.Person person)
         {
             var retPersonType = new DomainModel.PersonType();
@@ -106,11 +91,29 @@ namespace MyGenomics.Services
             return retPersonType;
         }
 
+        public void Remove(int id)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                var personToRemove = context.People.First(p => p.Id == id);
+                if (personToRemove != null)
+                {
+                    context.People.Remove(personToRemove);
+                    context.SaveChanges();
+                }
+            }
+        } 
+        
+        #endregion
+        
+
+        #region CRM Services
+
         public void MigrateCrmContacts()
         {
             MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
-
             string sugarSession = sugarClient.Authenticate();
+
             var crmContacts = sugarClient.GetContacts(sugarSession);
 
             using (var context = new MyGenomicsContext())
@@ -134,6 +137,14 @@ namespace MyGenomics.Services
                 .ForEach(p => result.Add(Mapper.Map<DataModel.Person, DomainModel.Person>(p)));
 
             return result;
+        }
+
+        public DomainModel.Person GetContactFromCrm(string username)
+        {
+            SugarCRM.Client sugarClient = new SugarCRM.Client();
+            string sugarSession = sugarClient.Authenticate();
+
+            return Mapper.Map<Person, DomainModel.Person>(sugarClient.GetContact(username, sugarSession));
         }
 
         public DomainModel.Person AuthenticateInCrm(string username, string password)
@@ -177,6 +188,23 @@ namespace MyGenomics.Services
             return result;
         }
 
+        public void UpdateCrmContact(DomainModel.Person person)
+        {
+            SugarCRM.Client sugarClient = new SugarCRM.Client();
+            string sugarSession = sugarClient.Authenticate();
+
+            sugarClient.UpdateExistingContact(
+                    Mapper.Map<DomainModel.Person, Person>(person),
+                    sugarSession);
+
+
+        }
+
+        #endregion
+
+
+        #region Private Methods
+
         private void UpdatePerson(Person contextPerson, Person crmContact)
         {
             // Allinea tutto tranne UserName e Id
@@ -194,5 +222,12 @@ namespace MyGenomics.Services
             contextPerson.PersonTypeId = crmContact.PersonTypeId;
             contextPerson.PhoneNumber = crmContact.PhoneNumber;
         }
+
+        private string CryptPassword(string password)
+        {
+            return password;
+        } 
+
+        #endregion
     }
 }

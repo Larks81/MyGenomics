@@ -8,6 +8,7 @@ using MyGenomics.Data.Context;
 using MyGenomics.DataModel;
 using System.Data.Entity;
 using MyGenomics.DomainModel;
+using SugarCRM = MyGenomics.Data.SugarCRM;
 
 namespace MyGenomics.Services
 {
@@ -176,6 +177,14 @@ namespace MyGenomics.Services
             strBuilder.AppendLine("</ul><br/>");
 
             return strBuilder.ToString();            
+        }
+
+        private void SetResultInCrm(DataModel.Person person, List<ProductCategory> productCategories)
+        {
+            SugarCRM.Client sugarClient = new SugarCRM.Client();
+            string sugarSession = sugarClient.Authenticate();
+
+            sugarClient.SetQuestionnaireResult(person, productCategories, sugarSession);
         }
 
     }

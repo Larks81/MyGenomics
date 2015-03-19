@@ -25,7 +25,11 @@ namespace MyGenomics.Services
 
             Mapper.CreateMap<DataModel.PersonType, DomainModel.PersonType>();
             Mapper.CreateMap<DataModel.QuestionnaireResult, DomainModel.QuestionnaireResult>()
-                .ForMember(dest => dest.ProductCategoryName, opt => opt.MapFrom(src => src.ProductCategory.Name));
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.ProductUrl, opt => opt.MapFrom(src => src.Product.UrlDetail))
+                .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.Product.Price))
+                .ForMember(dest => dest.ProductShortDescription, opt => opt.MapFrom(src => src.Product.ShortDescription))
+                .ForMember(dest => dest.ProductDescription, opt => opt.MapFrom(src => src.Product.Description));
 
             Mapper.CreateMap<DataModel.PersonAnswer, DomainModel.PersonGivenAnswer>()
             .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.Answer.Text))

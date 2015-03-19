@@ -215,7 +215,7 @@ namespace MyGenomics.Data.SugarCRM
             // TO DO: Check if there was an error    
         }
 
-        public void SetQuestionnaireResult(Person contact, List<ProductCategory> recommendedAnalysis, string sessionId)
+        public void SetQuestionnaireResult(Person contact, List<Product> recommendedAnalysis, string sessionId)
         {
             // TO DO: Da implementare sulla base di ciò che deve essere salvato nel CRM
         }

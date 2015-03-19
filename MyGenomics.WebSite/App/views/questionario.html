@@ -6,7 +6,7 @@
         text-align: left;
     }    
 </style>
-
+<button ng-click="fakeResult()"></button>
 <div ng-show="!ReadyToLoad">
     <img src="../../Content/themes/base/images/loading.gif" />
 </div>
@@ -184,19 +184,38 @@
             <img src="../../Content/themes/base/images/loading.gif" />
         </div>
         <div ng-show="PersonQuestionnaireCalculated">
-            <p>Sei stato identificato come: <b>{{PersonQuestionnaireResult.Person.PersonType.Description}}</b> </p>
-            <p><u><b>Le sue Risposte alle domande</b></u></p>
+            <p>
+                Sei stato identificato come: <b>{{PersonQuestionnaireResult.Person.PersonType.Description}}</b> <br />
+                Sulla base delle tue risposte vogliamo mostrarti i nostri prodotti con i nostri consigli
+            </p>
+            <br/>
+            <!--<p><u><b>Le sue Risposte alle domande</b></u></p>
             <ul>
                 <li ng-repeat="answer in PersonQuestionnaireResult.Answers">
                     {{answer.QuestionText}} : <b>{{answer.AnswerText}}</b> {{answer.AdditionalInfo}}
                 </li>
             </ul>
-            <br />
-            <p><u><b>Test Consigliati</b></u></p>
-            <table>
+            <br />-->
+            <!--<p><u><b>I nostri test</b></u></p>-->
+            <div class="panel panel-default" ng-repeat="result in PersonQuestionnaireResult.Results">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><b>{{result.ProductName}}</b></h2>
+                </div>
+                <div class="panel-body">
+                    <p>{{result.ProductShortDescription}}</p>                   
+                    <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>
+                    <span ng-show="result.Result>=4 && result.Result<=6" title="punteggio: {{result.Result}}" class="label label-warning">Consigliato</span>
+                    <span ng-show="result.Result>=7" title="punteggio: {{result.Result}}" class="label label-danger">Altamente consigliato</span>
+                </div>
+            </div>
+
+            
+
+            <!--<table>
                 <tr ng-repeat="result in PersonQuestionnaireResult.Results">
-                    <td style="width:100px;">
-                        <b>{{result.ProductCategoryName}}:</b>
+                    <td style="width:300px;">
+                        <h3><a ng-href="{{result.ProductUrl}}" target="_blank">{{result.ProductName}}</a>:</h3>
+                        <p>{{result.ProductShortDescription}}</p>
                     </td>
                     <td>
                         <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>
@@ -204,7 +223,7 @@
                         <span ng-show="result.Result>=7" title="punteggio: {{result.Result}}" class="label label-danger">Altamente consigliato</span>
                     </td>
                 </tr>
-            </table>
+            </table>-->
         </div>
         
     </div>

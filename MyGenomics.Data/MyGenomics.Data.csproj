@@ -50,17 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\MyGenomicsContext.cs" />
-    <Compile Include="Migrations\201503081733000_initial.cs" />
-    <Compile Include="Migrations\201503081733000_initial.Designer.cs">
-      <DependentUpon>201503081733000_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503131944543_patch1.cs" />
-    <Compile Include="Migrations\201503131944543_patch1.Designer.cs">
-      <DependentUpon>201503131944543_patch1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503171217149_pathPTNull.cs" />
-    <Compile Include="Migrations\201503171217149_pathPTNull.Designer.cs">
-      <DependentUpon>201503171217149_pathPTNull.cs</DependentUpon>
+    <Compile Include="Migrations\201503192159412_initial.cs" />
+    <Compile Include="Migrations\201503192159412_initial.Designer.cs">
+      <DependentUpon>201503192159412_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,17 +65,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503081733000_initial.resx">
-      <DependentUpon>201503081733000_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503131944543_patch1.resx">
-      <DependentUpon>201503131944543_patch1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503171217149_pathPTNull.resx">
-      <DependentUpon>201503171217149_pathPTNull.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">
       <Project>{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}</Project>
       <Name>MyGenomics.Common</Name>
@@ -92,6 +73,11 @@
       <Project>{2168d311-1d01-4b0d-9d47-6fb3b02570ed}</Project>
       <Name>MyGenomics.DataModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503192159412_initial.resx">
+      <DependentUpon>201503192159412_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

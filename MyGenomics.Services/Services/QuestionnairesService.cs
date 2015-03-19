@@ -85,11 +85,11 @@ namespace MyGenomics.Services
                 return answer;
             }
         }
-        public List<ProductCategory> GetProductCategories()
+        public List<Product> GetProducts()
         {
             using (var context = new MyGenomicsContext())
             {
-                return context.ProductCategories.ToList();                    
+                return context.Products.ToList();                    
             }
         }
 

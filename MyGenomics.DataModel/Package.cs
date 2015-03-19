@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace MyGenomics.DataModel
 {
-    public class ProductCategory : ModelBase
-    {        
+    public class Package : ModelBase
+    {
         public string Name { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

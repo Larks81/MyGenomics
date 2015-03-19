@@ -26,7 +26,7 @@ namespace MyGenomics.Services
                     .Include(i => i.Questionnaire)
                     .Include(i => i.Questionnaire.Questions.Select(q=>q.Anwers))
                     .Include(i => i.Answers)
-                    .Include(i => i.Results.Select(r=>r.ProductCategory))
+                    .Include(i => i.Results.Select(r=>r.Product))
                     .Include(i => i.Person.PersonType)
                     .FirstOrDefault(q=>q.Id==id);                
             }
@@ -42,33 +42,41 @@ namespace MyGenomics.Services
         {
             var personQuestionnaireToInsert = new DataModel.PersonQuestionnaire();
             var personTypeId=0;
+            var password = "";
 
-            if (personQuestionnaire.PersonId > 0)
+            //Prelevo la password che perderei nel caso abbia a che fare con 
+            //un utente registrato, così da poterla reimpostare
+            if (personQuestionnaireToInsert.PersonId > 0 &&
+                personQuestionnaireToInsert.Person.Id == personQuestionnaireToInsert.PersonId)
             {
-                personTypeId = _personService.Get(personQuestionnaire.PersonId).PersonTypeId;
-            }
-            else
-            {
-                var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
-                if (personType != null)
+                using (var context = new MyGenomicsContext())
                 {
-                    personQuestionnaire.Person.PersonTypeId = personType.Id;
-                    personTypeId = personType.Id;
-                }
+                    password = context.People.FirstOrDefault(p => p.Id == personQuestionnaire.Person.Id).Password;
+                }    
             }
-
+            
+            //Calcolo il personTypeId
+            var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
+            if (personType != null)
+            {
+                personQuestionnaire.Person.PersonTypeId = personType.Id;
+                personTypeId = personType.Id;
+            }
+           
+            //Rimappo in DataModel
             personQuestionnaireToInsert = Mapper.Map<DomainModel.SubmitPersonQuestionnaire, DataModel.PersonQuestionnaire>(personQuestionnaire);
             personQuestionnaireToInsert.CreatedDate = DateTime.Now;
             personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
 
-
-
             using (var context = new MyGenomicsContext())
             {
+                //Se gia presente aggiorno la persona
+                //altrimenti verra inserita nuova
                 if (personQuestionnaireToInsert.PersonId > 0 &&
                     personQuestionnaireToInsert.Person.Id == personQuestionnaireToInsert.PersonId)
                 {
-                    context.People.Attach(personQuestionnaireToInsert.Person);
+                    personQuestionnaireToInsert.Person.Password = password;
+                    context.Entry(personQuestionnaireToInsert.Person).State = EntityState.Modified;                     
                     personQuestionnaireToInsert.Person = null;
                 }
                
@@ -81,14 +89,14 @@ namespace MyGenomics.Services
         private List<DataModel.QuestionnaireResult> CalculateQuestionnaireResult(DataModel.PersonQuestionnaire personQuestionnaire, int personTypeId)
         {
             var questionnaireResult = new List<DataModel.QuestionnaireResult>();            
-            var productcategories = _questionnairesService.GetProductCategories();
+            var products = _questionnairesService.GetProducts();
 
-            foreach (var productcategory in productcategories)
+            foreach (var product in products)
             {
                 questionnaireResult.Add(
                     new DataModel.QuestionnaireResult()
                     {
-                        ProductCategoryId = productcategory.Id,
+                        ProductId = product.Id,
                         Result = 0
                     }
                 );
@@ -103,39 +111,41 @@ namespace MyGenomics.Services
                 {
                     double valueOfNumericAnswer = Convert.ToDouble(personAnswer.AdditionalInfo);
 
-                    foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductCategoryId))
+                    foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductId))
                     {
                         questionnaireResult
-                            .FirstOrDefault(qr => qr.ProductCategoryId == answerWeightsForCategory.Key)
+                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
                             .Result += answerWeightsForCategory
                             .Where(awc => valueOfNumericAnswer >= awc.FromNumericAdditionalInfo && valueOfNumericAnswer <= awc.ToNumericAdditionalInfo)
                             .Sum(aw => aw.Value);
 
                         questionnaireResult
-                            .FirstOrDefault(qr => qr.ProductCategoryId == answerWeightsForCategory.Key)
+                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
                             .NumberOfAnswer++;
                     }
                 }
                 //Text or Boolean answer
                 else
                 {
-                    foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductCategoryId))
+                    foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductId))
                     {
                         questionnaireResult
-                            .FirstOrDefault(qr => qr.ProductCategoryId == answerWeightsForCategory.Key)
+                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
                             .Result += answerWeightsForCategory.Sum(aw => aw.Value);
 
                         questionnaireResult
-                            .FirstOrDefault(qr => qr.ProductCategoryId == answerWeightsForCategory.Key)
+                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
                             .NumberOfAnswer++;
                     }
                 }
 
             }
 
-            questionnaireResult
+            questionnaireResult = questionnaireResult
                 .Where(q => q.NumberOfAnswer > 0)
-                .ToList()
+                .ToList();
+
+            questionnaireResult                
                 .ForEach(q => q.Result = q.Result / q.NumberOfAnswer);
 
             return questionnaireResult;
@@ -162,15 +172,15 @@ namespace MyGenomics.Services
             {
                 if (result.Result <= 3)
                 {
-                    strBuilder.AppendLine("<li><b>" + result.ProductCategoryName + ":</b> Non necessario</li>");
+                    strBuilder.AppendLine("<li><b>" + result.ProductName + ":</b> Non necessario</li>");
                 }
                 else if (result.Result > 3 && result.Result <= 6)
                 {
-                    strBuilder.AppendLine("<li><b>" + result.ProductCategoryName + ":</b> Consigliato</li>");
+                    strBuilder.AppendLine("<li><b>" + result.ProductName + ":</b> Consigliato</li>");
                 }
                 else
                 {
-                    strBuilder.AppendLine("<li><b>" + result.ProductCategoryName + ":</b> Altamente Consigliato</li>");
+                    strBuilder.AppendLine("<li><b>" + result.ProductName + ":</b> Altamente Consigliato</li>");
                 }
             }
 
@@ -179,7 +189,7 @@ namespace MyGenomics.Services
             return strBuilder.ToString();            
         }
 
-        private void SetResultInCrm(DataModel.Person person, List<ProductCategory> productCategories)
+        private void SetResultInCrm(DataModel.Person person, List<Product> productCategories)
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();

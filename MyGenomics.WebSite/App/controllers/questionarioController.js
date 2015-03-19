@@ -96,6 +96,16 @@
             return Person.login({ username: username, password: password }).$promise;
         };
 
+
+        $scope.fakeResult = function () {
+            $scope.getQuestionnaireResult(1)
+                .then(function (result) {
+                    $scope.PersonQuestionnaireResult = result;
+                    $scope.PersonQuestionnaireCalculated = true;
+                });
+            $scope.QuestionnaireFinished = true;
+        };
+
         //--------------------------------------------------------------------
         //--------------Validation functions----------------------------------
         //--------------------------------------------------------------------

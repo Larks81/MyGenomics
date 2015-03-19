@@ -71,15 +71,110 @@ namespace MyGenomics.Data.Migrations
                 Description = "Donna anziana (41-120)"
             });
 
-            context.ProductCategories.AddOrUpdate(new ProductCategory()
+            context.Packages.AddOrUpdate(new Package()
             {
                 Id = 1,
-                Name = "GenoTest"
+                Name = "Nutrizione e Sport",
+                Products = new List<Product>()
+                        {
+                            new Product()
+                            {
+                                    Id = 1,
+                                    Name = "Nutrigenomica",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/nutrigenomica",
+                                    Price = 400,
+                                    ShortDescription = "Nutrigenomica"                                                                 
+                            },
+                            new Product()
+                            {
+                                    Id = 2,
+                                    Name = "Sport Endurance",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/sport-endurance",
+                                    Price = 400,
+                                    ShortDescription = "Marcia, corsa, pattinaggio, ciclismo, sci di fondo ecc"
+                            },
+                            new Product()
+                            {
+                                    Id = 3,
+                                    Name = "Intolleranze e Dipendenze",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/intolleranze-e-dipendenze",
+                                    Price = 350,
+                                    ShortDescription = "Intolleranze e Dipendenze"
+                            },
+                            new Product()
+                            {
+                                    Id = 4,
+                                    Name = "Sport Potenza",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/sport-potenza",
+                                    Price = 400,
+                                    ShortDescription = "sollevamento pesi, salti e lanci dell’atletica legge ecc"
+                            },
+                            new Product()
+                            {
+                                    Id = 5,
+                                    Name = "Sport Situazione",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/sport-situazione",
+                                    Price = 400,
+                                    ShortDescription = "Calcio, pallacanestro, pallavolo, pallamano, tennis ecc"
+                            }
+                        }
             });
-            context.ProductCategories.AddOrUpdate(new ProductCategory()
+
+            context.Packages.AddOrUpdate(new Package()
             {
                 Id = 2,
-                Name = "AltroTest"
+                Name = "Medicina Personalizzata",
+                Products = new List<Product>()
+                        {
+                            new Product()
+                            {
+                                    Id = 6,
+                                    Name = "Metabolismo energetico e osseo",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/metabolismo-energetico-e-osseo",
+                                    Price = 350,
+                                    ShortDescription = "Diabete 2, iperTG, HDL/LDL, osteoporosi"                                                                 
+                            },
+                            new Product()
+                            {
+                                    Id = 7,
+                                    Name = "Alzheimer",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/alzheimer",
+                                    Price = 500,
+                                    ShortDescription = "Alzheimer"
+                            },
+                            new Product()
+                            {
+                                    Id = 8,
+                                    Name = "Oncologia: mammella",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/oncologia-mammella",
+                                    Price = 500,
+                                    ShortDescription = "Tumore alla mammella"
+                            },
+                            new Product()
+                            {
+                                    Id = 9,
+                                    Name = "Oncologia: colon-retto",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/oncologia-colon-retto",
+                                    Price = 500,
+                                    ShortDescription = "Tumore a colon-retto"
+                            },
+                            new Product()
+                            {
+                                    Id = 10,
+                                    Name = "Oncologia: prostata",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/oncologia-prostata",
+                                    Price = 500,
+                                    ShortDescription = "Tumore alla prostata"
+                            },
+                            new Product()
+                            {
+                                    Id = 10,
+                                    Name = "Parkinson",
+                                    UrlDetail = "http://www.mygenomics.eu/genotest/parkinson",
+                                    Price = 500,
+                                    ShortDescription = "Parkinson"
+                            }
+                        }
             });
 
             context.Questionnaires.AddOrUpdate(new Questionnaire()
@@ -104,25 +199,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Old Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }
@@ -135,25 +230,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Old Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }                                                                                
@@ -166,25 +261,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Old Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }                                                                         
@@ -207,25 +302,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -238,25 +333,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -269,25 +364,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -310,25 +405,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -341,25 +436,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -372,25 +467,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -413,25 +508,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -444,25 +539,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -475,25 +570,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -516,25 +611,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -547,25 +642,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -580,7 +675,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 1, //From 1
                                                                                                     ToNumericAdditionalInfo = 3, //To 3
                                                                                                     Value = 1
@@ -588,7 +683,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 4, //From 1
                                                                                                     ToNumericAdditionalInfo = 10, //To 3
                                                                                                     Value = 2
@@ -596,7 +691,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 1, //From 1
                                                                                                     ToNumericAdditionalInfo = 3, //To 3
                                                                                                     Value = 3
@@ -604,7 +699,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 4, //From 1
                                                                                                     ToNumericAdditionalInfo = 10, //To 3
                                                                                                     Value = 4
@@ -612,7 +707,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 1, //From 1
                                                                                                     ToNumericAdditionalInfo = 3, //To 3
                                                                                                     Value = 1
@@ -620,7 +715,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 4, //From 1
                                                                                                     ToNumericAdditionalInfo = 10, //To 3
                                                                                                     Value = 2
@@ -628,7 +723,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Old Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 1, //From 1
                                                                                                     ToNumericAdditionalInfo = 3, //To 3
                                                                                                     Value = 4
@@ -636,7 +731,7 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Old Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     FromNumericAdditionalInfo = 4, //From 1
                                                                                                     ToNumericAdditionalInfo = 10, //To 3
                                                                                                     Value = 5
@@ -661,25 +756,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -692,25 +787,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             }          
@@ -723,25 +818,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             },
@@ -766,25 +861,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             },
@@ -797,25 +892,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             },
@@ -828,25 +923,25 @@ namespace MyGenomics.Data.Migrations
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 1, //Young Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 1
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 2, //Old Man
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 2
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 3, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 3
                                                                                                 },
                                                                                                 new AnswerWeight()
                                                                                                 {
                                                                                                     PersonTypeId = 4, //Young Woman
-                                                                                                    ProductCategoryId = 1, //Genotest
+                                                                                                    ProductId = 1, //Genotest
                                                                                                     Value = 4
                                                                                                 }
                                                                                             },

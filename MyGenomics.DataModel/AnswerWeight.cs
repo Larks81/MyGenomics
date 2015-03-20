@@ -10,7 +10,7 @@ namespace MyGenomics.DataModel
     {        
         public PersonType PersonType { get; set; }        
         public int AnswerId { get; set; }
-        public int PersonTypeId { get; set; }
+        public int? PersonTypeId { get; set; }
         public Product Product { get; set; }
         public int ProductId { get; set; }
         public int FromNumericAdditionalInfo { get; set; }

@@ -133,19 +133,19 @@
                                 {{question.Text}}
                                 <ul>
                                     <li ng-repeat="possibleAnswer in question.Anwers">
-                                        <input type="checkbox" ng-model="question.GivenAnswerId" ng-true-value="{{possibleAnswer.Id}}" ng-false-value="null">
+                                        <input type="checkbox" ng-model="possibleAnswer.SelectedAnswer" ng-change="uncheckOthersIfNecessary(question,possibleAnswer.Id)">
                                         {{possibleAnswer.Text}}
                                         <div ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==1">
                                             <input type="text" style="width:300px;"
-                                                   ng-disabled="possibleAnswer.Id!=question.GivenAnswerId"
-                                                   ng-model="question.AdditionalInfo"
+                                                   ng-disabled="!possibleAnswer.SelectedAnswer"
+                                                   ng-model="possibleAnswer.AdditionalInfo"
                                                    ng-model-options="{ updateOn: 'blur' }" />
                                         </div>
                                         <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==2">
                                             <br />
                                             <input type="text" style="width:100px;"
-                                                   ng-disabled="possibleAnswer.Id!=question.GivenAnswerId"
-                                                   ng-model="question.AdditionalInfo"
+                                                   ng-disabled="!possibleAnswer.SelectedAnswer"
+                                                   ng-model="possibleAnswer.AdditionalInfo"
                                                    ng-model-options="{ updateOn: 'blur' }" />
                                             (da {{possibleAnswer.MinValueNumericAdditionalInfo}} a {{possibleAnswer.MaxValueNumericAdditionalInfo}})
                                         </span>
@@ -156,7 +156,7 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="submit" ng-click="validateAnswers(category)" class="btn btn-primary btn-lg" value="Continua" />
+                    <input type="submit" ng-click="validateAnswers(category.Questions)" class="btn btn-primary btn-lg" value="Continua" />
                 </div>
             </div>
         </wz-step>        

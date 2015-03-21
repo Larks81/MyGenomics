@@ -4,7 +4,10 @@
         margin-right: auto;
         width: 960px;
         text-align: left;
-    }    
+    }
+    .not-bullet {
+        list-style-type: none;        
+    }   
 </style>
 <button ng-click="fakeResult()"></button>
 <div ng-show="!ReadyToLoad">
@@ -131,9 +134,9 @@
                         <tr ng-repeat="question in category.Questions">
                             <td>
                                 {{question.Text}}
-                                <ul>
+                                <ul ng-class="{'not-bullet' : question.QuestionType==3}">
                                     <li ng-repeat="possibleAnswer in question.Anwers">
-                                        <input type="checkbox" ng-model="possibleAnswer.SelectedAnswer" ng-change="uncheckOthersIfNecessary(question,possibleAnswer.Id)">
+                                        <input type="checkbox" ng-show="question.QuestionType!=3" ng-model="possibleAnswer.SelectedAnswer" ng-change="uncheckOthersIfNecessary(question,possibleAnswer.Id)">
                                         {{possibleAnswer.Text}}
                                         <div ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==1">
                                             <input type="text" style="width:300px;"

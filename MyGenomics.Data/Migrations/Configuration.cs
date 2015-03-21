@@ -680,11 +680,12 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 5,
                                                             Text = "Soffre di qualche patologia cronica",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.MultipleNotExclusive,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
                                                                 {
-                                                                    Text = "DIABETE",
+                                                                    Text = "DIABETE",                                                                    
                                                                     AnswerWeight = new List<AnswerWeight>()
                                                                     {
                                                                         new AnswerWeight()
@@ -869,6 +870,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 6,
                                                             Text = "Assume farmaci abitualmente?",
                                                             IsRequired = true,
+                                                            QuestionType = QuestionType.MultipleExclusive,
                                                             Anwers = new List<Answer>()
                                                                      {
                                                                          new Answer()
@@ -1025,6 +1027,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 7,
                                                             Text = "Ha alcune delle seguenti problematiche",
                                                             IsRequired = true,
+                                                            QuestionType = QuestionType.MultipleNotExclusive,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1076,6 +1079,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 8,
                                                             Text = "Quanti caffè assume al giorno?",
                                                             IsRequired = true,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1108,7 +1112,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 6,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 30,
                                                                             ProductId = 1,
                                                                             Value = 8,
                                                                         }
@@ -1123,6 +1127,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 9,
                                                             Text = "Indichi la sua abitudine al fumo",
                                                             IsRequired = true,
+                                                            QuestionType = QuestionType.MultipleExclusive,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1217,6 +1222,7 @@ namespace MyGenomics.Data.Migrations
                                                             CategoryId = 5,
                                                             StepNumber = 10,
                                                             Text = "Nel caso fosse fumatore vorrebbe smettere di fumare?",
+                                                            QuestionType = QuestionType.MultipleExclusive,
                                                             IsRequired = false,
                                                             Anwers = new List<Answer>()
                                                             {
@@ -1266,6 +1272,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 11,
                                                             Text = " In una settimana tipo, quanti minuti cammina in totale, sia per lavoro che per spostamenti o momenti ricreativi (considerando solo quando cammina per almeno 10 minuti consecutivi)",
                                                             IsRequired = true,
+                                                            QuestionType = QuestionType.MultipleExclusive,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1344,6 +1351,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 12,
                                                             Text = " Quanti bicchieri di alcolici (vino/birramisurati in bicchieri da 200 ml)assume mediamente durante una settimana?",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1369,7 +1377,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 3,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 30,
                                                                             ProductId = 1,
                                                                             Value = 8,
                                                                         }
@@ -1384,12 +1392,13 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 13,
                                                             Text = " Quanti bicchieri di superalcolici assume in media in una settimana?",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
                                                                 {
                                                                     AdditionalInfoType = Common.enums.AdditionalInfoType.Numeric,
-                                                                    HasAdditionalInfo = true,
+                                                                    HasAdditionalInfo = true,                                                                    
                                                                     AnswerWeight = new List<AnswerWeight>()
                                                                     {
                                                                         new AnswerWeight()
@@ -1402,7 +1411,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 1,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 100,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1421,6 +1430,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 14,
                                                             Text = "Mi sento stressato (indicare con un valore da 0 a 10)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1439,7 +1449,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 6,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 10,
                                                                             ProductId = 1,
                                                                             Value = 8,
                                                                         }
@@ -1454,6 +1464,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 15,
                                                             Text = "Mi sento stanco (indicare con un valore da 0 a 10)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1472,7 +1483,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 6,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 10,
                                                                             ProductId = 1,
                                                                             Value = 5,
                                                                         }
@@ -1488,6 +1499,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 16,
                                                             Text = "Posso controllare la situazione (indicare con un valore da 0 a 10)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1506,7 +1518,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 6,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 10,
                                                                             ProductId = 1,
                                                                             Value = 7,
                                                                         }
@@ -1521,6 +1533,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 17,
                                                             Text = "Lo scorso anno ho perso molti giorni di lavoro/studio per motivi di salute quali",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.MultipleNotExclusive,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1569,6 +1582,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 18,
                                                             Text = "In quale tra i seguenti stili di vita le piacerebbe di più migliorare? ",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.MultipleNotExclusive,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1632,6 +1646,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 19,
                                                             Text = " Colesterolo totale (mg/dl)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1650,7 +1665,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 201,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 1000,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1665,6 +1680,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 20,
                                                             Text = "Valore di HDL (mg/dl)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1683,7 +1699,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 41,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 200,
                                                                             ProductId = 1,
                                                                             Value = 1,
                                                                         }
@@ -1698,6 +1714,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 21,
                                                             Text = "Valore di HDL (mg/dl)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1716,7 +1733,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 41,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 200,
                                                                             ProductId = 1,
                                                                             Value = 1,
                                                                         }
@@ -1731,6 +1748,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 22,
                                                             Text = "Valore di LDL (mg/dl)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1749,7 +1767,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 151,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 400,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1764,6 +1782,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 23,
                                                             Text = "Valore di trigliceridi (mg/dl)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1782,7 +1801,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 151,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 300,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1797,6 +1816,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 24,
                                                             Text = "Valore di Glicemia (mg/dl)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1815,7 +1835,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 101,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 500,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1834,6 +1854,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 25,
                                                             Text = "Pressione Arteriosa Minima (mmHg)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1852,7 +1873,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 81,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 200,
                                                                             ProductId = 1,
                                                                             Value = 1,
                                                                         }
@@ -1867,6 +1888,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 26,
                                                             Text = "Frequesnza cardiaca a riposo",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1885,7 +1907,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 80,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 200,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1900,6 +1922,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 26,
                                                             Text = "Circonferenza addominale (cm)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1918,7 +1941,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 101,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 300,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }
@@ -1933,6 +1956,7 @@ namespace MyGenomics.Data.Migrations
                                                             StepNumber = 24,
                                                             Text = "Body Mass Index (BMI = massa corporea in kg/statura in m)",
                                                             IsRequired = false,
+                                                            QuestionType = QuestionType.ValueOnly,
                                                             Anwers = new List<Answer>()
                                                             {
                                                                 new Answer()
@@ -1951,7 +1975,7 @@ namespace MyGenomics.Data.Migrations
                                                                         new AnswerWeight()
                                                                         {
                                                                             FromNumericAdditionalInfo = 25,
-                                                                            ToNumericAdditionalInfo = Int16.MaxValue,
+                                                                            ToNumericAdditionalInfo = 100,
                                                                             ProductId = 1,
                                                                             Value = 9,
                                                                         }

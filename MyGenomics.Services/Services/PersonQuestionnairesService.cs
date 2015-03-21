@@ -66,7 +66,7 @@ namespace MyGenomics.Services
             //Rimappo in DataModel
             personQuestionnaireToInsert = Mapper.Map<DomainModel.SubmitPersonQuestionnaire, DataModel.PersonQuestionnaire>(personQuestionnaire);
             personQuestionnaireToInsert.CreatedDate = DateTime.Now;
-            personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
+            //personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
 
             using (var context = new MyGenomicsContext())
             {

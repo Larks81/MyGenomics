@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyGenomics.Common.enums;
 
 namespace MyGenomics.DataModel
 {
@@ -14,6 +15,7 @@ namespace MyGenomics.DataModel
         public int CategoryId { get; set; } 
         public List<Answer> Anwers { get; set; }
         public bool IsRequired { get; set; }
+        public QuestionType QuestionType { get; set; }
         
     }
 }

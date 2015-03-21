@@ -42,6 +42,7 @@ namespace MyGenomics.Services
                             Id = q.Id,
                             Text = q.Text,
                             IsRequired = q.IsRequired,
+                            QuestionType = q.QuestionType,
                             Anwers = q.Anwers.Select(a => new Domainmodel.Answer()
                             {
                                 Id = a.Id,

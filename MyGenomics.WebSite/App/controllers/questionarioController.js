@@ -39,8 +39,14 @@
             
             for (var cat = 0; cat < questionnaire.QuestionsCategories.length; cat++) {
                 for (var quest = 0; quest < questionnaire.QuestionsCategories[cat].Questions.length; quest++) {
-                    for (var answ = 0; answ < questionnaire.QuestionsCategories[cat].Questions[quest].Anwers.length; answ++) {                        
-                        questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].SelectedAnswer = false;
+                    for (var answ = 0; answ < questionnaire.QuestionsCategories[cat].Questions[quest].Anwers.length; answ++) {
+
+                        if (questionnaire.QuestionsCategories[cat].Questions[quest].QuestionType == 3) { //ValueOnly
+                            questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].SelectedAnswer = true;
+                        } else {
+                            questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].SelectedAnswer = false;
+                        }
+
                         questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].AdditionalInfo = "";
                         questionnaire.QuestionsCategories[cat].Questions[quest].ErrorText = "";
                     }                    
@@ -54,7 +60,7 @@
 
         $scope.uncheckOthersIfNecessary = function (question,answerId) {
 
-            if(true){
+            if (question.QuestionType==1) {
                 for (var answ = 0; answ < question.Anwers.length; answ++) {
                     if (question.Anwers[answ].Id != answerId) {
                         question.Anwers[answ].SelectedAnswer = false;
@@ -83,7 +89,7 @@
 
                         if (questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].SelectedAnswer) {
                             personQuestionnaire.GivenAnswers[nQuestion] = new Object();
-                            personQuestionnaire.GivenAnswers[nQuestion].QuestionId = questionnaire.QuestionsCategories[cat].Questions[quest].Id;
+                            personQuestionnaire.GivenAnswers[nQuestion].QuestionId = questionnaire.QuestionsCategories[cat].Questions[quest].Id;                            
                             personQuestionnaire.GivenAnswers[nQuestion].AnswerId = questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].Id;
                             personQuestionnaire.GivenAnswers[nQuestion].AdditionalInfo = questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].AdditionalInfo;
                             nQuestion++;
@@ -130,7 +136,7 @@
         //--------------------------------------------------------------------
 
         $scope.validateAnswers = function (questions) {
-            var exclusiveQuestion = true;
+            
             var fieldInvalid = 0;
             for (var k = 0; k < questions.length; k++) {
                 if (questions[k].IsRequired) {
@@ -140,7 +146,7 @@
                             selectedAnswers++;
                         }
                     }
-                    if (selectedAnswers > 1 && exclusiveQuestion) {
+                    if (selectedAnswers > 1 && questions[k].QuestionType==1) {
                         questions[k].ErrorText = "* Risposta multipla non consentita";
                         fieldInvalid++;
                     } else if (selectedAnswers < 1) {

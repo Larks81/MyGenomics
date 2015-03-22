@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MyGenomics.Common.enums;
 using MyGenomics.Data.Context;
@@ -98,6 +99,8 @@ namespace MyGenomics.Services
 
         public int AddOrUpdateQuestionnaire(Questionnaire questionnaire)
         {
+            questionnaire.UpdateDate = DateTime.Now;
+
             bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
@@ -112,6 +115,7 @@ namespace MyGenomics.Services
                 }
                 else
                 {
+                    questionnaire.InsertDate = DateTime.Now;
                     context.Questionnaires.Add(questionnaire);
                 }
                 
@@ -136,6 +140,7 @@ namespace MyGenomics.Services
 
         public int AddOrUpdateQuestionCategory(QuestionCategory questionCategory)
         {
+            questionCategory.UpdateDate = DateTime.Now;
             bool idFound=false;
             using (var context = new MyGenomicsContext())
             {
@@ -150,6 +155,7 @@ namespace MyGenomics.Services
                 }
                 else
                 {
+                    questionCategory.InsertDate = DateTime.Now;
                     context.QuestionCategories.Add(questionCategory);    
                 }
 
@@ -160,6 +166,7 @@ namespace MyGenomics.Services
 
         public int AddOrUpdateQuestion(Question question)
         {
+            question.UpdateDate = DateTime.Now;
             bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
@@ -174,6 +181,7 @@ namespace MyGenomics.Services
                 }
                 else
                 {
+                    question.InsertDate = DateTime.Now;
                     context.Questions.Add(question);
                 }
                 
@@ -183,6 +191,7 @@ namespace MyGenomics.Services
         }
         public int AddOrUpdateAnswer(Answer answer)
         {
+            answer.UpdateDate = DateTime.Now;
             bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
@@ -197,6 +206,7 @@ namespace MyGenomics.Services
                 }
                 else
                 {
+                    answer.InsertDate = DateTime.Now;
                     context.Answers.Add(answer);
                 }                
                 context.SaveChanges();
@@ -206,6 +216,7 @@ namespace MyGenomics.Services
 
         public int AddOrUpdateAnswerWeight(AnswerWeight answerWeight)
         {
+            answerWeight.UpdateDate = DateTime.Now;
             bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
@@ -220,11 +231,26 @@ namespace MyGenomics.Services
                 }
                 else
                 {
+                    answerWeight.InsertDate = DateTime.Now;
                     context.AnswerWeights.Add(answerWeight);
                 }                      
                 context.SaveChanges();
                 return answerWeight.Id;
             }  
+        }
+
+
+        public void RemoveQuestionnaireItemsBefore(int questionnaireId, DateTime beforedate)
+        {            
+            using (var context = new MyGenomicsContext())
+            {
+                context.PersonAnswers.RemoveRange(context.PersonAnswers.Where(pa => pa.Question.QuestionnaireId == questionnaireId && pa.Question.UpdateDate < beforedate));
+                context.PersonAnswers.RemoveRange(context.PersonAnswers.Where(pa => pa.Question.QuestionnaireId == questionnaireId && pa.Answer.UpdateDate < beforedate));                
+                context.AnswerWeights.RemoveRange(context.AnswerWeights.Where(aw => aw.Answer.Question.QuestionnaireId == questionnaireId && aw.UpdateDate < beforedate));
+                context.Answers.RemoveRange(context.Answers.Where(a => a.Question.QuestionnaireId == questionnaireId && a.UpdateDate < beforedate));
+                context.Questions.RemoveRange(context.Questions.Where(a => a.QuestionnaireId == questionnaireId && a.UpdateDate < beforedate));
+                context.SaveChanges();
+            }
         }
 
     }

@@ -292,6 +292,8 @@ namespace MyGenomics.Data.SugarCRM
                 //PersonType =
                 PhoneNumber = item["phone_mobile"]["value"],
                 UserName = item["area_riservata_uid_c"]["value"],
+                InsertDate = DateTime.Now,
+                UpdateDate = DateTime.Now
             };
         }
 

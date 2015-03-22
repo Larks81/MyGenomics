@@ -229,6 +229,7 @@ namespace MyGenomics.Services
             contextPerson.PersonType = crmContact.PersonType;
             contextPerson.PersonTypeId = crmContact.PersonTypeId;
             contextPerson.PhoneNumber = crmContact.PhoneNumber;
+            contextPerson.UpdateDate = DateTime.Now;                
         }
 
         private string CryptPassword(string password)

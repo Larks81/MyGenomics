@@ -23,52 +23,11 @@ namespace MyGenomics.Data.Migrations
             context.Languages.AddOrUpdate(new Language()
                                           {
                                               Id = 1,
-                                              Name = "IT"
+                                              Name = "IT",
+                                              InsertDate = DateTime.Now,
+                                              UpdateDate = DateTime.Now
                                           });
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 1,
-                                                       Name = "ANALISI PARODONTALE"
-                                                   });
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 2,
-                                                       Name = "ANALISI GENERALE"
-                                                   });
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 3,
-                                                       Name = "ANALISI ALIMENTARE"
-                                                   });
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 4,
-                                                       Name = "ANALISI ONCOLOGICA"
-                                                   });
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 5,
-                                                       Name = "ANALISI COMPORTAMENTALE"
-                                                   });
-
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 6,
-                                                       Name = "ANALISI STRESS PSICO FISICO"
-                                                   });
-
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 7,
-                                                       Name = "ESAMI EMATOCHIMICI"
-                                                   });
-            context.QuestionCategories.AddOrUpdate(new QuestionCategory()
-                                                   {
-                                                       Id = 8,
-                                                       Name = "PARAMETRI BIOMETRICI"
-                                                   });
-
-
+            
 
             context.PersonTypes.AddOrUpdate(new PersonType()
                                             {
@@ -77,7 +36,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 0,
                                                 AgeTo = 12,
                                                 Description = "Bambino (1-12)",
-                                                Code = "BAMBINO_MASCHIO"
+                                                Code = "BAMBINO_MASCHIO",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -87,7 +48,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 0,
                                                 AgeTo = 12,
                                                 Description = "Bambina (1-12)",
-                                                Code = "BAMBINO_FEMMINA"
+                                                Code = "BAMBINO_FEMMINA",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -97,7 +60,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 13,
                                                 AgeTo = 17,
                                                 Description = "Adolescente (13-17)",
-                                                Code = "ADOLESCENTE_MASCHIO"
+                                                Code = "ADOLESCENTE_MASCHIO",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -107,7 +72,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 13,
                                                 AgeTo = 17,
                                                 Description = "Adolescente (13-17)",
-                                                Code = "ADOLESCENTE_FEMMINA"
+                                                Code = "ADOLESCENTE_FEMMINA",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -117,7 +84,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 18,
                                                 AgeTo = 55,
                                                 Description = "Adulto (18-55)",
-                                                Code = "ADULTO_MASCHIO"
+                                                Code = "ADULTO_MASCHIO",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -127,7 +96,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 18,
                                                 AgeTo = 55,
                                                 Description = "Adulta (18-55)",
-                                                Code = "ADULTO_FEMMINA"
+                                                Code = "ADULTO_FEMMINA",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
 
@@ -138,7 +109,9 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 56,
                                                 AgeTo = 120,
                                                 Description = "Uomo anziano (56+)",
-                                                Code = "ANZIANO_MASCHIO"
+                                                Code = "ANZIANO_MASCHIO",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.PersonTypes.AddOrUpdate(new PersonType()
@@ -148,13 +121,17 @@ namespace MyGenomics.Data.Migrations
                                                 AgeFrom = 56,
                                                 AgeTo = 120,
                                                 Description = "Donna anziana (56+)",
-                                                Code = "ANZIANO_FEMMINA"
+                                                Code = "ANZIANO_FEMMINA",
+                                                InsertDate = DateTime.Now,
+                                                UpdateDate = DateTime.Now
                                             });
 
             context.Packages.AddOrUpdate(new Package()
                                          {
                                              Id = 1,
                                              Name = "Nutrizione e Sport",
+                                              InsertDate = DateTime.Now,
+                                              UpdateDate = DateTime.Now,
                                              Products = new List<Product>()
                                                         {
                                                             new Product()
@@ -165,7 +142,9 @@ namespace MyGenomics.Data.Migrations
                                                                     "http://www.mygenomics.eu/genotest/nutrigenomica",
                                                                 Price = 400,
                                                                 ShortDescription = "Nutrigenomica",
-                                                                Code = "NUTRIGENOMICA"
+                                                                Code = "NUTRIGENOMICA",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -176,7 +155,9 @@ namespace MyGenomics.Data.Migrations
                                                                 Price = 400,
                                                                 ShortDescription =
                                                                     "Marcia, corsa, pattinaggio, ciclismo, sci di fondo ecc",
-                                                                Code = "SPORT-ENDURANCE"
+                                                                Code = "SPORT-ENDURANCE",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -186,7 +167,9 @@ namespace MyGenomics.Data.Migrations
                                                                     "http://www.mygenomics.eu/genotest/intolleranze-e-dipendenze",
                                                                 Price = 350,
                                                                 ShortDescription = "Intolleranze e Dipendenze",
-                                                                Code = "INTOLLERANZE-DIPENDENZE"
+                                                                Code = "INTOLLERANZE-DIPENDENZE",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -197,7 +180,9 @@ namespace MyGenomics.Data.Migrations
                                                                 Price = 400,
                                                                 ShortDescription =
                                                                     "sollevamento pesi, salti e lanci dell’atletica legge ecc",
-                                                                Code = "SPORT-POTENZA"
+                                                                Code = "SPORT-POTENZA",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -208,7 +193,9 @@ namespace MyGenomics.Data.Migrations
                                                                 Price = 400,
                                                                 ShortDescription =
                                                                     "Calcio, pallacanestro, pallavolo, pallamano, tennis ecc",
-                                                                Code = "SPORT-SITUAZIONE"
+                                                                Code = "SPORT-SITUAZIONE",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             }
                                                         }
                                          });
@@ -217,6 +204,8 @@ namespace MyGenomics.Data.Migrations
                                          {
                                              Id = 2,
                                              Name = "Medicina Personalizzata",
+                                             InsertDate = DateTime.Now,
+                                             UpdateDate = DateTime.Now,
                                              Products = new List<Product>()
                                                         {
                                                             new Product()
@@ -228,7 +217,9 @@ namespace MyGenomics.Data.Migrations
                                                                 Price = 350,
                                                                 ShortDescription =
                                                                     "Diabete 2, iperTG, HDL/LDL, osteoporosi",
-                                                                Code = "METABOLISMO-ENERGETICO-OSSEO"
+                                                                Code = "METABOLISMO-ENERGETICO-OSSEO",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -237,7 +228,9 @@ namespace MyGenomics.Data.Migrations
                                                                 UrlDetail =
                                                                     "http://www.mygenomics.eu/genotest/alzheimer",
                                                                 Price = 500,
-                                                                ShortDescription = "ALZHEIMER"
+                                                                ShortDescription = "ALZHEIMER",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -246,7 +239,9 @@ namespace MyGenomics.Data.Migrations
                                                                 UrlDetail =
                                                                     "http://www.mygenomics.eu/genotest/oncologia-mammella",
                                                                 Price = 500,
-                                                                ShortDescription = "TUMORE-MAMMELLA"
+                                                                ShortDescription = "TUMORE-MAMMELLA",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -256,7 +251,9 @@ namespace MyGenomics.Data.Migrations
                                                                     "http://www.mygenomics.eu/genotest/oncologia-colon-retto",
                                                                 Price = 500,
                                                                 ShortDescription = "Tumore a colon-retto",
-                                                                Code = "TUMORE-COLON-RETTO"
+                                                                Code = "TUMORE-COLON-RETTO",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -266,7 +263,9 @@ namespace MyGenomics.Data.Migrations
                                                                     "http://www.mygenomics.eu/genotest/oncologia-prostata",
                                                                 Price = 500,
                                                                 ShortDescription = "Tumore alla prostata",
-                                                                Code = "TUMORE-PROSTATA"
+                                                                Code = "TUMORE-PROSTATA",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             },
                                                             new Product()
                                                             {
@@ -276,7 +275,9 @@ namespace MyGenomics.Data.Migrations
                                                                     "http://www.mygenomics.eu/genotest/parkinson",
                                                                 Price = 500,
                                                                 ShortDescription = "Parkinson",
-                                                                Code = "PARKINSON"
+                                                                Code = "PARKINSON",
+                                                                InsertDate = DateTime.Now,
+                                                                UpdateDate = DateTime.Now
                                                             }
                                                         }
                                          });

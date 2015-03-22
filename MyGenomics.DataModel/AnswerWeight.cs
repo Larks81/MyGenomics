@@ -8,7 +8,8 @@ namespace MyGenomics.DataModel
 {
     public class AnswerWeight : ModelBase
     {        
-        public PersonType PersonType { get; set; }        
+        public PersonType PersonType { get; set; }
+        public Answer Answer { get; set; }
         public int AnswerId { get; set; }
         public int? PersonTypeId { get; set; }
         public Product Product { get; set; }

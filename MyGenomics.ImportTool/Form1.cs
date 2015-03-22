@@ -52,6 +52,7 @@ namespace MyGenomics.ImportTool
         {
             using (var transation = new TransactionScope())
             {
+                DateTime initDate = DateTime.Now;
                 int numRowExcel = 0;
                 try
                 {
@@ -191,6 +192,7 @@ namespace MyGenomics.ImportTool
                         }
                     }
                     pck.Save();
+                    _questionnaireService.RemoveQuestionnaireItemsBefore(questionnaireId, initDate);
                     transation.Complete();
                     return "Importazione eseguita con successo";
                                         

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace MyGenomics.DataModel
 {
     public class Questionnaire : ModelBase
-    {        
+    {
+        public string Code { get; set; }
         public string Name { get; set; }
         public List<Question> Questions { get; set; }
         public Language Language { get; set; }

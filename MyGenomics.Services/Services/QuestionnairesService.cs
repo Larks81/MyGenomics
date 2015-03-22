@@ -66,7 +66,8 @@ namespace MyGenomics.Services
                     .Select(q=> new Domainmodel.Questionnaire()
                                 {
                                     Id = q.Id,
-                                    Name = q.Name
+                                    Name = q.Name,
+                                    Code = q.Code
                                 })
                     .ToList();
             }
@@ -95,6 +96,68 @@ namespace MyGenomics.Services
         }
 
 
+        public int AddQuestionnaire(Questionnaire questionnaire)
+        {
+            using (var context = new MyGenomicsContext())
+            {                
+                context.Questionnaires.Add(questionnaire);
+                context.SaveChanges();
+                return questionnaire.Id;
+            }
+        }
+
+        public void RemoveQuestionnaire(int questionnaireId)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                var questionnaire = context.Questionnaires.FirstOrDefault(q => q.Id == questionnaireId);
+                if (questionnaire != null)
+                {                    
+                    context.PersonQuestionnaires.RemoveRange(context.PersonQuestionnaires.Where(pq => pq.QuestionnaireId == questionnaire.Id));
+                    context.Questionnaires.Remove(questionnaire);
+                    context.SaveChanges();
+                }                                
+            }
+        }
+
+        public int AddQuestionCategory(QuestionCategory questionCategory)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                context.QuestionCategories.Add(questionCategory);
+                context.SaveChanges();
+                return questionCategory.Id;
+            }            
+        }
+
+        public int AddQuestion(Question question)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                context.Questions.Add(question);
+                context.SaveChanges();
+                return question.Id;
+            }     
+        }
+        public int AddAnswer(Answer answer)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                context.Answers.Add(answer);
+                context.SaveChanges();
+                return answer.Id;
+            }     
+        }
+
+        public int AddAnswerWeight(AnswerWeight answerWeight)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                context.AnswerWeights.Add(answerWeight);
+                context.SaveChanges();
+                return answerWeight.Id;
+            }  
+        }
 
     }
 }

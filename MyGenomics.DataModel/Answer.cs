@@ -12,7 +12,9 @@ namespace MyGenomics.DataModel
         public string Text { get; set; }
         public bool HasAdditionalInfo { get; set; }
         public AdditionalInfoType AdditionalInfoType { get; set; }
-        public List<AnswerWeight> AnswerWeight { get; set; }        
+        public List<AnswerWeight> AnswerWeight { get; set; }
+        public Question Question { get; set; }    
+        public int QuestionId { get; set; }    
 
     }
 }

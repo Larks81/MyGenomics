@@ -21,15 +21,26 @@
             label: 'Femmina',            
         }];
        
-        $scope.getQuestionnaires = function () {            
+        $scope.getQuestionnaires = function () {
+            var questionnaireDefault = "MYGENOMICS_IT";
+            var questionnaireDefaultId;
             Questionnaire.query( function (data) {
                 $scope.Questionnaires = data;
-                $scope.selectQuestionnaire($scope.Questionnaires[0]);
+
+                for (quest = 0; quest < data.length; quest++) {
+                    if (data[quest].Code == questionnaireDefault) {
+                        questionnaireDefaultId = data[quest].Id;
+                    }
+                }
+
+                if (questionnaireDefaultId > 0) {
+                    $scope.selectQuestionnaire(questionnaireDefaultId);
+                }                
             });                        
         };
 
-        $scope.selectQuestionnaire = function (questionnaire) {            
-            Questionnaire.get({id: questionnaire.Id }, function (data) {
+        $scope.selectQuestionnaire = function (questionnaireId) {            
+            Questionnaire.get({ id: questionnaireId }, function (data) {
                 $scope.SelectedQuestionnaire = data;
                 $scope.buildPersonQuestionnaire(data);
             });            

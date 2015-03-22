@@ -91,6 +91,14 @@ namespace MyGenomics.Services
             return retPersonType;
         }
 
+        public List<DataModel.PersonType> GetPersonTypes()
+        {           
+            using (var context = new MyGenomicsContext())
+            {
+                return context.PersonTypes.ToList();
+            }            
+        }
+
         public void Remove(int id)
         {
             using (var context = new MyGenomicsContext())

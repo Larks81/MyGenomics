@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.WebApi", "MyGenomics.WebApi\MyGenomics.WebApi.csproj", "{D0797987-00AD-4A2C-916A-6A78F4FEFE97}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.Common", "MyGenomics.Common\MyGenomics.Common.csproj", "{05F6C81A-6F65-45E5-86C7-6B10B3081CA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.ServicesUnitTest", "MyGenomics.ServicesUnitTest\MyGenomics.ServicesUnitTest.csproj", "{34526F05-26AC-48EE-9042-33175F04D593}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.ImportTool", "MyGenomics.ImportTool\MyGenomics.ImportTool.csproj", "{8C4479C9-D787-439B-8E6E-31C6E8B5EA2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{34526F05-26AC-48EE-9042-33175F04D593}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34526F05-26AC-48EE-9042-33175F04D593}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34526F05-26AC-48EE-9042-33175F04D593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4479C9-D787-439B-8E6E-31C6E8B5EA2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4479C9-D787-439B-8E6E-31C6E8B5EA2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4479C9-D787-439B-8E6E-31C6E8B5EA2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4479C9-D787-439B-8E6E-31C6E8B5EA2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

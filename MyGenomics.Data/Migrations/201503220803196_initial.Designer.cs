@@ -13,7 +13,7 @@ namespace MyGenomics.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201503192159412_initial"; }
+            get { return "201503220803196_initial"; }
         }
         
         string IMigrationMetadata.Source

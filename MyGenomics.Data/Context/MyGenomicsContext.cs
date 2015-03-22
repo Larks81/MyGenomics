@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,5 +27,10 @@ namespace MyGenomics.Data.Context
         public DbSet<PersonType> PersonTypes { get; set; }
         public DbSet<QuestionnaireResult> QuestionnaireResults { get; set; }
         public DbSet<Package> Packages { get; set; }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        //}
     }
 }

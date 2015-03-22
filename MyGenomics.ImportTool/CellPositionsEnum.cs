@@ -8,17 +8,21 @@ namespace MyGenomics.ImportTool
 {
     
         public enum Cell { 
-            CategoriaDomanda = 0,
-            TestoDomanda=1,
-            Obbligatorio=2,
-            TipoDomanda=3,
-            TestoRisposta=4,
-            TipoRisposta=5,
-            TipoPersona=6,
-            Prodotto=7,
-            DaValore=8,
-            AValore=9,
-            Peso=10
+            CategoriaDomanda = 1,
+            TestoDomanda=2,
+            Obbligatorio=3,
+            TipoDomanda=4,
+            TestoRisposta=5,
+            TipoRisposta=6,
+            TipoPersona=7,
+            Prodotto=8,
+            DaValore=9,
+            AValore=10,
+            Peso=11,
+            QuestionCategoryId = 20,
+            QuestionId = 21,
+            AnswerId = 22,
+            WeightId = 23,
         }
     
 }

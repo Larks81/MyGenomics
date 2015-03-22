@@ -11,9 +11,13 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
 using Excel;
+
 using MyGenomics.Common.enums;
+using MyGenomics.Common.extensions;
 using MyGenomics.DataModel;
 using MyGenomics.Services;
+using OfficeOpenXml;
+
 
 namespace MyGenomics.ImportTool
 {
@@ -28,69 +32,61 @@ namespace MyGenomics.ImportTool
         public Form1()
         {
             InitializeComponent();            
-            FillQuestionnairesCombo();
-        }
-
-        private void FillQuestionnairesCombo()
-        {
-            _questionnaires = _questionnaireService.GetAll();
-            cbQuestionnaires.Items.Clear();
-
-            foreach (var questionnaire in _questionnaires)
-            {
-                cbQuestionnaires.Items.Add(questionnaire);
-            }
+            
         }
 
         private void btnImportQuestionnaire_Click(object sender, EventArgs e)
         {
+            tbLog.Text += "Inizio Import"+Environment.NewLine;
+            tbLog.Text += "Carico dati base..." + Environment.NewLine;
+            Application.DoEvents();
+            _questionnaires = _questionnaireService.GetAll();
             _products = _questionnaireService.GetProducts();
             _personTypes = _personsService.GetPersonTypes();
-
-            if (string.IsNullOrWhiteSpace(cbQuestionnaires.Text) || string.IsNullOrWhiteSpace(tbQuestionnaireName.Text))
-            {
-                MessageBox.Show("è necessario dare un codice e un titolo al Questionario", "ERRORE", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-                
-            tbLog.Text = "Import in corso";
+            tbLog.Text += "Import in corso..." + Environment.NewLine;
             Application.DoEvents();
-            tbLog.Text = InsertQuestionnaireFromExcel(tbPathExcel.Text);
-            FillQuestionnairesCombo();
+            tbLog.Text += InsertQuestionnaireFromExcel(tbPathExcel.Text);            
         }
 
         private string InsertQuestionnaireFromExcel(string excelPath)
         {
             using (var transation = new TransactionScope())
             {
+                int numRowExcel = 0;
                 try
                 {
-
-                    var selectedQuestionnaire = (DomainModel.Questionnaire)cbQuestionnaires.SelectedItem;
-
-                    if (selectedQuestionnaire!=null && selectedQuestionnaire.Id > 0)
-                    {
-                        _questionnaireService.RemoveQuestionnaire(Convert.ToInt16(selectedQuestionnaire.Id));    
-                    }
                     
+                    FileInfo excelFile = new FileInfo(excelPath);
+                    ExcelPackage pck = new ExcelPackage(excelFile);
+
+                    string questionnaireCode = "";
+                    int questionnaireId=0;
+                    int languageId = 0;
+                    string questionnaireName = "";
+
+                    var wsQuestionario = pck.Workbook.Worksheets["Questionario"];
+
+                    questionnaireCode = wsQuestionario.GetValue(2, 1).ConvertToString();
+                    languageId = wsQuestionario.GetValue(2, 2).ConvertToInt();
+                    questionnaireName = wsQuestionario.GetValue(2, 3).ConvertToString();
+
+                    var questionnaireFound = _questionnaires.FirstOrDefault(q => q.Code == questionnaireCode);
+                    if (questionnaireFound != null)
+                    {
+                        questionnaireId = questionnaireFound.Id;
+                    }
 
                     var questionnaire = new Questionnaire()
                                         {
-                                            Code = cbQuestionnaires.Text,
-                                            Name = tbQuestionnaireName.Text,
-                                            LanguageId = 1
+                                            Id = questionnaireId,
+                                            Code = questionnaireCode,
+                                            Name = questionnaireName,
+                                            LanguageId = languageId
                                         };
-                    int questionnaireId = _questionnaireService.AddQuestionnaire(questionnaire);
-
-                    FileStream stream = File.Open(excelPath, FileMode.Open, FileAccess.Read);
-
-                    //2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                    IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-
-                    //4. DataSet - Create column names from first row
-                    excelReader.IsFirstRowAsColumnNames = true;
-                    DataSet result = excelReader.AsDataSet();
-
+                    questionnaireId = _questionnaireService.AddOrUpdateQuestionnaire(questionnaire);                    
+                    var wsDomande = pck.Workbook.Worksheets["Domande"];
+                    var totalRows = wsDomande.Dimension.Rows;
+                    
                     string categoriaDomandaCorrente = "";
                     int categoriaDomandaCorrenteId = -1;
                     string domandaCorrente = "";
@@ -98,28 +94,35 @@ namespace MyGenomics.ImportTool
                     string rispostaCorrente = "";
                     int rispostaCorrenteId = -1;
 
-                    foreach (DataRow row in result.Tables[1].Rows)
+                    for (int i = 2; i <= totalRows; i++)
                     {
-                        var categoriaDomanda = row[(int) Cell.CategoriaDomanda].ToString();
-                        var testoDomanda = row[(int) Cell.TestoDomanda].ToString();
-                        var obbligatorio = row[(int) Cell.Obbligatorio].ToString();
-                        var tipoDomanda = row[(int) Cell.TipoDomanda].ToString();
-                        var testoRisposta = row[(int) Cell.TestoRisposta].ToString();
-                        var tipoRisposta = row[(int) Cell.TipoRisposta].ToString();
-                        var tipoPersona = row[(int) Cell.TipoPersona].ToString();
-                        var prodotto = row[(int) Cell.Prodotto].ToString();
-                        var daValore = row[(int) Cell.DaValore].ToString();
-                        var aValore = row[(int) Cell.AValore].ToString();
-                        var peso = row[(int) Cell.Peso].ToString();
+                        numRowExcel = i;
+                        string categoriaDomanda = wsDomande.GetValue(i, (int)Cell.CategoriaDomanda).ConvertToString();
+                        string testoDomanda = wsDomande.GetValue(i, (int)Cell.TestoDomanda).ConvertToString();
+                        string obbligatorio = wsDomande.GetValue(i, (int)Cell.Obbligatorio).ConvertToString();
+                        string tipoDomanda = wsDomande.GetValue(i, (int)Cell.TipoDomanda).ConvertToString();
+                        string testoRisposta = wsDomande.GetValue(i, (int)Cell.TestoRisposta).ConvertToString();
+                        string tipoRisposta = wsDomande.GetValue(i, (int)Cell.TipoRisposta).ConvertToString();
+                        string tipoPersona = wsDomande.GetValue(i, (int)Cell.TipoPersona).ConvertToString();
+                        string prodotto = wsDomande.GetValue(i, (int)Cell.Prodotto).ConvertToString();
+                        string daValore = wsDomande.GetValue(i, (int)Cell.DaValore).ConvertToString();
+                        string aValore = wsDomande.GetValue(i, (int)Cell.AValore).ConvertToString();
+                        string peso = wsDomande.GetValue(i, (int)Cell.Peso).ConvertToString();
+                        int questionCategoryId = wsDomande.GetValue(i, (int)Cell.QuestionCategoryId).ConvertToInt();
+                        int questionId = wsDomande.GetValue(i, (int)Cell.QuestionId).ConvertToInt();
+                        int answerId = wsDomande.GetValue(i, (int)Cell.AnswerId).ConvertToInt();
+                        int weightId = wsDomande.GetValue(i, (int)Cell.WeightId).ConvertToInt();
 
                         //Rottura Categoria domanda
                         if (!string.IsNullOrWhiteSpace(categoriaDomanda))
                         {
                             var questionCategory = new QuestionCategory()
                                                    {
+                                                       Id = questionCategoryId,
                                                        Name = categoriaDomanda
                                                    };
-                            categoriaDomandaCorrenteId = AddQuestionCategory(questionCategory);
+                            categoriaDomandaCorrenteId = AddOrUpdateQuestionCategory(questionCategory);
+                            wsDomande.SetValue(i, (int)Cell.QuestionCategoryId, categoriaDomandaCorrenteId);
                             categoriaDomandaCorrente = categoriaDomanda;
                         }
 
@@ -128,6 +131,7 @@ namespace MyGenomics.ImportTool
                         {
                             var question = new Question()
                                            {
+                                               Id = questionId,
                                                QuestionnaireId = questionnaireId,
                                                CategoryId = categoriaDomandaCorrenteId,
                                                IsRequired = obbligatorio == "SI" ? true : false,
@@ -140,7 +144,8 @@ namespace MyGenomics.ImportTool
                                                StepNumber = 1,
                                                Text = testoDomanda
                                            };
-                            domandaCorrenteId = AddQuestion(question);
+                            domandaCorrenteId = AddOrUpdateQuestion(question);
+                            wsDomande.SetValue(i, (int) Cell.QuestionId, domandaCorrenteId);
                             domandaCorrente = testoDomanda;
                         }
                         
@@ -149,6 +154,7 @@ namespace MyGenomics.ImportTool
                         {
                             var answer = new Answer()
                                          {
+                                             Id = answerId,
                                              QuestionId = domandaCorrenteId,
                                              Text = testoRisposta,
                                              AdditionalInfoType =
@@ -160,7 +166,8 @@ namespace MyGenomics.ImportTool
                                              HasAdditionalInfo = tipoRisposta != "VEROFALSO"
                                          };
 
-                            rispostaCorrenteId = AddAnswer(answer);
+                            rispostaCorrenteId = AddOrUpdateAnswer(answer);
+                            wsDomande.SetValue(i, (int)Cell.AnswerId, rispostaCorrenteId);
                             rispostaCorrente = testoRisposta + tipoRisposta;
                         }
 
@@ -168,6 +175,7 @@ namespace MyGenomics.ImportTool
                         {
                             var answerWeight = new AnswerWeight()
                                                {
+                                                   Id = weightId,
                                                    AnswerId = rispostaCorrenteId,
                                                    FromNumericAdditionalInfo =
                                                        !string.IsNullOrEmpty(daValore) ? Convert.ToInt16(daValore) : 0,
@@ -178,38 +186,40 @@ namespace MyGenomics.ImportTool
                                                    Value = Convert.ToInt16(peso)
                                                };
 
-                            AddAnswerWeight(answerWeight);
+                            var pesoCorrenteId = AddOrUpdateAnswerWeight(answerWeight);
+                            wsDomande.SetValue(i, (int)Cell.WeightId, pesoCorrenteId);
                         }
                     }
-                    excelReader.Close();
+                    pck.Save();
                     transation.Complete();
                     return "Importazione eseguita con successo";
+                                        
                 }
                 catch(Exception ex)
                 {
-                    return "Errore! "+ex.Message;
+                    return "Import Annullato! Errore nella riga " + numRowExcel + Environment.NewLine + Environment.NewLine + ex.ToString();
                 }
             }
 
         }
 
-        private int AddQuestionCategory(QuestionCategory questionCategory)
+        private int AddOrUpdateQuestionCategory(QuestionCategory questionCategory)
         {
-            return _questionnaireService.AddQuestionCategory(questionCategory);
+            return _questionnaireService.AddOrUpdateQuestionCategory(questionCategory);
         }
 
-        private int AddQuestion(Question question)
+        private int AddOrUpdateQuestion(Question question)
         {
-            return _questionnaireService.AddQuestion(question);
+            return _questionnaireService.AddOrUpdateQuestion(question);
         }
-        private int AddAnswer(Answer answer)
+        private int AddOrUpdateAnswer(Answer answer)
         {
-            return _questionnaireService.AddAnswer(answer);
+            return _questionnaireService.AddOrUpdateAnswer(answer);
         }
 
-        private int AddAnswerWeight(AnswerWeight answerWeight)
+        private int AddOrUpdateAnswerWeight(AnswerWeight answerWeight)
         {
-            return _questionnaireService.AddAnswerWeight(answerWeight);
+            return _questionnaireService.AddOrUpdateAnswerWeight(answerWeight);
         }
 
         private int GetProductIdByCode(string productCode)
@@ -222,6 +232,12 @@ namespace MyGenomics.ImportTool
             if (string.IsNullOrEmpty(personTypeCode))
                 return null;
             return _personTypes.FirstOrDefault(p => p.Code == personTypeCode).Id;
+        }
+
+        private void btnSearchFile_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            tbPathExcel.Text = openFileDialog1.FileName;
         }
 
 

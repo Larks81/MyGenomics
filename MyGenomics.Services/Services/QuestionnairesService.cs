@@ -96,11 +96,25 @@ namespace MyGenomics.Services
         }
 
 
-        public int AddQuestionnaire(Questionnaire questionnaire)
+        public int AddOrUpdateQuestionnaire(Questionnaire questionnaire)
         {
+            bool idFound = false;
             using (var context = new MyGenomicsContext())
-            {                
-                context.Questionnaires.Add(questionnaire);
+            {
+                idFound = context.Questionnaires.FirstOrDefault(qc => qc.Id == questionnaire.Id) != null;
+            }
+
+            using (var context = new MyGenomicsContext())
+            {
+                if (questionnaire.Id > 0 && idFound)
+                {
+                    context.Entry(questionnaire).State = EntityState.Modified;
+                }
+                else
+                {
+                    context.Questionnaires.Add(questionnaire);
+                }
+                
                 context.SaveChanges();
                 return questionnaire.Id;
             }
@@ -120,40 +134,94 @@ namespace MyGenomics.Services
             }
         }
 
-        public int AddQuestionCategory(QuestionCategory questionCategory)
+        public int AddOrUpdateQuestionCategory(QuestionCategory questionCategory)
         {
+            bool idFound=false;
             using (var context = new MyGenomicsContext())
             {
-                context.QuestionCategories.Add(questionCategory);
+                idFound = context.QuestionCategories.FirstOrDefault(qc => qc.Id == questionCategory.Id) != null;
+            }
+
+            using (var context = new MyGenomicsContext())
+            {
+                if (questionCategory.Id > 0 && idFound)
+                {
+                    context.Entry(questionCategory).State = EntityState.Modified;
+                }
+                else
+                {
+                    context.QuestionCategories.Add(questionCategory);    
+                }
+
                 context.SaveChanges();
                 return questionCategory.Id;
             }            
         }
 
-        public int AddQuestion(Question question)
+        public int AddOrUpdateQuestion(Question question)
         {
+            bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
-                context.Questions.Add(question);
+                idFound = context.Questions.FirstOrDefault(q => q.Id == question.Id) != null;
+            }
+
+            using (var context = new MyGenomicsContext())
+            {
+                if (question.Id > 0 && idFound)
+                {
+                    context.Entry(question).State = EntityState.Modified;
+                }
+                else
+                {
+                    context.Questions.Add(question);
+                }
+                
                 context.SaveChanges();
                 return question.Id;
             }     
         }
-        public int AddAnswer(Answer answer)
+        public int AddOrUpdateAnswer(Answer answer)
         {
+            bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
-                context.Answers.Add(answer);
+                idFound = context.Answers.FirstOrDefault(a => a.Id == answer.Id) != null;
+            }
+
+            using (var context = new MyGenomicsContext())
+            {
+                if (answer.Id > 0 && idFound)
+                {
+                    context.Entry(answer).State = EntityState.Modified;
+                }
+                else
+                {
+                    context.Answers.Add(answer);
+                }                
                 context.SaveChanges();
                 return answer.Id;
             }     
         }
 
-        public int AddAnswerWeight(AnswerWeight answerWeight)
+        public int AddOrUpdateAnswerWeight(AnswerWeight answerWeight)
         {
+            bool idFound = false;
             using (var context = new MyGenomicsContext())
             {
-                context.AnswerWeights.Add(answerWeight);
+                idFound = context.AnswerWeights.FirstOrDefault(a => a.Id == answerWeight.Id) != null;
+            }
+
+            using (var context = new MyGenomicsContext())
+            {
+                if (answerWeight.Id > 0 && idFound)
+                {
+                    context.Entry(answerWeight).State = EntityState.Modified;
+                }
+                else
+                {
+                    context.AnswerWeights.Add(answerWeight);
+                }                      
                 context.SaveChanges();
                 return answerWeight.Id;
             }  

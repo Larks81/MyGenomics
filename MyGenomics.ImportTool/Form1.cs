@@ -27,16 +27,16 @@ namespace MyGenomics.ImportTool
 
         public Form1()
         {
-            InitializeComponent();
-            _questionnaires = _questionnaireService.GetAll();
-            FillQuestionnairesCombo(_questionnaires);
+            InitializeComponent();            
+            FillQuestionnairesCombo();
         }
 
-        private void FillQuestionnairesCombo(List<DomainModel.Questionnaire> questionnaires)
+        private void FillQuestionnairesCombo()
         {
+            _questionnaires = _questionnaireService.GetAll();
             cbQuestionnaires.Items.Clear();
 
-            foreach (var questionnaire in questionnaires)
+            foreach (var questionnaire in _questionnaires)
             {
                 cbQuestionnaires.Items.Add(questionnaire);
             }
@@ -53,10 +53,10 @@ namespace MyGenomics.ImportTool
                 return;
             }
                 
-
             tbLog.Text = "Import in corso";
             Application.DoEvents();
             tbLog.Text = InsertQuestionnaireFromExcel(tbPathExcel.Text);
+            FillQuestionnairesCombo();
         }
 
         private string InsertQuestionnaireFromExcel(string excelPath)

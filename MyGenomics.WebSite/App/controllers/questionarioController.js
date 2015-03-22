@@ -11,7 +11,7 @@
         $scope.PersonErrorText = "";
         $scope.PersonLoginErrorText = "";
         $scope.QuestionnaireFinished = false;
-        $scope.PersonQuestionnaireCalculated = false;
+        $scope.PersonQuestionnaireCalculated = false;        
 
         $scope.Genders = [{
             id: 1,
@@ -183,14 +183,20 @@
             if ((typeof (person) === "undefined") ||                
                 (person.BirthDate == "" || typeof (person.BirthDate) === "undefined" || $('#tbBirthDate').$invalid) ||
                 (person.Email == "" || typeof (person.Email) === "undefined") ||
-                (person.Gender == "" || typeof (person.Gender) === "undefined"))               
+                (person.Gender == "" || typeof (person.Gender) === "undefined"))
             {
                 fieldInvalid = true;                
             }
                 
             if (!fieldInvalid) {
-                WizardHandler.wizard().next();
-                $scope.PersonErrorText = "";
+
+                if (!person.PrivacyLawAgree) {
+                    $scope.PersonErrorText = "* è necessario acconsentire alla legge sulla privacy";
+                } else {
+                    WizardHandler.wizard().next();
+                    $scope.PersonErrorText = "";
+                }
+                
             } else {
                 $scope.PersonErrorText = "* è necessario compilare i campi obbligatori";
             }

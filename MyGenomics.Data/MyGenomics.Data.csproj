@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201503222018516_dating.Designer.cs">
       <DependentUpon>201503222018516_dating.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503231218178_updateResult.cs" />
+    <Compile Include="Migrations\201503231218178_updateResult.Designer.cs">
+      <DependentUpon>201503231218178_updateResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503222018516_dating.resx">
       <DependentUpon>201503222018516_dating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503231218178_updateResult.resx">
+      <DependentUpon>201503231218178_updateResult.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

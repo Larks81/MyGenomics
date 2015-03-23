@@ -22,26 +22,26 @@ namespace MyGenomics.Services
             var retPersonQuestionnaire = new DomainModel.PersonQuestionnaire();
             using (var context = new MyGenomicsContext())
             {
-                personQuestionnaire = context.PersonQuestionnaires                    
+                personQuestionnaire = context.PersonQuestionnaires
                     .Include(i => i.Questionnaire)
-                    .Include(i => i.Questionnaire.Questions.Select(q=>q.Anwers))
+                    .Include(i => i.Questionnaire.Questions.Select(q => q.Anwers))
                     .Include(i => i.Answers)
-                    .Include(i => i.Results.Select(r=>r.Product))
+                    .Include(i => i.Results.Select(r => r.Product))
                     .Include(i => i.Person.PersonType)
-                    .FirstOrDefault(q=>q.Id==id);                
+                    .FirstOrDefault(q => q.Id == id);
             }
             if (personQuestionnaire != null)
-            {                
-                retPersonQuestionnaire = Mapper.Map<DataModel.PersonQuestionnaire, DomainModel.PersonQuestionnaire>(personQuestionnaire);                
+            {
+                retPersonQuestionnaire = Mapper.Map<DataModel.PersonQuestionnaire, DomainModel.PersonQuestionnaire>(personQuestionnaire);
             }
-            
+
             return retPersonQuestionnaire;
         }
 
         public int Insert(SubmitPersonQuestionnaire personQuestionnaire)
         {
             var personQuestionnaireToInsert = new DataModel.PersonQuestionnaire();
-            var personTypeId=0;
+            var personTypeId = 0;
             var password = "";
 
             //Prelevo la password che perderei nel caso abbia a che fare con 
@@ -52,9 +52,9 @@ namespace MyGenomics.Services
                 using (var context = new MyGenomicsContext())
                 {
                     password = context.People.FirstOrDefault(p => p.Id == personQuestionnaire.Person.Id).Password;
-                }    
+                }
             }
-            
+
             //Calcolo il personTypeId
             var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
             if (personType != null)
@@ -62,11 +62,11 @@ namespace MyGenomics.Services
                 personQuestionnaire.Person.PersonTypeId = personType.Id;
                 personTypeId = personType.Id;
             }
-           
+
             //Rimappo in DataModel
             personQuestionnaireToInsert = Mapper.Map<DomainModel.SubmitPersonQuestionnaire, DataModel.PersonQuestionnaire>(personQuestionnaire);
             personQuestionnaireToInsert.CreatedDate = DateTime.Now;
-            //personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
+            personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
 
             using (var context = new MyGenomicsContext())
             {
@@ -76,19 +76,19 @@ namespace MyGenomics.Services
                     personQuestionnaireToInsert.Person.Id == personQuestionnaireToInsert.PersonId)
                 {
                     personQuestionnaireToInsert.Person.Password = password;
-                    context.Entry(personQuestionnaireToInsert.Person).State = EntityState.Modified;                     
+                    context.Entry(personQuestionnaireToInsert.Person).State = EntityState.Modified;
                     personQuestionnaireToInsert.Person = null;
                 }
-               
+
                 context.PersonQuestionnaires.Add(personQuestionnaireToInsert);
                 context.SaveChanges();
                 return personQuestionnaireToInsert.Id;
-            }            
+            }
         }
 
         private List<DataModel.QuestionnaireResult> CalculateQuestionnaireResult(DataModel.PersonQuestionnaire personQuestionnaire, int personTypeId)
         {
-            var questionnaireResult = new List<DataModel.QuestionnaireResult>();            
+            var questionnaireResult = new List<DataModel.QuestionnaireResult>();
             var products = _questionnairesService.GetProducts();
 
             foreach (var product in products)
@@ -104,7 +104,9 @@ namespace MyGenomics.Services
 
             foreach (var personAnswer in personQuestionnaire.Answers)
             {
+                var questions = new List<DataModel.Question>();
                 var answer = _questionnairesService.GetAnswerAndWeightsByAnswerId(personAnswer.AnswerId, personTypeId);
+                var possibleAnswers = _questionnairesService.GetAnswersAndWeightsByQuestionId(answer.QuestionId, personTypeId);
 
                 //Type of answer -> numeric
                 if (answer.HasAdditionalInfo && answer.AdditionalInfoType == AdditionalInfoType.Numeric)
@@ -115,9 +117,15 @@ namespace MyGenomics.Services
                     {
                         questionnaireResult
                             .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
-                            .Result += answerWeightsForCategory
+                            .PersonTotal += answerWeightsForCategory
                             .Where(awc => valueOfNumericAnswer >= awc.FromNumericAdditionalInfo && valueOfNumericAnswer <= awc.ToNumericAdditionalInfo)
-                            .Sum(aw => aw.Value);
+                            .Sum(aw => aw.Value) - 1;
+
+                        // Get the worse possible answer
+                        questionnaireResult
+                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                            .WorseCaseTotal += possibleAnswers
+                            .Select(a => a.AnswerWeight.Where(w => w.ProductId == answerWeightsForCategory.Key).Max(w => w.Value)).Max() - 1;
 
                         questionnaireResult
                             .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
@@ -127,29 +135,62 @@ namespace MyGenomics.Services
                 //Text or Boolean answer
                 else
                 {
-                    foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductId))
+                    if (answer.Question.QuestionType == QuestionType.MultipleExclusive)
                     {
-                        questionnaireResult
-                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
-                            .Result += answerWeightsForCategory.Sum(aw => aw.Value);
+                        foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductId))
+                        {
+                            questionnaireResult
+                                .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                                .PersonTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
 
-                        questionnaireResult
-                            .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
-                            .NumberOfAnswer++;
+                            // Get the worst possible answer
+                            questionnaireResult
+                                .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                                .WorseCaseTotal += possibleAnswers
+                                .Select(a => a.AnswerWeight.Where(w => w.ProductId == answerWeightsForCategory.Key).Max(w => w.Value)).Max() - 1;
+
+                            questionnaireResult
+                                .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                                .NumberOfAnswer++;
+                        }
+                    }
+                    else if (answer.Question.QuestionType == QuestionType.MultipleNotExclusive)
+                    {
+                        foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductId))
+                        {
+                            questionnaireResult
+                                .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                                .PersonTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
+
+
+                            if (!questions.Any(q => q.Id != answer.QuestionId))
+                            {
+                                // Get the worst possible answers for the specific question
+                                questionnaireResult
+                                    .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                                    .WorseCaseTotal += possibleAnswers
+                                    .Sum(a => a.AnswerWeight.Where(w => w.ProductId == answerWeightsForCategory.Key).Max(w => w.Value) - 1) ;
+
+                                questions.Add(answer.Question);
+                            }
+
+                            questionnaireResult
+                                .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
+                                .NumberOfAnswer++;
+                        }
                     }
                 }
-
             }
 
             questionnaireResult = questionnaireResult
                 .Where(q => q.NumberOfAnswer > 0)
                 .ToList();
 
-            questionnaireResult                
-                .ForEach(q => q.Result = q.Result / q.NumberOfAnswer);
+            questionnaireResult
+                .ForEach(q => q.Result = q.PersonTotal / q.WorseCaseTotal + 1);
 
             return questionnaireResult;
-            
+
         }
 
         public string GetHtmlResultOfPersonQuestionnaire(DomainModel.PersonQuestionnaire personQuestionnaire)
@@ -186,7 +227,7 @@ namespace MyGenomics.Services
 
             strBuilder.AppendLine("</ul><br/>");
 
-            return strBuilder.ToString();            
+            return strBuilder.ToString();
         }
 
         private void SetResultInCrm(DataModel.Person person, List<Product> productCategories)

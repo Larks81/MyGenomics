@@ -85,9 +85,51 @@ namespace MyGenomics.Services
                     .Where(aw => aw.AnswerId == answerId && aw.PersonTypeId == personTypeId)
                     .ToList();
 
+                // If it's not specified the personTypeId get the default
+                if (context.AnswerWeights.Count() == 0)
+                {
+                    answer.AnswerWeight = context.AnswerWeights
+                        .Where(aw => aw.AnswerId == answerId && aw.PersonTypeId == null)
+                        .ToList();
+                }
+
+                answer.Question = context.Questions
+                    .FirstOrDefault(q => q.Id == answer.QuestionId);
+
                 return answer;
             }
         }
+
+        public List<Answer> GetAnswersAndWeightsByQuestionId(int questionId, int personTypeId)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                var answers = context.Answers
+                    .Where(a => a.QuestionId == questionId)
+                    .ToList();
+
+                foreach (var answer in answers)
+                {
+                    answer.AnswerWeight = context.AnswerWeights
+                        .Where(aw => aw.AnswerId == answer.Id && aw.PersonTypeId == personTypeId)
+                        .ToList();
+
+                    // If it's not specified the personTypeId get the default
+                    if (context.AnswerWeights.Count() == 0)
+                    {
+                        answer.AnswerWeight = context.AnswerWeights
+                            .Where(aw => aw.AnswerId == answer.Id && aw.PersonTypeId == null)
+                            .ToList();
+                    }
+
+                    answer.Question = context.Questions
+                        .FirstOrDefault(q => q.Id == answer.QuestionId);
+                }
+
+                return answers;
+            }
+        }
+
         public List<Product> GetProducts()
         {
             using (var context = new MyGenomicsContext())

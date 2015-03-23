@@ -86,7 +86,7 @@ namespace MyGenomics.Services
                     .ToList();
 
                 // If it's not specified the personTypeId get the default
-                if (context.AnswerWeights.Count() == 0)
+                if (answer.AnswerWeight.Count() == 0)
                 {
                     answer.AnswerWeight = context.AnswerWeights
                         .Where(aw => aw.AnswerId == answerId && aw.PersonTypeId == null)
@@ -115,7 +115,7 @@ namespace MyGenomics.Services
                         .ToList();
 
                     // If it's not specified the personTypeId get the default
-                    if (context.AnswerWeights.Count() == 0)
+                    if (answer.AnswerWeight.Count() == 0)
                     {
                         answer.AnswerWeight = context.AnswerWeights
                             .Where(aw => aw.AnswerId == answer.Id && aw.PersonTypeId == null)

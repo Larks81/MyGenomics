@@ -102,9 +102,11 @@ namespace MyGenomics.Services
                 );
             }
 
+
+            var questions = new List<DataModel.Question>();
+
             foreach (var personAnswer in personQuestionnaire.Answers)
             {
-                var questions = new List<DataModel.Question>();
                 var answer = _questionnairesService.GetAnswerAndWeightsByAnswerId(personAnswer.AnswerId, personTypeId);
                 var possibleAnswers = _questionnairesService.GetAnswersAndWeightsByQuestionId(answer.QuestionId, personTypeId);
 
@@ -163,7 +165,7 @@ namespace MyGenomics.Services
                                 .PersonTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
 
 
-                            if (!questions.Any(q => q.Id != answer.QuestionId))
+                            if (!questions.Any(q => q.Id == answer.QuestionId))
                             {
                                 // Get the worst possible answers for the specific question
                                 questionnaireResult
@@ -187,7 +189,7 @@ namespace MyGenomics.Services
                 .ToList();
 
             questionnaireResult
-                .ForEach(q => q.Result = q.PersonTotal / q.WorseCaseTotal + 1);
+                .ForEach(q => q.Result = q.PersonTotal / q.WorseCaseTotal * 8 + 1);
 
             return questionnaireResult;
 

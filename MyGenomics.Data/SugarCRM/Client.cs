@@ -218,6 +218,100 @@ namespace MyGenomics.Data.SugarCRM
         public void SetQuestionnaireResult(Person contact, List<Product> recommendedAnalysis, string sessionId)
         {
             // TO DO: Da implementare sulla base di ciò che deve essere salvato nel CRM
+            Dictionary<string, string> crmProducts = new Dictionary<string, string>();
+
+            //contacts_bc_prodotti_2
+            var json = _serializer.Serialize(new
+            {
+                session = sessionId,
+                module_name = "bc_Prodotti",
+                order_by = "",
+                offset = "0",
+                select_fields = "",
+                link_name_to_fields_array = "",
+                max_results = "100",
+                deleted = 0
+            });
+
+            var values = new NameValueCollection();
+            values = new NameValueCollection();
+            values["method"] = "get_entry_list";
+            values["input_type"] = "json";
+            values["response_type"] = "json";
+            values["rest_data"] = json;
+
+            var response = _client.UploadValues(_sugarUrl, values);
+            var responseString = Encoding.Default.GetString(response);
+
+            var responseList = _serializer.Deserialize<Dictionary<string, dynamic>>(responseString);
+            var count = responseList["result_count"];
+            for (int i = 0; i < count; i++)
+            {
+                var item = responseList["entry_list"][i]["name_value_list"];
+                crmProducts.Add(item["id"]["value"], item["name"]["value"]);
+            }
+
+
+
+            // Get the Contact 
+            string userId = null;
+            json = _serializer.Serialize(new
+            {
+                session = sessionId,
+                module_name = "Contacts",
+                query = "area_riservata_uid_c = '" + contact.UserName + "'",
+                order_by = "",
+                offset = "0",
+                select_fields = "",
+                link_name_to_fields_array = "",
+                max_results = "100",
+                deleted = 0
+            });
+
+            values = new NameValueCollection();
+            values["method"] = "get_entry_list";
+            values["input_type"] = "json";
+            values["response_type"] = "json";
+            values["rest_data"] = json;
+
+            response = _client.UploadValues(_sugarUrl, values);
+            responseString = Encoding.Default.GetString(response);
+
+            responseList = _serializer.Deserialize<Dictionary<string, dynamic>>(responseString);
+            if (responseList["result_count"] > 0)
+            {
+                userId = responseList["entry_list"][0]["name_value_list"]["id"]["value"];
+            }
+
+            if (String.IsNullOrEmpty(userId))
+                return;
+
+            foreach (var item in recommendedAnalysis)
+            {
+                foreach (var prod in crmProducts.Where(p => p.Value.ToLowerInvariant().Contains(item.Name.ToLowerInvariant())))
+                {
+                    var jsonRelation = _serializer.Serialize(new
+                    {
+                        session = sessionId,
+                        module_name = "Contacts",
+                        module_id = userId,
+                        link_field_name = "contacts_bc_prodotti_2",
+                        related_ids = new string[] { prod.Key },
+                        delete = 0
+                    });
+
+                    var relationValues = new NameValueCollection();
+                    relationValues["method"] = "set_relationship";
+                    relationValues["input_type"] = "json";
+                    relationValues["response_type"] = "json";
+                    relationValues["rest_data"] = jsonRelation;
+
+                    var relationResponse = _client.UploadValues(_sugarUrl, relationValues);
+                    var relationString = Encoding.Default.GetString(relationResponse);
+
+                    responseList = _serializer.Deserialize<Dictionary<string, dynamic>>(responseString);
+                } 
+            }
         }
 
 

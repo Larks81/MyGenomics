@@ -232,12 +232,18 @@ namespace MyGenomics.Services
             return strBuilder.ToString();
         }
 
-        private void SetResultInCrm(DataModel.Person person, List<Product> productCategories)
+        public void SetResultInCrm(DomainModel.Person person, List<DomainModel.QuestionnaireResult> result)
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
+            List<Product> products = new List<Product>() ;
+            using (var context = new MyGenomicsContext())
+            {
+                products = context.Products.ToList()
+                    .Where(p => result.Where(r => r.Result > 3).Select(r => r.ProductId).Contains(p.Id)).ToList();
+            }
 
-            sugarClient.SetQuestionnaireResult(person, productCategories, sugarSession);
+            sugarClient.SetQuestionnaireResult(Mapper.Map<DomainModel.Person, DataModel.Person>(person), products, sugarSession);
         }
 
     }

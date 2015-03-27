@@ -111,7 +111,7 @@ namespace MyGenomics.Services
                 var possibleAnswers = _questionnairesService.GetAnswersAndWeightsByQuestionId(answer.QuestionId, personTypeId);
 
                 //Type of answer -> numeric
-                if (answer.HasAdditionalInfo && answer.AdditionalInfoType == AdditionalInfoType.Numeric)
+                if (answer.HasAdditionalInfo && answer.AdditionalInfoType == AdditionalInfoType.Numeric && !string.IsNullOrEmpty(personAnswer.AdditionalInfo))
                 {
                     double valueOfNumericAnswer = Convert.ToDouble(personAnswer.AdditionalInfo);
 
@@ -189,7 +189,7 @@ namespace MyGenomics.Services
                 .ToList();
 
             questionnaireResult
-                .ForEach(q => q.Result = q.PersonTotal / q.WorseCaseTotal * 8 + 1);
+                .ForEach(q => q.Result = ((double)q.PersonTotal / (double)q.WorseCaseTotal) * 8 + 1);
 
             return questionnaireResult;
 

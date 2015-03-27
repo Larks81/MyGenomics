@@ -24,9 +24,9 @@ namespace MyGenomics.ImportTool
     public partial class Form1 : Form
     {
         private QuestionnairesService _questionnaireService = new QuestionnairesService();
-        private PersonsService _personsService = new PersonsService();
+        private ContactService _contactsService = new ContactService();
         private List<Product> _products;
-        private List<PersonType> _personTypes;
+        private List<ContactType> _contactTypes;
         private List<DomainModel.Questionnaire> _questionnaires;
 
         public Form1()
@@ -42,7 +42,7 @@ namespace MyGenomics.ImportTool
             Application.DoEvents();
             _questionnaires = _questionnaireService.GetAll();
             _products = _questionnaireService.GetProducts();
-            _personTypes = _personsService.GetPersonTypes();
+            _contactTypes = _contactsService.GetContactTypes();
             tbLog.Text += "Import in corso..." + Environment.NewLine;
             Application.DoEvents();
             tbLog.Text += InsertQuestionnaireFromExcel(tbPathExcel.Text);            
@@ -107,7 +107,7 @@ namespace MyGenomics.ImportTool
                         string tipoDomanda = wsDomande.GetValue(i, (int)Cell.TipoDomanda).ConvertToString();
                         string testoRisposta = wsDomande.GetValue(i, (int)Cell.TestoRisposta).ConvertToString();
                         string tipoRisposta = wsDomande.GetValue(i, (int)Cell.TipoRisposta).ConvertToString();
-                        string tipoPersona = wsDomande.GetValue(i, (int)Cell.TipoPersona).ConvertToString();
+                        string tipoContacta = wsDomande.GetValue(i, (int)Cell.TipoContacta).ConvertToString();
                         string prodotto = wsDomande.GetValue(i, (int)Cell.Prodotto).ConvertToString();
                         string daValore = wsDomande.GetValue(i, (int)Cell.DaValore).ConvertToString();
                         string aValore = wsDomande.GetValue(i, (int)Cell.AValore).ConvertToString();
@@ -185,7 +185,7 @@ namespace MyGenomics.ImportTool
                                                        !string.IsNullOrEmpty(daValore) ? Convert.ToInt16(daValore) : 0,
                                                    ToNumericAdditionalInfo =
                                                        !string.IsNullOrEmpty(aValore) ? Convert.ToInt16(aValore) : 0,
-                                                   PersonTypeId = GetPersonTypeIdByCode(tipoPersona),
+                                                   ContactTypeId = GetContactTypeIdByCode(tipoContacta),
                                                    ProductId = GetProductIdByCode(prodotto),
                                                    Value = Convert.ToInt16(peso)
                                                };
@@ -232,11 +232,11 @@ namespace MyGenomics.ImportTool
             return _products.FirstOrDefault(p => p.Code == productCode).Id;
         }
 
-        private int? GetPersonTypeIdByCode(string personTypeCode)
+        private int? GetContactTypeIdByCode(string contactTypeCode)
         {
-            if (string.IsNullOrEmpty(personTypeCode))
+            if (string.IsNullOrEmpty(contactTypeCode))
                 return null;
-            return _personTypes.FirstOrDefault(p => p.Code == personTypeCode).Id;
+            return _contactTypes.FirstOrDefault(p => p.Code == contactTypeCode).Id;
         }
 
         private void btnSearchFile_Click(object sender, EventArgs e)

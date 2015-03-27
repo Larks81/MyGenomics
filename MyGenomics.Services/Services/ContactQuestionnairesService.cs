@@ -12,81 +12,81 @@ using SugarCRM = MyGenomics.Data.SugarCRM;
 
 namespace MyGenomics.Services
 {
-    public class PersonQuestionnairesService
+    public class ContactQuestionnairesService
     {
-        private readonly PersonsService _personService = new PersonsService();
+        private readonly ContactService _contactService = new ContactService();
         private readonly QuestionnairesService _questionnairesService = new QuestionnairesService();
-        public DomainModel.PersonQuestionnaire Get(int id)
+        public DomainModel.ContactQuestionnaire Get(int id)
         {
-            DataModel.PersonQuestionnaire personQuestionnaire;
-            var retPersonQuestionnaire = new DomainModel.PersonQuestionnaire();
+            DataModel.ContactQuestionnaire contactQuestionnaire;
+            var retContactQuestionnaire = new DomainModel.ContactQuestionnaire();
             using (var context = new MyGenomicsContext())
             {
-                personQuestionnaire = context.PersonQuestionnaires
+                contactQuestionnaire = context.ContactQuestionnaires
                     .Include(i => i.Questionnaire)
                     .Include(i => i.Questionnaire.Questions.Select(q => q.Anwers))
                     .Include(i => i.Answers)
                     .Include(i => i.Results.Select(r => r.Product))
-                    .Include(i => i.Person.PersonType)
+                    .Include(i => i.Contact.ContactType)
                     .FirstOrDefault(q => q.Id == id);
             }
-            if (personQuestionnaire != null)
+            if (contactQuestionnaire != null)
             {
-                retPersonQuestionnaire = Mapper.Map<DataModel.PersonQuestionnaire, DomainModel.PersonQuestionnaire>(personQuestionnaire);
+                retContactQuestionnaire = Mapper.Map<DataModel.ContactQuestionnaire, DomainModel.ContactQuestionnaire>(contactQuestionnaire);
             }
 
-            return retPersonQuestionnaire;
+            return retContactQuestionnaire;
         }
 
-        public int Insert(SubmitPersonQuestionnaire personQuestionnaire)
+        public int Insert(SubmitContactQuestionnaire contactQuestionnaire)
         {
-            var personQuestionnaireToInsert = new DataModel.PersonQuestionnaire();
-            var personTypeId = 0;
+            var contactQuestionnaireToInsert = new DataModel.ContactQuestionnaire();
+            var contactTypeId = 0;
             var password = "";
 
             //Prelevo la password che perderei nel caso abbia a che fare con 
             //un utente registrato, così da poterla reimpostare
-            if (personQuestionnaireToInsert.PersonId > 0 &&
-                personQuestionnaireToInsert.Person.Id == personQuestionnaireToInsert.PersonId)
+            if (contactQuestionnaireToInsert.ContactId > 0 &&
+                contactQuestionnaireToInsert.Contact.Id == contactQuestionnaireToInsert.ContactId)
             {
                 using (var context = new MyGenomicsContext())
                 {
-                    password = context.People.FirstOrDefault(p => p.Id == personQuestionnaire.Person.Id).Password;
+                    password = context.Contacts.FirstOrDefault(p => p.Id == contactQuestionnaire.Contact.Id).Password;
                 }
             }
 
-            //Calcolo il personTypeId
-            var personType = _personService.GetPersonTypeByPerson(personQuestionnaire.Person);
-            if (personType != null)
+            //Calcolo il contactTypeId
+            var contactType = _contactService.GetContactTypeByContact(contactQuestionnaire.Contact);
+            if (contactType != null)
             {
-                personQuestionnaire.Person.PersonTypeId = personType.Id;
-                personTypeId = personType.Id;
+                contactQuestionnaire.Contact.ContactTypeId = contactType.Id;
+                contactTypeId = contactType.Id;
             }
 
             //Rimappo in DataModel
-            personQuestionnaireToInsert = Mapper.Map<DomainModel.SubmitPersonQuestionnaire, DataModel.PersonQuestionnaire>(personQuestionnaire);
-            personQuestionnaireToInsert.CreatedDate = DateTime.Now;
-            personQuestionnaireToInsert.Results = CalculateQuestionnaireResult(personQuestionnaireToInsert, personTypeId);
+            contactQuestionnaireToInsert = Mapper.Map<DomainModel.SubmitContactQuestionnaire, DataModel.ContactQuestionnaire>(contactQuestionnaire);
+            contactQuestionnaireToInsert.CreatedDate = DateTime.Now;
+            contactQuestionnaireToInsert.Results = CalculateQuestionnaireResult(contactQuestionnaireToInsert, contactTypeId);
 
             using (var context = new MyGenomicsContext())
             {
-                //Se gia presente aggiorno la persona
+                //Se gia presente aggiorno la contacta
                 //altrimenti verra inserita nuova
-                if (personQuestionnaireToInsert.PersonId > 0 &&
-                    personQuestionnaireToInsert.Person.Id == personQuestionnaireToInsert.PersonId)
+                if (contactQuestionnaireToInsert.ContactId > 0 &&
+                    contactQuestionnaireToInsert.Contact.Id == contactQuestionnaireToInsert.ContactId)
                 {
-                    personQuestionnaireToInsert.Person.Password = password;
-                    context.Entry(personQuestionnaireToInsert.Person).State = EntityState.Modified;
-                    personQuestionnaireToInsert.Person = null;
+                    contactQuestionnaireToInsert.Contact.Password = password;
+                    context.Entry(contactQuestionnaireToInsert.Contact).State = EntityState.Modified;
+                    contactQuestionnaireToInsert.Contact = null;
                 }
 
-                context.PersonQuestionnaires.Add(personQuestionnaireToInsert);
+                context.ContactQuestionnaires.Add(contactQuestionnaireToInsert);
                 context.SaveChanges();
-                return personQuestionnaireToInsert.Id;
+                return contactQuestionnaireToInsert.Id;
             }
         }
 
-        private List<DataModel.QuestionnaireResult> CalculateQuestionnaireResult(DataModel.PersonQuestionnaire personQuestionnaire, int personTypeId)
+        private List<DataModel.QuestionnaireResult> CalculateQuestionnaireResult(DataModel.ContactQuestionnaire contactQuestionnaire, int contactTypeId)
         {
             var questionnaireResult = new List<DataModel.QuestionnaireResult>();
             var products = _questionnairesService.GetProducts();
@@ -105,21 +105,21 @@ namespace MyGenomics.Services
 
             var questions = new List<DataModel.Question>();
 
-            foreach (var personAnswer in personQuestionnaire.Answers)
+            foreach (var contactAnswer in contactQuestionnaire.Answers)
             {
-                var answer = _questionnairesService.GetAnswerAndWeightsByAnswerId(personAnswer.AnswerId, personTypeId);
-                var possibleAnswers = _questionnairesService.GetAnswersAndWeightsByQuestionId(answer.QuestionId, personTypeId);
+                var answer = _questionnairesService.GetAnswerAndWeightsByAnswerId(contactAnswer.AnswerId, contactTypeId);
+                var possibleAnswers = _questionnairesService.GetAnswersAndWeightsByQuestionId(answer.QuestionId, contactTypeId);
 
                 //Type of answer -> numeric
-                if (answer.HasAdditionalInfo && answer.AdditionalInfoType == AdditionalInfoType.Numeric && !string.IsNullOrEmpty(personAnswer.AdditionalInfo))
+                if (answer.HasAdditionalInfo && answer.AdditionalInfoType == AdditionalInfoType.Numeric && !string.IsNullOrEmpty(contactAnswer.AdditionalInfo))
                 {
-                    double valueOfNumericAnswer = Convert.ToDouble(personAnswer.AdditionalInfo);
+                    double valueOfNumericAnswer = Convert.ToDouble(contactAnswer.AdditionalInfo);
 
                     foreach (var answerWeightsForCategory in answer.AnswerWeight.GroupBy(aw => aw.ProductId))
                     {
                         questionnaireResult
                             .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
-                            .PersonTotal += answerWeightsForCategory
+                            .ContactTotal += answerWeightsForCategory
                             .Where(awc => valueOfNumericAnswer >= awc.FromNumericAdditionalInfo && valueOfNumericAnswer <= awc.ToNumericAdditionalInfo)
                             .Sum(aw => aw.Value) - 1;
 
@@ -143,7 +143,7 @@ namespace MyGenomics.Services
                         {
                             questionnaireResult
                                 .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
-                                .PersonTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
+                                .ContactTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
 
                             // Get the worst possible answer
                             questionnaireResult
@@ -162,7 +162,7 @@ namespace MyGenomics.Services
                         {
                             questionnaireResult
                                 .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
-                                .PersonTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
+                                .ContactTotal += answerWeightsForCategory.Sum(aw => aw.Value) - 1;
 
 
                             if (!questions.Any(q => q.Id == answer.QuestionId))
@@ -192,7 +192,7 @@ namespace MyGenomics.Services
 
             foreach (var item in questionnaireResult)
             {
-                double tmpRes = ((double)item.PersonTotal / (double)item.WorseCaseTotal) * 8 + 1;
+                double tmpRes = ((double)item.ContactTotal / (double)item.WorseCaseTotal) * 8 + 1;
                 if (tmpRes <= 2)
                     item.Result = 1;
                 else if (tmpRes <= 5)
@@ -205,14 +205,14 @@ namespace MyGenomics.Services
 
         }
 
-        public string GetHtmlResultOfPersonQuestionnaire(DomainModel.PersonQuestionnaire personQuestionnaire)
+        public string GetHtmlResultOfContactQuestionnaire(DomainModel.ContactQuestionnaire contactQuestionnaire)
         {
             var strBuilder = new StringBuilder();
-            strBuilder.AppendLine("<h3>Grazie " + personQuestionnaire.Person.FirstName + "</h3>");
+            strBuilder.AppendLine("<h3>Grazie " + contactQuestionnaire.Contact.FirstName + "</h3>");
             strBuilder.AppendLine("<p>Queste sono le risposte che hai dato</p>");
             strBuilder.AppendLine("<ul>");
 
-            foreach (var answer in personQuestionnaire.Answers)
+            foreach (var answer in contactQuestionnaire.Answers)
             {
                 strBuilder.AppendLine("<li>" + answer.QuestionText + " <b>" + answer.AnswerText + "</b> " + answer.AdditionalInfo + "</li>");
             }
@@ -221,7 +221,7 @@ namespace MyGenomics.Services
             strBuilder.AppendLine("<p>Questi sono i risultati:</p>");
             strBuilder.AppendLine("<ul>");
 
-            foreach (var result in personQuestionnaire.Results)
+            foreach (var result in contactQuestionnaire.Results)
             {
                 if (result.Result <= 3)
                 {
@@ -242,7 +242,7 @@ namespace MyGenomics.Services
             return strBuilder.ToString();
         }
 
-        public void SetResultInCrm(DomainModel.Person person, List<DomainModel.QuestionnaireResult> result)
+        public void SetResultInCrm(DomainModel.Contact contact, List<DomainModel.QuestionnaireResult> result)
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
@@ -253,7 +253,7 @@ namespace MyGenomics.Services
                     .Where(p => result.Where(r => r.Result > 3).Select(r => r.ProductId).Contains(p.Id)).ToList();
             }
 
-            sugarClient.SetQuestionnaireResult(Mapper.Map<DomainModel.Person, DataModel.Person>(person), products, sugarSession);
+            sugarClient.SetQuestionnaireResult(Mapper.Map<DomainModel.Contact, DataModel.Contact>(contact), products, sugarSession);
         }
 
     }

@@ -40,10 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Answer.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="PersonGivenAnswer.cs" />
-    <Compile Include="PersonQuestionnaire.cs" />
-    <Compile Include="PersonType.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="ContactGivenAnswer.cs" />
+    <Compile Include="ContactQuestionnaire.cs" />
+    <Compile Include="ContactType.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="QuestionCategory.cs" />
     <Compile Include="Questionnaire.cs" />

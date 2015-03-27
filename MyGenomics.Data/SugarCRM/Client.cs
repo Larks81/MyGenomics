@@ -56,7 +56,7 @@ namespace MyGenomics.Data.SugarCRM
             return loginResponse["id"];
         }
 
-        public Person GetContact(string userName, string sessionId)
+        public Contact GetContact(string userName, string sessionId)
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
@@ -92,9 +92,9 @@ namespace MyGenomics.Data.SugarCRM
             return null;
         }
 
-        public List<Person> GetContacts(string sessionId)
+        public List<Contact> GetContacts(string sessionId)
         {
-            List<Person> result = new List<Person>();
+            List<Contact> result = new List<Contact>();
 
             var json = _serializer.Serialize(new
             {
@@ -127,7 +127,7 @@ namespace MyGenomics.Data.SugarCRM
         }
 
 
-        public void UpdateExistingContact(Person contact, string sessionId)
+        public void UpdateExistingContact(Contact contact, string sessionId)
         {
             string userId = null;
 
@@ -184,8 +184,8 @@ namespace MyGenomics.Data.SugarCRM
                     ////Gender
                     //LastName = item["last_name"]["value"],
                     //Password = item["area_riservata_psw_c"]["value"],
-                    ////PersonalDoctor = 
-                    ////PersonType =
+                    ////ContactalDoctor = 
+                    ////ContactType =
                     //PhoneNumber = item["phone_mobile"]["value"],
                     //UserName = item["area_riservata_uid_c"]["value"],
 
@@ -215,7 +215,7 @@ namespace MyGenomics.Data.SugarCRM
             // TO DO: Check if there was an error    
         }
 
-        public void SetQuestionnaireResult(Person contact, List<Product> recommendedAnalysis, string sessionId)
+        public void SetQuestionnaireResult(Contact contact, List<Product> recommendedAnalysis, string sessionId)
         {
             // TO DO: Da implementare sulla base di ciò che deve essere salvato nel CRM
             Dictionary<string, string> crmProducts = new Dictionary<string, string>();
@@ -320,7 +320,7 @@ namespace MyGenomics.Data.SugarCRM
 
         #region Private Methods
 
-        private Person MapContact(dynamic item)
+        private Contact MapContact(dynamic item)
         {
             DateTime birthDate;
 
@@ -334,7 +334,7 @@ namespace MyGenomics.Data.SugarCRM
             else
                 birthDate = new DateTime(1900, 1, 1);
 
-            return new Person()
+            return new Contact()
             {
                 //alt_address_city
                 //alt_address_country
@@ -382,8 +382,8 @@ namespace MyGenomics.Data.SugarCRM
                 //Gender
                 LastName = item["last_name"]["value"],
                 Password = item["area_riservata_psw_c"]["value"],
-                //PersonalDoctor = 
-                //PersonType =
+                //ContactalDoctor = 
+                //ContactType =
                 PhoneNumber = item["phone_mobile"]["value"],
                 UserName = item["area_riservata_uid_c"]["value"],
                 InsertDate = DateTime.Now,

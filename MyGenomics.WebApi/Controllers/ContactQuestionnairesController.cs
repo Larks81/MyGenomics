@@ -8,18 +8,18 @@ using MyGenomics.Services;
 
 namespace MyGenomics.Controllers
 {
-    public class PersonQuestionnairesController : ApiController
+    public class ContactQuestionnairesController : ApiController
     {
-        private readonly PersonQuestionnairesService _personQuestionnairesService = new PersonQuestionnairesService();
+        private readonly ContactQuestionnairesService _contactQuestionnairesService = new ContactQuestionnairesService();
         
-        public PersonQuestionnaire Get(int id)
+        public ContactQuestionnaire Get(int id)
         {
-            return _personQuestionnairesService.Get(id);
+            return _contactQuestionnairesService.Get(id);
         }
         
-        public object Post([FromBody]SubmitPersonQuestionnaire value)
+        public object Post([FromBody]SubmitContactQuestionnaire value)
         {                        
-            var idInserted = _personQuestionnairesService.Insert(value);
+            var idInserted = _contactQuestionnairesService.Insert(value);
 
             Task.Factory.StartNew(() =>
             {
@@ -27,11 +27,11 @@ namespace MyGenomics.Controllers
                 var mailTemplatePath = System.Configuration.ConfigurationManager.AppSettings.Get("mailTemplatePath");
                 var mailSubject = System.Configuration.ConfigurationManager.AppSettings.Get("mailSubject");
                 var mailTemplate = File.OpenText(System.Web.Hosting.HostingEnvironment.MapPath(mailTemplatePath)).ReadToEnd();
-                var p = _personQuestionnairesService.Get(idInserted);
+                var p = _contactQuestionnairesService.Get(idInserted);
                 var htmlMail = mailTemplate.Replace("<%content%>",
-                    _personQuestionnairesService.GetHtmlResultOfPersonQuestionnaire(p));
+                    _contactQuestionnairesService.GetHtmlResultOfContactQuestionnaire(p));
 
-                OnlineServices.MailService.SendMail(value.Person.Email, mailSubject, htmlMail);
+                OnlineServices.MailService.SendMail(value.Contact.Email, mailSubject, htmlMail);
             });            
 
             return new { idInserted };

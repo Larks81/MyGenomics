@@ -5,97 +5,97 @@ using AutoMapper;
 using MyGenomics.Data.Context;
 using MyGenomics.DataModel;
 using MyGenomics.DomainModel;
-using Person = MyGenomics.DataModel.Person;
+using Contact = MyGenomics.DataModel.Contact;
 using SugarCRM = MyGenomics.Data.SugarCRM;
 
 namespace MyGenomics.Services
 {
-    public class PersonsService
+    public class ContactService
     {
         #region EF Services
         
-        public DomainModel.Person GetPersonByLogin(string username, string password)
+        public DomainModel.Contact GetContactByLogin(string username, string password)
         {
-            Person dataPerson;
+            Contact dataContact;
             string cryptedPassword = CryptPassword(password);
             using (var context = new MyGenomicsContext())
             {
-                dataPerson = context.People
+                dataContact = context.Contacts
                     .FirstOrDefault(p =>
                         p.UserName.ToUpper() == username.ToUpper() &&
                         p.Password == cryptedPassword);
             }
 
-            if (dataPerson != null)
+            if (dataContact != null)
             {
-                return Mapper.Map<DataModel.Person, DomainModel.Person>(dataPerson);
+                return Mapper.Map<DataModel.Contact, DomainModel.Contact>(dataContact);
             }
             return null;
         }
 
-        public DomainModel.Person Get(int id)
+        public DomainModel.Contact Get(int id)
         {
-            Person dataPerson;
+            Contact dataContact;
             using (var context = new MyGenomicsContext())
             {
-                dataPerson = context.People
+                dataContact = context.Contacts
                     .FirstOrDefault(p =>
                         p.Id == id);
             }
 
-            if (dataPerson != null)
+            if (dataContact != null)
             {
-                return Mapper.Map<DataModel.Person, DomainModel.Person>(dataPerson);
+                return Mapper.Map<DataModel.Contact, DomainModel.Contact>(dataContact);
             }
             return null;
         }
 
-        public List<DomainModel.Person> GetAll()
+        public List<DomainModel.Contact> GetAll()
         {
-            List<DomainModel.Person> result = new List<DomainModel.Person>();
+            List<DomainModel.Contact> result = new List<DomainModel.Contact>();
             using (var context = new MyGenomicsContext())
             {
-                context.People
+                context.Contacts
                     .ToList()
-                    .ForEach(p => result.Add(Mapper.Map<DataModel.Person, DomainModel.Person>(p)));
+                    .ForEach(p => result.Add(Mapper.Map<DataModel.Contact, DomainModel.Contact>(p)));
             }
             return result;
         }
 
-        public DomainModel.PersonType GetPersonTypeByPerson(DomainModel.Person person)
+        public DomainModel.ContactType GetContactTypeByContact(DomainModel.Contact contact)
         {
-            var retPersonType = new DomainModel.PersonType();
-            DataModel.PersonType personType;
+            var retContactType = new DomainModel.ContactType();
+            DataModel.ContactType contactType;
             var today = DateTime.Today;
-            int personAge = today.Year - person.BirthDate.Year;
-            if (person.BirthDate > today.AddYears(-personAge))
+            int contactAge = today.Year - contact.BirthDate.Year;
+            if (contact.BirthDate > today.AddYears(-contactAge))
             {
-                personAge--;
+                contactAge--;
             }
 
             using (var context = new MyGenomicsContext())
             {
-                personType = context.PersonTypes
-                    .FirstOrDefault(t => t.AgeFrom <= personAge && t.AgeTo >= personAge && t.Gender == person.Gender);
+                contactType = context.ContactTypes
+                    .FirstOrDefault(t => t.AgeFrom <= contactAge && t.AgeTo >= contactAge && t.Gender == contact.Gender);
             }
 
-            if (personType != null)
+            if (contactType != null)
             {
-                retPersonType.Id = personType.Id;
-                retPersonType.AgeFrom = personType.AgeFrom;
-                retPersonType.AgeTo = personType.AgeTo;
-                retPersonType.Gender = personType.Gender;
-                retPersonType.Description = personType.Description;
+                retContactType.Id = contactType.Id;
+                retContactType.AgeFrom = contactType.AgeFrom;
+                retContactType.AgeTo = contactType.AgeTo;
+                retContactType.Gender = contactType.Gender;
+                retContactType.Description = contactType.Description;
             }
 
-            return retPersonType;
+            return retContactType;
         }
 
-        public List<DataModel.PersonType> GetPersonTypes()
+        public List<DataModel.ContactType> GetContactTypes()
         {           
             using (var context = new MyGenomicsContext())
             {
-                return context.PersonTypes.ToList();
+                return context.ContactTypes.ToList();
             }            
         }
 
@@ -103,10 +103,10 @@ namespace MyGenomics.Services
         {
             using (var context = new MyGenomicsContext())
             {
-                var personToRemove = context.People.First(p => p.Id == id);
-                if (personToRemove != null)
+                var contactToRemove = context.Contacts.First(p => p.Id == id);
+                if (contactToRemove != null)
                 {
-                    context.People.Remove(personToRemove);
+                    context.Contacts.Remove(contactToRemove);
                     context.SaveChanges();
                 }
             }
@@ -127,38 +127,38 @@ namespace MyGenomics.Services
             using (var context = new MyGenomicsContext())
             {
                 // Faccio la migrazione degli utenti non presenti
-                context.People.AddRange(crmContacts.Where(p => !context.People.Any(c => c.UserName == p.UserName)));
+                context.Contacts.AddRange(crmContacts.Where(p => !context.Contacts.Any(c => c.UserName == p.UserName)));
                 context.SaveChanges();
             }
 
             // TO DO: Allineare eventuali modifiche (es. pwd)?
         }
 
-        public List<DomainModel.Person> GetAllCrmContacts()
+        public List<DomainModel.Contact> GetAllCrmContacts()
         {
-            List<DomainModel.Person> result = new List<DomainModel.Person>();
+            List<DomainModel.Contact> result = new List<DomainModel.Contact>();
 
             MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
 
             string sugarSession = sugarClient.Authenticate();
             sugarClient.GetContacts(sugarSession)
-                .ForEach(p => result.Add(Mapper.Map<DataModel.Person, DomainModel.Person>(p)));
+                .ForEach(p => result.Add(Mapper.Map<DataModel.Contact, DomainModel.Contact>(p)));
 
             return result;
         }
 
-        public DomainModel.Person GetContactFromCrm(string username)
+        public DomainModel.Contact GetContactFromCrm(string username)
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
 
-            return Mapper.Map<Person, DomainModel.Person>(sugarClient.GetContact(username, sugarSession));
+            return Mapper.Map<Contact, DomainModel.Contact>(sugarClient.GetContact(username, sugarSession));
         }
 
-        public DomainModel.Person AuthenticateInCrm(string username, string password)
+        public DomainModel.Contact AuthenticateInCrm(string username, string password)
         {
-            // Prima cerco se la persona è già presente a DB
-            DomainModel.Person result = GetPersonByLogin(username, password);
+            // Prima cerco se la contacta è già presente a DB
+            DomainModel.Contact result = GetContactByLogin(username, password);
             if (result == null)
             {
                 MyGenomics.Data.SugarCRM.Client sugarClient = new Data.SugarCRM.Client();
@@ -172,37 +172,37 @@ namespace MyGenomics.Services
                     using (var context = new MyGenomicsContext())
                     {
                         // Se l'utente non è presente, lo aggiungo prima di tornare l'anagrafica
-                        if (!context.People.Any(p => p.UserName == username))
+                        if (!context.Contacts.Any(p => p.UserName == username))
                         {
                             // Se aggiungo l'utente lo salvo con la pwd Criptata
                             crmContact.Password = CryptPassword(password);
-                            context.People.Add(crmContact);
+                            context.Contacts.Add(crmContact);
                             context.SaveChanges();
                         }
                         else
                         {
                             // l'utente è presente ma la pwd è stata modificata, lo leggo e lo allineo 
-                            UpdatePerson(context.People.First(p => p.UserName == username), crmContact);
+                            UpdateContact(context.Contacts.First(p => p.UserName == username), crmContact);
                             context.SaveChanges();
                         }
                     }
 
                     if (crmContact != null)
                     {
-                        return Mapper.Map<DataModel.Person, DomainModel.Person>(crmContact);
+                        return Mapper.Map<DataModel.Contact, DomainModel.Contact>(crmContact);
                     }
                 }
             }
             return result;
         }
 
-        public void UpdateCrmContact(DomainModel.Person person)
+        public void UpdateCrmContact(DomainModel.Contact contact)
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
 
             sugarClient.UpdateExistingContact(
-                    Mapper.Map<DomainModel.Person, Person>(person),
+                    Mapper.Map<DomainModel.Contact, Contact>(contact),
                     sugarSession);
 
 
@@ -213,23 +213,23 @@ namespace MyGenomics.Services
 
         #region Private Methods
 
-        private void UpdatePerson(Person contextPerson, Person crmContact)
+        private void UpdateContact(Contact contextContact, Contact crmContact)
         {
             // Allinea tutto tranne UserName e Id
-            contextPerson.Address = crmContact.Address;
-            contextPerson.BirthCity = crmContact.BirthCity;
-            contextPerson.BirthDate = crmContact.BirthDate;
-            contextPerson.City = crmContact.City;
-            contextPerson.Email = crmContact.Email;
-            contextPerson.FirstName = crmContact.FirstName;
-            contextPerson.Gender = crmContact.Gender;
-            contextPerson.LastName = crmContact.LastName;
-            contextPerson.Password = CryptPassword(crmContact.Password);
-            contextPerson.PersonalDoctor = crmContact.PersonalDoctor;
-            contextPerson.PersonType = crmContact.PersonType;
-            contextPerson.PersonTypeId = crmContact.PersonTypeId;
-            contextPerson.PhoneNumber = crmContact.PhoneNumber;
-            contextPerson.UpdateDate = DateTime.Now;                
+            contextContact.Address = crmContact.Address;
+            contextContact.BirthCity = crmContact.BirthCity;
+            contextContact.BirthDate = crmContact.BirthDate;
+            contextContact.City = crmContact.City;
+            contextContact.Email = crmContact.Email;
+            contextContact.FirstName = crmContact.FirstName;
+            contextContact.Gender = crmContact.Gender;
+            contextContact.LastName = crmContact.LastName;
+            contextContact.Password = CryptPassword(crmContact.Password);
+            contextContact.ContactalDoctor = crmContact.ContactalDoctor;
+            contextContact.ContactType = crmContact.ContactType;
+            contextContact.ContactTypeId = crmContact.ContactTypeId;
+            contextContact.PhoneNumber = crmContact.PhoneNumber;
+            contextContact.UpdateDate = DateTime.Now;                
         }
 
         private string CryptPassword(string password)

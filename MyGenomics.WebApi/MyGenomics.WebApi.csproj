@@ -190,8 +190,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\PersonQuestionnairesController.cs" />
-    <Compile Include="Controllers\PersonsController.cs" />
+    <Compile Include="Controllers\ContactQuestionnairesController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

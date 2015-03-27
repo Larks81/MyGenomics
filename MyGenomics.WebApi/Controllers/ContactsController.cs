@@ -5,19 +5,19 @@ using MyGenomics.Services;
 
 namespace MyGenomics.Controllers
 {
-    public class PersonController : ApiController
+    public class ContactsController : ApiController
     {
-        private readonly PersonsService _personService = new PersonsService();
+        private readonly ContactService _contactService = new ContactService();
         // GET api/pesrons
-        public IEnumerable<Person> Get()
+        public IEnumerable<Contact> Get()
         {
             return null;
         }
 
         // GET api/pesrons/5
-        public Person Get(string username, string password)
+        public Contact Get(string username, string password)
         {
-            return _personService.GetPersonByLogin(username, password);
+            return _contactService.GetContactByLogin(username, password);
         }
 
         // POST api/pesrons

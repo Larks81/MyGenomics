@@ -1,17 +1,17 @@
 ﻿angular.module('MyGenomicsApp')
-.controller('questionarioController', ['$scope', 'Questionnaire','PersonQuestionnaire','Person','WizardHandler',
-    function ($scope, Questionnaire, PersonQuestionnaire,Person, WizardHandler) {
+.controller('questionarioController', ['$scope', 'Questionnaire','ContactQuestionnaire','Contact','WizardHandler',
+    function ($scope, Questionnaire, ContactQuestionnaire,Contact, WizardHandler) {
 
         $scope.Questionnaires = null;
         $scope.SelectedQuestionnaire = null;
-        $scope.PersonQuestionnaireToFill = null;
-        $scope.PersonQuestionnaire = null;
+        $scope.ContactQuestionnaireToFill = null;
+        $scope.ContactQuestionnaire = null;
         $scope.TotStep = null;
         $scope.ReadyToLoad = false;
-        $scope.PersonErrorText = "";
-        $scope.PersonLoginErrorText = "";
+        $scope.ContactErrorText = "";
+        $scope.ContactLoginErrorText = "";
         $scope.QuestionnaireFinished = false;
-        $scope.PersonQuestionnaireCalculated = false;        
+        $scope.ContactQuestionnaireCalculated = false;        
 
         $scope.Genders = [{
             id: 1,
@@ -42,11 +42,11 @@
         $scope.selectQuestionnaire = function (questionnaireId) {            
             Questionnaire.get({ id: questionnaireId }, function (data) {
                 $scope.SelectedQuestionnaire = data;
-                $scope.buildPersonQuestionnaire(data);
+                $scope.buildContactQuestionnaire(data);
             });            
         };
 
-        $scope.buildPersonQuestionnaire = function (questionnaire) {
+        $scope.buildContactQuestionnaire = function (questionnaire) {
             
             for (var cat = 0; cat < questionnaire.QuestionsCategories.length; cat++) {
                 for (var quest = 0; quest < questionnaire.QuestionsCategories[cat].Questions.length; quest++) {
@@ -64,7 +64,7 @@
                 }
             }
 
-            $scope.PersonQuestionnaireToFill = questionnaire;
+            $scope.ContactQuestionnaireToFill = questionnaire;
             $scope.TotStep = questionnaire.QuestionsCategories.length;
             $scope.ReadyToLoad = true;            
         };
@@ -84,14 +84,14 @@
 
         $scope.submit = function () {
 
-            var personQuestionnaire = new PersonQuestionnaire();
-            questionnaire = $scope.PersonQuestionnaireToFill;
-            personQuestionnaire.QuestionnaireId = questionnaire.Id;
+            var contactQuestionnaire = new ContactQuestionnaire();
+            questionnaire = $scope.ContactQuestionnaireToFill;
+            contactQuestionnaire.QuestionnaireId = questionnaire.Id;
             
-            personQuestionnaire.PersonId = questionnaire.PersonId;
-            personQuestionnaire.Person = questionnaire.Person;
+            contactQuestionnaire.ContactId = questionnaire.ContactId;
+            contactQuestionnaire.Contact = questionnaire.Contact;
                         
-            personQuestionnaire.GivenAnswers = new Array();
+            contactQuestionnaire.GivenAnswers = new Array();
             
             var nQuestion = 0;
             for (var cat = 0; cat < questionnaire.QuestionsCategories.length; cat++) {
@@ -99,23 +99,23 @@
                     for (var answ = 0; answ < questionnaire.QuestionsCategories[cat].Questions[quest].Anwers.length; answ++) {
 
                         if (questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].SelectedAnswer) {
-                            personQuestionnaire.GivenAnswers[nQuestion] = new Object();
-                            personQuestionnaire.GivenAnswers[nQuestion].QuestionId = questionnaire.QuestionsCategories[cat].Questions[quest].Id;                            
-                            personQuestionnaire.GivenAnswers[nQuestion].AnswerId = questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].Id;
-                            personQuestionnaire.GivenAnswers[nQuestion].AdditionalInfo = questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].AdditionalInfo;
+                            contactQuestionnaire.GivenAnswers[nQuestion] = new Object();
+                            contactQuestionnaire.GivenAnswers[nQuestion].QuestionId = questionnaire.QuestionsCategories[cat].Questions[quest].Id;                            
+                            contactQuestionnaire.GivenAnswers[nQuestion].AnswerId = questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].Id;
+                            contactQuestionnaire.GivenAnswers[nQuestion].AdditionalInfo = questionnaire.QuestionsCategories[cat].Questions[quest].Anwers[answ].AdditionalInfo;
                             nQuestion++;
                         }
                     }
                 }
             }
 
-            PersonQuestionnaire.save(personQuestionnaire).$promise
+            ContactQuestionnaire.save(contactQuestionnaire).$promise
             .then(function (data) {
                 var idInserted = data.idInserted;
                 $scope.getQuestionnaireResult(idInserted)
                 .then(function(result) {
-                    $scope.PersonQuestionnaireResult = result;
-                   $scope.PersonQuestionnaireCalculated = true;
+                    $scope.ContactQuestionnaireResult = result;
+                   $scope.ContactQuestionnaireCalculated = true;
                 });
                 $scope.QuestionnaireFinished = true;
             })
@@ -125,19 +125,19 @@
         };
 
         $scope.getQuestionnaireResult = function(id) {
-            return PersonQuestionnaire.get({id : id}).$promise;
+            return ContactQuestionnaire.get({id : id}).$promise;
         };
 
         $scope.makeLogin = function (username,password) {
-            return Person.login({ username: username, password: password }).$promise;
+            return Contact.login({ username: username, password: password }).$promise;
         };
 
 
         $scope.fakeResult = function () {
             $scope.getQuestionnaireResult(2)
                 .then(function (result) {
-                    $scope.PersonQuestionnaireResult = result;
-                    $scope.PersonQuestionnaireCalculated = true;
+                    $scope.ContactQuestionnaireResult = result;
+                    $scope.ContactQuestionnaireCalculated = true;
                 });
             $scope.QuestionnaireFinished = true;
         };
@@ -201,59 +201,59 @@
         };
 
         
-        $scope.validatePerson = function (person) {
+        $scope.validateContact = function (contact) {
 
             var fieldInvalid = false;
             
-            if ((typeof (person) === "undefined") ||                
-                (person.BirthDate == "" || typeof (person.BirthDate) === "undefined" || $('#tbBirthDate').$invalid) ||
-                (person.Email == "" || typeof (person.Email) === "undefined") ||
-                (person.Gender == "" || typeof (person.Gender) === "undefined"))
+            if ((typeof (contact) === "undefined") ||                
+                (contact.BirthDate == "" || typeof (contact.BirthDate) === "undefined" || $('#tbBirthDate').$invalid) ||
+                (contact.Email == "" || typeof (contact.Email) === "undefined") ||
+                (contact.Gender == "" || typeof (contact.Gender) === "undefined"))
             {
                 fieldInvalid = true;                
             }
                 
             if (!fieldInvalid) {
 
-                if (!person.PrivacyLawAgree) {
-                    $scope.PersonErrorText = "* è necessario acconsentire alla legge sulla privacy";
+                if (!contact.PrivacyLawAgree) {
+                    $scope.ContactErrorText = "* è necessario acconsentire alla legge sulla privacy";
                 } else {
                     WizardHandler.wizard().next();
-                    $scope.PersonErrorText = "";
+                    $scope.ContactErrorText = "";
                 }
                 
             } else {
-                $scope.PersonErrorText = "* è necessario compilare i campi obbligatori";
+                $scope.ContactErrorText = "* è necessario compilare i campi obbligatori";
             }
         };
 
-        $scope.validateLogin = function (person) {
+        $scope.validateLogin = function (contact) {
 
             var fieldInvalid = false;
 
-            if ((typeof (person) === "undefined") ||                
-                (person.UserName == "" || typeof (person.UserName) === "undefined") ||
-                (person.Password == "" || typeof (person.Password) === "undefined"))                
+            if ((typeof (contact) === "undefined") ||                
+                (contact.UserName == "" || typeof (contact.UserName) === "undefined") ||
+                (contact.Password == "" || typeof (contact.Password) === "undefined"))                
             {
                 fieldInvalid = true;
             }
 
             if (fieldInvalid == false) {
-                $scope.makeLogin(person.UserName, person.Password)
+                $scope.makeLogin(contact.UserName, contact.Password)
                     .then(function (result) {
                         if (result.Id != "" && result.Id > 0) {
-                            $scope.PersonQuestionnaireToFill.PersonId = result.Id;
-                            $scope.PersonQuestionnaireToFill.Person = result;
+                            $scope.ContactQuestionnaireToFill.ContactId = result.Id;
+                            $scope.ContactQuestionnaireToFill.Contact = result;
                             WizardHandler.wizard().next();
                         } else {
-                            $scope.PersonLoginErrorText = "* Login non valida!";
+                            $scope.ContactLoginErrorText = "* Login non valida!";
                         }
                         
                     }, function (reason) {
-                        $scope.PersonLoginErrorText = "* Login non valida!";
+                        $scope.ContactLoginErrorText = "* Login non valida!";
                     });
             } else {
-                $scope.PersonLoginErrorText = "* Login non valida!";
+                $scope.ContactLoginErrorText = "* Login non valida!";
             }
             
         };

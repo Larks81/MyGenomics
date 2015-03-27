@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MyGenomics.DomainModel
 {
-    public class PersonQuestionnaire
+    public class ContactQuestionnaire
     {
         public int QuestionnaireId { get; set; }
         public string QuestionnaireName { get; set; }
-        public List<PersonGivenAnswer> Answers { get; set; }
-        public Person Person { get; set; }
+        public List<ContactGivenAnswer> Answers { get; set; }
+        public Contact Contact { get; set; }
         public List<QuestionnaireResult> Results { get; set; }
     }
 }

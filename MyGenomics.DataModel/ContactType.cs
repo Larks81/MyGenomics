@@ -2,7 +2,7 @@
 
 namespace MyGenomics.DataModel
 {    
-    public class PersonType : ModelBase
+    public class ContactType : ModelBase
     {
         public string Code { get; set; }
         public Enums Gender { get; set; }

@@ -3,7 +3,7 @@ using System;
 
 namespace MyGenomics.DomainModel
 {
-    public class Person
+    public class Contact
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -16,9 +16,9 @@ namespace MyGenomics.DomainModel
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
-        public string PersonalDoctor { get; set; }
-        public PersonType PersonType { get; set; }
-        public int PersonTypeId { get; set; }
+        public string ContactalDoctor { get; set; }
+        public ContactType ContactType { get; set; }
+        public int ContactTypeId { get; set; }
 
     }
 }

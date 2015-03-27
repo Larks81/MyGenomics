@@ -8,12 +8,12 @@ namespace MyGenomics.DataModel
 {
     public class QuestionnaireResult : ModelBase
     {        
-        public int PersonQuestionnaireId { get; set; }
+        public int ContactQuestionnaireId { get; set; }
         public Product Product { get; set; }
         public int ProductId { get; set; }
         public double Result { get; set; }
         public int WorseCaseTotal { get; set; }
-        public int PersonTotal { get; set; }
+        public int ContactTotal { get; set; }
         public int NumberOfAnswer { get; set; }
     }
 }

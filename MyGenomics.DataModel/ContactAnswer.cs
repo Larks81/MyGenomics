@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyGenomics.DomainModel
+namespace MyGenomics.DataModel
 {
-    public class PersonGivenAnswer
-    {
+    public class ContactAnswer : ModelBase
+    {            
+        public Question Question { get; set; }
         public int QuestionId { get; set; }
-        public string QuestionText { get; set; }
+        public Answer Answer { get; set; }
         public int AnswerId { get; set; }
-        public string AnswerText { get; set; }
         public string AdditionalInfo { get; set; }
     }
 }

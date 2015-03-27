@@ -8,30 +8,30 @@ using MyGenomics.Services;
 namespace MyGenomics.ServicesUnitTest
 {
     [TestClass]
-    public class PersonServicesUnitTest
+    public class ContactServicesUnitTest
     {
         [TestMethod]
         public void MigrateContractFromCRM()
         {
-            List<Person> dbContacts = null;
-            List<Person> afterMigrationDbContacts = null;
-            List<Person> crmContacts = null;
+            List<Contact> dbContacts = null;
+            List<Contact> afterMigrationDbContacts = null;
+            List<Contact> crmContacts = null;
 
             BaseDataService.InitializeServices();
-            PersonsService service = new PersonsService();
+            ContactService service = new ContactService();
 
             try
             {
-                // Leggo tutte le persone da CRM
+                // Leggo tutte le contacte da CRM
                 crmContacts = service.GetAllCrmContacts();
 
-                // Leggo le persone presenti nel DB
+                // Leggo le contacte presenti nel DB
                 dbContacts = service.GetAll();
 
                 // Faccio la migrazione degli utenti non presenti
                 service.MigrateCrmContacts();
 
-                // Rileggo le persone presenti a DB
+                // Rileggo le contacte presenti a DB
                 afterMigrationDbContacts = service.GetAll();
 
                 // Verifico il numero di contatti aggiunti
@@ -57,11 +57,11 @@ namespace MyGenomics.ServicesUnitTest
         [TestMethod]
         public void AuthenticateInCrm()
         {
-            Person dbContact = null;
-            Person crmContact = null;
+            Contact dbContact = null;
+            Contact crmContact = null;
 
             BaseDataService.InitializeServices();
-            PersonsService service = new PersonsService();
+            ContactService service = new ContactService();
 
             try
             {
@@ -72,7 +72,7 @@ namespace MyGenomics.ServicesUnitTest
                 Assert.IsTrue(crmContact != null, "Caricamento contatto dal CRM");
 
                 // Verifico che il contatto sia stato aggiunto a DB
-                dbContact = service.GetPersonByLogin(userName, pwd);
+                dbContact = service.GetContactByLogin(userName, pwd);
                 Assert.IsTrue(dbContact != null, "Aggiunta contatto nel DB");
             }
             catch (Exception e)
@@ -94,14 +94,14 @@ namespace MyGenomics.ServicesUnitTest
         [TestMethod]
         public void UpdateCrmContact()
         {
-            Person crmContact = null;
-            Person updContact = null;
+            Contact crmContact = null;
+            Contact updContact = null;
             string oldEmail = null;
             string newEmail = "demo.demo@demo.com";
             string userName = "demo";
 
             BaseDataService.InitializeServices();
-            PersonsService service = new PersonsService();
+            ContactService service = new ContactService();
 
             try
             {

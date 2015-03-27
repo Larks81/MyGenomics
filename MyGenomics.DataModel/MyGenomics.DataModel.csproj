@@ -44,10 +44,10 @@
     <Compile Include="AnswerWeight.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="ModelBase.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="PersonAnswer.cs" />
-    <Compile Include="PersonQuestionnaire.cs" />
-    <Compile Include="PersonType.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="ContactAnswer.cs" />
+    <Compile Include="ContactQuestionnaire.cs" />
+    <Compile Include="ContactType.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

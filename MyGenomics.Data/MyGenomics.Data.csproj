@@ -50,17 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\MyGenomicsContext.cs" />
-    <Compile Include="Migrations\201503220803196_initial.cs" />
-    <Compile Include="Migrations\201503220803196_initial.Designer.cs">
-      <DependentUpon>201503220803196_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503222018516_dating.cs" />
-    <Compile Include="Migrations\201503222018516_dating.Designer.cs">
-      <DependentUpon>201503222018516_dating.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503231218178_updateResult.cs" />
-    <Compile Include="Migrations\201503231218178_updateResult.Designer.cs">
-      <DependentUpon>201503231218178_updateResult.cs</DependentUpon>
+    <Compile Include="Migrations\201503271921261_initial.cs" />
+    <Compile Include="Migrations\201503271921261_initial.Designer.cs">
+      <DependentUpon>201503271921261_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,14 +75,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503220803196_initial.resx">
-      <DependentUpon>201503220803196_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503222018516_dating.resx">
-      <DependentUpon>201503222018516_dating.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503231218178_updateResult.resx">
-      <DependentUpon>201503231218178_updateResult.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503271921261_initial.resx">
+      <DependentUpon>201503271921261_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

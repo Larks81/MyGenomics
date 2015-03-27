@@ -29,7 +29,7 @@ namespace MyGenomics.Data.Migrations
                                           });
             
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 1,
                                                 Gender = Enums.Male,
@@ -41,7 +41,7 @@ namespace MyGenomics.Data.Migrations
                                                 UpdateDate = DateTime.Now
                                             });
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 2,
                                                 Gender = Enums.Female,
@@ -53,7 +53,7 @@ namespace MyGenomics.Data.Migrations
                                                 UpdateDate = DateTime.Now
                                             });
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 3,
                                                 Gender = Enums.Male,
@@ -65,7 +65,7 @@ namespace MyGenomics.Data.Migrations
                                                 UpdateDate = DateTime.Now
                                             });
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 4,
                                                 Gender = Enums.Female,
@@ -77,7 +77,7 @@ namespace MyGenomics.Data.Migrations
                                                 UpdateDate = DateTime.Now
                                             });
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 5,
                                                 Gender = Enums.Male,
@@ -89,7 +89,7 @@ namespace MyGenomics.Data.Migrations
                                                 UpdateDate = DateTime.Now
                                             });
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 6,
                                                 Gender = Enums.Female,
@@ -102,7 +102,7 @@ namespace MyGenomics.Data.Migrations
                                             });
 
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 7,
                                                 Gender = Enums.Male,
@@ -114,7 +114,7 @@ namespace MyGenomics.Data.Migrations
                                                 UpdateDate = DateTime.Now
                                             });
 
-            context.PersonTypes.AddOrUpdate(new PersonType()
+            context.ContactTypes.AddOrUpdate(new ContactType()
                                             {
                                                 Id = 8,
                                                 Gender = Enums.Female,
@@ -203,7 +203,7 @@ namespace MyGenomics.Data.Migrations
             context.Packages.AddOrUpdate(new Package()
                                          {
                                              Id = 2,
-                                             Name = "Medicina Personalizzata",
+                                             Name = "Medicina Contactalizzata",
                                              InsertDate = DateTime.Now,
                                              UpdateDate = DateTime.Now,
                                              Products = new List<Product>()
@@ -307,25 +307,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Old Woman
+//                                                        //                                            ContactTypeId = 4, //Old Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -338,25 +338,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Old Woman
+//                                                        //                                            ContactTypeId = 4, //Old Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -369,25 +369,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Old Woman
+//                                                        //                                            ContactTypeId = 4, //Old Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -410,25 +410,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -441,25 +441,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -472,25 +472,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -513,25 +513,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -544,25 +544,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -575,25 +575,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -616,25 +616,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -647,25 +647,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -678,25 +678,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -737,49 +737,49 @@ namespace MyGenomics.Data.Migrations
 //                                                                    {
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 1, 
+//                                                                            ContactTypeId = 1, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 2
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 2, 
+//                                                                            ContactTypeId = 2, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 2
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 3, 
+//                                                                            ContactTypeId = 3, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 3
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 4, 
+//                                                                            ContactTypeId = 4, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 3
 //                                                                        },
 //                                                                        new AnswerWeight()                                                                     
 //                                                                        {
-//                                                                            PersonTypeId = 5, 
+//                                                                            ContactTypeId = 5, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 8
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 6, 
+//                                                                            ContactTypeId = 6, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 8
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 7, 
+//                                                                            ContactTypeId = 7, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 9
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 8, 
+//                                                                            ContactTypeId = 8, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 9
 //                                                                        }
@@ -792,49 +792,49 @@ namespace MyGenomics.Data.Migrations
 //                                                                    {
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 1, 
+//                                                                            ContactTypeId = 1, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 1
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 2, 
+//                                                                            ContactTypeId = 2, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 1
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 3, 
+//                                                                            ContactTypeId = 3, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 2
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 4, 
+//                                                                            ContactTypeId = 4, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 2
 //                                                                        },
 //                                                                        new AnswerWeight()                                                                                 
 //                                                                        {
-//                                                                            PersonTypeId = 5, 
+//                                                                            ContactTypeId = 5, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 7
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 6, 
+//                                                                            ContactTypeId = 6, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 7
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 7, 
+//                                                                            ContactTypeId = 7, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 9
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 8, 
+//                                                                            ContactTypeId = 8, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 9
 //                                                                        }
@@ -847,49 +847,49 @@ namespace MyGenomics.Data.Migrations
 //                                                                    {
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 1, 
+//                                                                            ContactTypeId = 1, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 1
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 2, 
+//                                                                            ContactTypeId = 2, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 1
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 3, 
+//                                                                            ContactTypeId = 3, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 2
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 4, 
+//                                                                            ContactTypeId = 4, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 2
 //                                                                        },
 //                                                                        new AnswerWeight()                                                                              
 //                                                                        {
-//                                                                            PersonTypeId = 5, 
+//                                                                            ContactTypeId = 5, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 7
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 6, 
+//                                                                            ContactTypeId = 6, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 7
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 7, 
+//                                                                            ContactTypeId = 7, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 9
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 8, 
+//                                                                            ContactTypeId = 8, 
 //                                                                            ProductId = 1, 
 //                                                                            Value = 9
 //                                                                        }
@@ -962,25 +962,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -993,25 +993,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -1024,25 +1024,25 @@ namespace MyGenomics.Data.Migrations
 //                                                        //                                    {
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 1, //Young Man
+//                                                        //                                            ContactTypeId = 1, //Young Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 1
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 2, //Old Man
+//                                                        //                                            ContactTypeId = 2, //Old Man
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 2
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 3, //Young Woman
+//                                                        //                                            ContactTypeId = 3, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 3
 //                                                        //                                        },
 //                                                        //                                        new AnswerWeight()
 //                                                        //                                        {
-//                                                        //                                            PersonTypeId = 4, //Young Woman
+//                                                        //                                            ContactTypeId = 4, //Young Woman
 //                                                        //                                            ProductId = 1, //Genotest
 //                                                        //                                            Value = 4
 //                                                        //                                        }
@@ -1317,49 +1317,49 @@ namespace MyGenomics.Data.Migrations
 //                                                                    {
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 1,
+//                                                                            ContactTypeId = 1,
 //                                                                            ProductId = 1,
 //                                                                            Value = 2,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 2,
+//                                                                            ContactTypeId = 2,
 //                                                                            ProductId = 1,
 //                                                                            Value = 2,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 3,
+//                                                                            ContactTypeId = 3,
 //                                                                            ProductId = 1,
 //                                                                            Value = 3,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 4,
+//                                                                            ContactTypeId = 4,
 //                                                                            ProductId = 1,
 //                                                                            Value =3,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 5,
+//                                                                            ContactTypeId = 5,
 //                                                                            ProductId = 1,
 //                                                                            Value = 5,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 6,
+//                                                                            ContactTypeId = 6,
 //                                                                            ProductId = 1,
 //                                                                            Value = 5,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 7,
+//                                                                            ContactTypeId = 7,
 //                                                                            ProductId = 1,
 //                                                                            Value = 5,
 //                                                                        },
 //                                                                        new AnswerWeight()
 //                                                                        {
-//                                                                            PersonTypeId = 8,
+//                                                                            ContactTypeId = 8,
 //                                                                            ProductId = 1,
 //                                                                            Value = 5,
 //                                                                        },

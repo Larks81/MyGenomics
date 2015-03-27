@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BaseDataService.cs" />
-    <Compile Include="Services\PersonQuestionnairesService.cs" />
-    <Compile Include="Services\PersonsService.cs" />
+    <Compile Include="Services\ContactQuestionnairesService.cs" />
+    <Compile Include="Services\ContactsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\QuestionnairesService.cs" />
     <Compile Include="Services\QuestionService.cs" />

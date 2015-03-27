@@ -7,7 +7,7 @@ using MyGenomics.Common.enums;
 
 namespace MyGenomics.DomainModel
 {    
-    public class PersonType
+    public class ContactType
     {
         public int Id { get; set; }
         public Enums Gender { get; set; }

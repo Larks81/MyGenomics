@@ -7,7 +7,7 @@ using MyGenomics.Common.enums;
 
 namespace MyGenomics.DataModel
 {
-    public class Person : ModelBase
+    public class Contact : ModelBase
     {        
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,9 +18,9 @@ namespace MyGenomics.DataModel
         public string BirthCity { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string PersonalDoctor { get; set; }
-        public PersonType PersonType { get; set; }
-        public int? PersonTypeId { get; set; }
+        public string ContactalDoctor { get; set; }
+        public ContactType ContactType { get; set; }
+        public int? ContactTypeId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
 

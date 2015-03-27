@@ -74,7 +74,7 @@ namespace MyGenomics.Services
             }
         }
 
-        public Answer GetAnswerAndWeightsByAnswerId(int answerId, int personTypeId)
+        public Answer GetAnswerAndWeightsByAnswerId(int answerId, int contactTypeId)
         {
             using (var context = new MyGenomicsContext())
             {
@@ -82,14 +82,14 @@ namespace MyGenomics.Services
                     .FirstOrDefault(a => a.Id == answerId);
 
                 answer.AnswerWeight = context.AnswerWeights
-                    .Where(aw => aw.AnswerId == answerId && aw.PersonTypeId == personTypeId)
+                    .Where(aw => aw.AnswerId == answerId && aw.ContactTypeId == contactTypeId)
                     .ToList();
 
-                // If it's not specified the personTypeId get the default
+                // If it's not specified the contactTypeId get the default
                 if (answer.AnswerWeight.Count() == 0)
                 {
                     answer.AnswerWeight = context.AnswerWeights
-                        .Where(aw => aw.AnswerId == answerId && aw.PersonTypeId == null)
+                        .Where(aw => aw.AnswerId == answerId && aw.ContactTypeId == null)
                         .ToList();
                 }
 
@@ -100,7 +100,7 @@ namespace MyGenomics.Services
             }
         }
 
-        public List<Answer> GetAnswersAndWeightsByQuestionId(int questionId, int personTypeId)
+        public List<Answer> GetAnswersAndWeightsByQuestionId(int questionId, int contactTypeId)
         {
             using (var context = new MyGenomicsContext())
             {
@@ -111,14 +111,14 @@ namespace MyGenomics.Services
                 foreach (var answer in answers)
                 {
                     answer.AnswerWeight = context.AnswerWeights
-                        .Where(aw => aw.AnswerId == answer.Id && aw.PersonTypeId == personTypeId)
+                        .Where(aw => aw.AnswerId == answer.Id && aw.ContactTypeId == contactTypeId)
                         .ToList();
 
-                    // If it's not specified the personTypeId get the default
+                    // If it's not specified the contactTypeId get the default
                     if (answer.AnswerWeight.Count() == 0)
                     {
                         answer.AnswerWeight = context.AnswerWeights
-                            .Where(aw => aw.AnswerId == answer.Id && aw.PersonTypeId == null)
+                            .Where(aw => aw.AnswerId == answer.Id && aw.ContactTypeId == null)
                             .ToList();
                     }
 
@@ -173,7 +173,7 @@ namespace MyGenomics.Services
                 var questionnaire = context.Questionnaires.FirstOrDefault(q => q.Id == questionnaireId);
                 if (questionnaire != null)
                 {                    
-                    context.PersonQuestionnaires.RemoveRange(context.PersonQuestionnaires.Where(pq => pq.QuestionnaireId == questionnaire.Id));
+                    context.ContactQuestionnaires.RemoveRange(context.ContactQuestionnaires.Where(pq => pq.QuestionnaireId == questionnaire.Id));
                     context.Questionnaires.Remove(questionnaire);
                     context.SaveChanges();
                 }                                
@@ -286,8 +286,8 @@ namespace MyGenomics.Services
         {            
             using (var context = new MyGenomicsContext())
             {
-                context.PersonAnswers.RemoveRange(context.PersonAnswers.Where(pa => pa.Question.QuestionnaireId == questionnaireId && pa.Question.UpdateDate < beforedate));
-                context.PersonAnswers.RemoveRange(context.PersonAnswers.Where(pa => pa.Question.QuestionnaireId == questionnaireId && pa.Answer.UpdateDate < beforedate));                
+                context.ContactAnswers.RemoveRange(context.ContactAnswers.Where(pa => pa.Question.QuestionnaireId == questionnaireId && pa.Question.UpdateDate < beforedate));
+                context.ContactAnswers.RemoveRange(context.ContactAnswers.Where(pa => pa.Question.QuestionnaireId == questionnaireId && pa.Answer.UpdateDate < beforedate));                
                 context.AnswerWeights.RemoveRange(context.AnswerWeights.Where(aw => aw.Answer.Question.QuestionnaireId == questionnaireId && aw.UpdateDate < beforedate));
                 context.Answers.RemoveRange(context.Answers.Where(a => a.Question.QuestionnaireId == questionnaireId && a.UpdateDate < beforedate));
                 context.Questions.RemoveRange(context.Questions.Where(a => a.QuestionnaireId == questionnaireId && a.UpdateDate < beforedate));

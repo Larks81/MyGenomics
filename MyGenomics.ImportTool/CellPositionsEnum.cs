@@ -14,7 +14,7 @@ namespace MyGenomics.ImportTool
             TipoDomanda=4,
             TestoRisposta=5,
             TipoRisposta=6,
-            TipoPersona=7,
+            TipoContacta=7,
             Prodotto=8,
             DaValore=9,
             AValore=10,

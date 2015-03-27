@@ -15,16 +15,16 @@ namespace MyGenomics.Data.Context
         { }
 
         public DbSet<Answer> Answers { get; set; }        
-        public DbSet<Person> People { get; set; }
-        public DbSet<PersonAnswer> PersonAnswers { get; set; }
-        public DbSet<PersonQuestionnaire> PersonQuestionnaires { get; set; }        
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactAnswer> ContactAnswers { get; set; }
+        public DbSet<ContactQuestionnaire> ContactQuestionnaires { get; set; }        
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionCategory> QuestionCategories { get; set; }
         public DbSet<Questionnaire> Questionnaires { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<AnswerWeight> AnswerWeights { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<PersonType> PersonTypes { get; set; }
+        public DbSet<ContactType> ContactTypes { get; set; }
         public DbSet<QuestionnaireResult> QuestionnaireResults { get; set; }
         public DbSet<Package> Packages { get; set; }
 

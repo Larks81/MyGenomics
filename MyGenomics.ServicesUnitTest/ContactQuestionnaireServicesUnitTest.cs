@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 namespace MyGenomics.ServicesUnitTest
 {
     [TestClass]
-    public class PersonQuestionnaireServicesUnitTest
+    public class ContactQuestionnaireServicesUnitTest
     {
         [TestMethod]
         public void SetResultInCrm()
         {
             BaseDataService.InitializeServices();
-            PersonQuestionnairesService questService = new PersonQuestionnairesService();
-            PersonsService persService = new PersonsService();
+            ContactQuestionnairesService questService = new ContactQuestionnairesService();
+            ContactService persService = new ContactService();
 
             try
             {
                 string userName = "demo";
                 string pwd = "demo";
                 // Verifico se il contatto è stato trovato
-                Person crmContact = persService.AuthenticateInCrm(userName, pwd);
+                Contact crmContact = persService.AuthenticateInCrm(userName, pwd);
                 QuestionnaireResult result = new QuestionnaireResult()
                 {
                     NumberOfAnswer = 9,

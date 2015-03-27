@@ -171,7 +171,7 @@ namespace MyGenomics.Services
                                 questionnaireResult
                                     .FirstOrDefault(qr => qr.ProductId == answerWeightsForCategory.Key)
                                     .WorseCaseTotal += possibleAnswers
-                                    .Sum(a => a.AnswerWeight.Where(w => w.ProductId == answerWeightsForCategory.Key).Max(w => w.Value) - 1) ;
+                                    .Sum(a => a.AnswerWeight.Where(w => w.ProductId == answerWeightsForCategory.Key).Max(w => w.Value) - 1);
 
                                 questions.Add(answer.Question);
                             }
@@ -188,8 +188,18 @@ namespace MyGenomics.Services
                 .Where(q => q.NumberOfAnswer > 0)
                 .ToList();
 
-            questionnaireResult
-                .ForEach(q => q.Result = ((double)q.PersonTotal / (double)q.WorseCaseTotal) * 8 + 1);
+
+
+            foreach (var item in questionnaireResult)
+            {
+                double tmpRes = ((double)item.PersonTotal / (double)item.WorseCaseTotal) * 8 + 1;
+                if (tmpRes <= 2)
+                    item.Result = 1;
+                else if (tmpRes <= 5)
+                    item.Result = 2;
+                else
+                    item.Result = 3;
+            }
 
             return questionnaireResult;
 
@@ -236,7 +246,7 @@ namespace MyGenomics.Services
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
-            List<Product> products = new List<Product>() ;
+            List<Product> products = new List<Product>();
             using (var context = new MyGenomicsContext())
             {
                 products = context.Products.ToList()

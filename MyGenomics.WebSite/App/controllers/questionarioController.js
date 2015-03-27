@@ -134,7 +134,7 @@
 
 
         $scope.fakeResult = function () {
-            $scope.getQuestionnaireResult(2)
+            $scope.getQuestionnaireResult(1)
                 .then(function (result) {
                     $scope.PersonQuestionnaireResult = result;
                     $scope.PersonQuestionnaireCalculated = true;
@@ -154,7 +154,7 @@
                     var selectedAnswers = 0;
                     for (var answ = 0 ; answ < questions[k].Anwers.length ; answ++) {
                         if (questions[k].Anwers[answ].SelectedAnswer) {
-                            selectedAnswers++;                            
+                            selectedAnswers++;
                         }
                     }
                     if (selectedAnswers > 1 && questions[k].QuestionType==1) {
@@ -165,40 +165,17 @@
                         fieldInvalid++;
                     } else {
                         questions[k].ErrorText = "";
-                    }                
+                    }
                     
                 } else {
                     questions[k].ErrorText = "";
                 }
             }
-
-            //Check numeric answer
-            for (var k = 0; k < questions.length; k++) {                
-                for (var answ = 0; answ < questions[k].Anwers.length; answ++) {
-                    if (questions[k].Anwers[answ].SelectedAnswer &&
-                        typeof (questions[k].Anwers[answ].AdditionalInfo) !== "undefined" &&
-                        questions[k].Anwers[answ].AdditionalInfo!="" &&
-                        questions[k].Anwers[answ].HasAdditionalInfo &&
-                        questions[k].Anwers[answ].AdditionalInfoType == 2) {
-
-                        var value = questions[k].Anwers[answ].AdditionalInfo;
-                        var valueMin = questions[k].Anwers[answ].MinValueNumericAdditionalInfo;
-                        var valueMax = questions[k].Anwers[answ].MaxValueNumericAdditionalInfo;
-
-                        if (!$.isNumeric(value) || value < valueMin || value > valueMax) {
-                            questions[k].ErrorText = "* è necessario inserire un valore numerico da " + valueMin + " a " + valueMax;
-                            fieldInvalid++;
-                        }
-                    }
-                }
-            }
-
             if (fieldInvalid == 0) {
                 WizardHandler.wizard().next();
             }            
         };
 
-        
         $scope.validatePerson = function (person) {
 
             var fieldInvalid = false;

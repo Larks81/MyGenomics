@@ -50,10 +50,7 @@ namespace MyGenomics.ImportTool
 
         private string InsertQuestionnaireFromExcel(string excelPath)
         {
-            var transOpts = new TransactionOptions();
-            transOpts.IsolationLevel = System.Transactions.IsolationLevel.Serializable;
-
-            using (var transation = new TransactionScope(TransactionScopeOption.Required, transOpts))
+            using (var transation = new TransactionScope())
             {
                 DateTime initDate = DateTime.Now;
                 int numRowExcel = 0;

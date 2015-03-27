@@ -8,6 +8,10 @@
     .not-bullet {
         list-style-type: none;        
     }   
+    .question {
+        font-weight: bold;
+        color: #737373;
+    }
 </style>
 <button ng-click="fakeResult()"></button>
 <div ng-show="!ReadyToLoad">
@@ -20,7 +24,7 @@
                 <div class="panel-heading">Questionario GenoTest</div>
                 <div class="panel-body" style="padding-left: 25px;">                    
                     <div class="row">                        
-                        <div class="col-md-5">
+                        <div class="col-md-12">
                             <fieldset>
                                 <legend>Sei già nostro cliente?</legend>
                                 <form class="form-inline">
@@ -32,7 +36,7 @@
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <label for="tbPassword">Password</label><br />
-                                        <input id="tbPassword" style="width:300px;" class="form-control" type="text" ng-model="PersonQuestionnaireToFill.Person.Password" />
+                                        <input id="tbPassword" style="width:300px;" class="form-control" type="password" ng-model="PersonQuestionnaireToFill.Person.Password" />
                                     </div>
                                 </form>   
                                 <label style="color:Red;">{{PersonLoginErrorText}}</label>                                 
@@ -127,42 +131,37 @@
         </wz-step>
 
         <wz-step ng-repeat-start="category in PersonQuestionnaireToFill.QuestionsCategories">
-
             <div class="panel panel-default">
                 <div class="panel-heading">Questionario GenoTest</div>
-                <div class="panel-body" style="padding-left: 25px;">
-                    <h3>{{category.Name}}</h3>
-                    <br />
-                    <table>
-                        <tr ng-repeat="question in category.Questions">
-                            <td>
-                                {{question.Text}}
-                                <ul ng-class="{'not-bullet' : question.QuestionType==3}">
-                                    <li ng-repeat="possibleAnswer in question.Anwers">
-                                        <input type="checkbox" ng-show="question.QuestionType!=3" ng-model="possibleAnswer.SelectedAnswer" ng-change="uncheckOthersIfNecessary(question,possibleAnswer.Id)">
-                                        {{possibleAnswer.Text}}
-                                        <div ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==1">
-                                            <input type="text" style="width:300px;"
-                                                   ng-disabled="!possibleAnswer.SelectedAnswer"
-                                                   ng-model="possibleAnswer.AdditionalInfo"
-                                                   ng-model-options="{ updateOn: 'blur' }" />
-                                        </div>
-                                        <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==2">
-                                            <br />
-                                            <input type="text" style="width:100px;"
-                                                   ng-disabled="!possibleAnswer.SelectedAnswer"
-                                                   ng-model="possibleAnswer.AdditionalInfo"
-                                                   ng-model-options="{ updateOn: 'blur' }" />
-                                            (da {{possibleAnswer.MinValueNumericAdditionalInfo}} a {{possibleAnswer.MaxValueNumericAdditionalInfo}})
-                                        </span>
-                                    </li>
-                                </ul>
-                                <label style="color:Red;">{{question.ErrorText}}</label>
-                                <br />
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="submit" ng-click="validateAnswers(category.Questions)" class="btn btn-primary btn-lg" value="Continua" />
+                <div class="panel-body" style="padding-left: 25px;">                    
+                    <fieldset>
+                        <legend>{{category.Name}}</legend>                                                
+                            <ul ng-repeat="question in category.Questions">
+                                <li>
+                                    <p class="question">{{question.Text}}<a ng-show="question.IsRequired" style="color:Red;"> *</a> </p>                                    
+                                        <div style="padding-left:10px;" ng-repeat="possibleAnswer in question.Anwers">
+                                            <input type="checkbox" ng-show="question.QuestionType!=3" ng-model="possibleAnswer.SelectedAnswer" ng-change="uncheckOthersIfNecessary(question,possibleAnswer.Id)">
+                                            {{possibleAnswer.Text}}
+                                            <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==1">
+                                                <input type="text" style="width:300px;"
+                                                       ng-disabled="!possibleAnswer.SelectedAnswer"
+                                                       ng-model="possibleAnswer.AdditionalInfo"
+                                                       ng-model-options="{ updateOn: 'blur' }" />
+                                            </span>
+                                            <span ng-show="possibleAnswer.HasAdditionalInfo&&possibleAnswer.AdditionalInfoType==2">
+                                                <input type="text" style="width:100px;"
+                                                       ng-disabled="!possibleAnswer.SelectedAnswer"
+                                                       ng-model="possibleAnswer.AdditionalInfo"
+                                                       ng-model-options="{ updateOn: 'blur' }" />
+                                                (da {{possibleAnswer.MinValueNumericAdditionalInfo}} a {{possibleAnswer.MaxValueNumericAdditionalInfo}})
+                                            </span>
+                                        </div>                                    
+                                    <label style="color:Red;">{{question.ErrorText}}</label>
+                                    <br />
+                                </li>
+                            </ul>
+                        <input type="submit" ng-click="validateAnswers(category.Questions)" class="btn btn-primary btn-lg" value="Continua" />
+                    </fieldset>
                 </div>
             </div>
         </wz-step>        
@@ -208,30 +207,20 @@
                     <h2 class="panel-title"><b>{{result.ProductName}}</b></h2>
                 </div>
                 <div class="panel-body">
-                    <p>{{result.ProductShortDescription}}</p>                   
-                    <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>
-                    <span ng-show="result.Result>=4 && result.Result<=6" title="punteggio: {{result.Result}}" class="label label-warning">Consigliato</span>
-                    <span ng-show="result.Result>=7" title="punteggio: {{result.Result}}" class="label label-danger">Altamente consigliato</span>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>{{result.ProductShortDescription}}</p>
+                            <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>
+                            <span ng-show="result.Result>=4 && result.Result<=6" title="punteggio: {{result.Result}}" class="label label-warning">Consigliato</span>
+                            <span ng-show="result.Result>=7" title="punteggio: {{result.Result}}" class="label label-danger">Altamente consigliato</span>
+                        </div>
+                        <div class="col-md-6">
+                            <a ng-href="{{result.ProductUrl}}" target="_blank"><button type="button" style="float:right" class="btn btn-primary btn-lg">Scoprilo subito!</button></a>
+                        </div>
+                    </div>                                                        
                 </div>
-            </div>
-
-            
-
-            <!--<table>
-                <tr ng-repeat="result in PersonQuestionnaireResult.Results">
-                    <td style="width:300px;">
-                        <h3><a ng-href="{{result.ProductUrl}}" target="_blank">{{result.ProductName}}</a>:</h3>
-                        <p>{{result.ProductShortDescription}}</p>
-                    </td>
-                    <td>
-                        <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>
-                        <span ng-show="result.Result>=4 && result.Result<=6" title="punteggio: {{result.Result}}" class="label label-warning">Consigliato</span>
-                        <span ng-show="result.Result>=7" title="punteggio: {{result.Result}}" class="label label-danger">Altamente consigliato</span>
-                    </td>
-                </tr>
-            </table>-->
-        </div>
-        
+            </div>                    
+        </div>        
     </div>
     
 </div>

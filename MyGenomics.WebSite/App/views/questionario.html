@@ -210,9 +210,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p>{{result.ProductShortDescription}}</p>
-                            <span ng-show="result.Result<=3" title="punteggio: {{result.Result}}" class="label label-success">Non necessario</span>
-                            <span ng-show="result.Result>=4 && result.Result<=6" title="punteggio: {{result.Result}}" class="label label-warning">Consigliato</span>
-                            <span ng-show="result.Result>=7" title="punteggio: {{result.Result}}" class="label label-danger">Altamente consigliato</span>
+                            <span ng-show="result.Result==1" class="label label-success">Non necessario</span>
+                            <span ng-show="result.Result==2" class="label label-warning">Consigliato</span>
+                            <span ng-show="result.Result==3" class="label label-danger">Altamente consigliato</span>
                         </div>
                         <div class="col-md-6">
                             <a ng-href="{{result.ProductUrl}}" target="_blank"><button type="button" style="float:right" class="btn btn-primary btn-lg">Scoprilo subito!</button></a>

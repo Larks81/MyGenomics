@@ -160,7 +160,9 @@
                     if (selectedAnswers > 1 && questions[k].QuestionType==1) {
                         questions[k].ErrorText = "* Risposta multipla non consentita";
                         fieldInvalid++;
-                    } else if (selectedAnswers < 1) {
+                    } else if (selectedAnswers < 1 || (questions[k].QuestionType == 3 &&  //ValueOnly
+                                                       (typeof (questions[k].Anwers[0].AdditionalInfo) === "undefined" ||
+                                                        questions[k].Anwers[0].AdditionalInfo == ""))) {
                         questions[k].ErrorText = "* Risposta necessaria";
                         fieldInvalid++;
                     } else {

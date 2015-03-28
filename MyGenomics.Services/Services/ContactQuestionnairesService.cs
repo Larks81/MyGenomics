@@ -246,7 +246,7 @@ namespace MyGenomics.Services
         {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
-            List<Product> products = new List<Product>();
+            List<DataModel.Product> products = new List<DataModel.Product>();
             using (var context = new MyGenomicsContext())
             {
                 products = context.Products.ToList()

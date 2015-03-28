@@ -8,6 +8,6 @@ namespace MyGenomics.DataModel
 {
     public class Language : ModelBase
     {        
-        public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

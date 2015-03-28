@@ -84,6 +84,8 @@
 
         $scope.submit = function () {
 
+            $scope.QuestionnaireFinished = true;
+
             var contactQuestionnaire = new ContactQuestionnaire();
             questionnaire = $scope.ContactQuestionnaireToFill;
             contactQuestionnaire.QuestionnaireId = questionnaire.Id;
@@ -116,8 +118,7 @@
                 .then(function(result) {
                     $scope.ContactQuestionnaireResult = result;
                    $scope.ContactQuestionnaireCalculated = true;
-                });
-                $scope.QuestionnaireFinished = true;
+                });                
             })
             .catch(function (data) {
                 alert("error");

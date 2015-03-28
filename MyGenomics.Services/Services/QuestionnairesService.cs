@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
+using AutoMapper;
 using MyGenomics.Common.enums;
 using MyGenomics.Data.Context;
 using MyGenomics.DataModel;
 using System.Data.Entity;
+using MyGenomics.Services.Services;
 using Datamodel = MyGenomics.DataModel;
 using Domainmodel = MyGenomics.DomainModel;
 
@@ -74,6 +77,21 @@ namespace MyGenomics.Services
             }
         }
 
+        public Domainmodel.Questionnaire GetQuestionnaireByCode(string questionnaireCode)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                var questionnaire = context.Questionnaires
+                    .FirstOrDefault(q => q.Code == questionnaireCode);
+
+                if (questionnaire != null)
+                {
+                    return Mapper.Map<DataModel.Questionnaire, DomainModel.Questionnaire>(questionnaire);
+                }
+                return null;
+            }
+        }
+
         public Answer GetAnswerAndWeightsByAnswerId(int answerId, int contactTypeId)
         {
             using (var context = new MyGenomicsContext())
@@ -137,6 +155,9 @@ namespace MyGenomics.Services
                 return context.Products.ToList();                    
             }
         }
+
+
+        
 
 
         public int AddOrUpdateQuestionnaire(Questionnaire questionnaire)
@@ -295,5 +316,163 @@ namespace MyGenomics.Services
             }
         }
 
+
+
+        public Domainmodel.ImportQuestionnaire ImportQuestionnaire(Domainmodel.ImportQuestionnaire questionnaireImport)
+        {
+            var contactsService = new ContactService(); 
+            var productsService = new ProductsService(); 
+            var transOpts = new TransactionOptions();
+            transOpts.IsolationLevel = System.Transactions.IsolationLevel.Serializable;
+            int numRowExcel = 0;
+
+            try
+            {
+
+                using (var transation = new TransactionScope(TransactionScopeOption.Required, transOpts))
+                {
+                    DateTime initDate = DateTime.Now;
+                    
+
+                    var contactTypes = contactsService.GetContactTypes();
+                    var products = productsService.GetAll();
+
+                    string questionnaireCode = "";
+                    int questionnaireId = 0;
+                    int languageId = 0;
+                    string questionnaireName = "";
+
+                    questionnaireCode = questionnaireImport.QuestionnaireCode;
+                    languageId = questionnaireImport.LanguageCode;
+                    questionnaireName = questionnaireImport.QuestionnaireName;
+
+                    var questionnaireFound = GetQuestionnaireByCode(questionnaireCode);
+                    if (questionnaireFound != null)
+                    {
+                        questionnaireId = questionnaireFound.Id;
+                    }
+
+                    var questionnaire = new Questionnaire()
+                                        {
+                                            Id = questionnaireId,
+                                            Code = questionnaireCode,
+                                            Name = questionnaireName,
+                                            LanguageId = languageId
+                                        };
+                    questionnaireId = AddOrUpdateQuestionnaire(questionnaire);
+
+                    int categoriaDomandaCorrenteId = -1;
+                    int domandaCorrenteId = -1;
+                    int rispostaCorrenteId = -1;
+                    int pesoCorrenteId = -1;
+
+                    foreach (var detail in questionnaireImport.Details)
+                    {
+                        numRowExcel = detail.RowNumber;
+                        string categoriaDomanda = detail.QuestionCategory;
+                        string testoDomanda = detail.QuestionText;
+                        bool obbligatorio = detail.Required;
+                        QuestionType tipoDomanda = detail.QuestionType;
+                        string testoRisposta = detail.AnswerText;
+                        AdditionalInfoType? tipoRisposta = detail.AnswerType;
+                        string tipoContacta = detail.ContactTypeCode;
+                        string prodotto = detail.ProductCode;
+                        int? daValore = detail.FromValue;
+                        int? aValore = detail.ToValue;
+                        int? peso = detail.Weight;
+                        int? questionCategoryId = detail.QuestionCategoryId;
+                        int? questionId = detail.QuestionId;
+                        int? answerId = detail.AnswerId;
+                        int? weightId = detail.AnswerWeightId;
+
+                        //Rottura Categoria domanda
+                        if (!string.IsNullOrWhiteSpace(categoriaDomanda))
+                        {
+                            var questionCategory = new QuestionCategory()
+                                                   {
+                                                       Id = questionCategoryId.Value,
+                                                       Name = categoriaDomanda
+                                                   };
+                            categoriaDomandaCorrenteId = AddOrUpdateQuestionCategory(questionCategory);                            
+                        }
+
+                        //Rottura domanda
+                        if (!string.IsNullOrWhiteSpace(testoDomanda))
+                        {
+                            var question = new Question()
+                                           {
+                                               Id = questionId.Value,
+                                               QuestionnaireId = questionnaireId,
+                                               CategoryId = categoriaDomandaCorrenteId,
+                                               IsRequired = obbligatorio,
+                                               QuestionType = tipoDomanda,
+                                               StepNumber = detail.RowNumber,
+                                               Text = testoDomanda
+                                           };
+                            domandaCorrenteId = AddOrUpdateQuestion(question);                            
+                        }
+
+                        //Rottura risposta
+                        if (!string.IsNullOrWhiteSpace(testoRisposta) || tipoRisposta.HasValue)
+                        {
+                            var answer = new Answer()
+                                         {
+                                             Id = answerId.Value,
+                                             QuestionId = domandaCorrenteId,
+                                             Text = testoRisposta,
+                                             AdditionalInfoType = detail.AnswerType.Value,
+                                             HasAdditionalInfo = (detail.AnswerType != 0)
+                                         };
+
+                            rispostaCorrenteId = AddOrUpdateAnswer(answer);                            
+                        }
+
+                        if (peso > 0 && !string.IsNullOrWhiteSpace(prodotto))
+                        {
+                            int? contactTypeId = null;
+                            if (!string.IsNullOrWhiteSpace(tipoContacta))
+                            {
+                                contactTypeId = contactTypes.FirstOrDefault(ct => ct.Code == tipoContacta).Id;
+                            }
+
+                            int? productId = null;
+                            if (!string.IsNullOrWhiteSpace(prodotto))
+                            {
+                                productId = products.FirstOrDefault(ct => ct.Code == prodotto).Id;
+                            }
+
+                            var answerWeight = new AnswerWeight()
+                                               {
+                                                   Id = weightId.Value,
+                                                   AnswerId = rispostaCorrenteId,
+                                                   FromNumericAdditionalInfo =
+                                                       (daValore.HasValue) ? daValore.Value : 0,
+                                                   ToNumericAdditionalInfo =
+                                                       (aValore.HasValue) ? aValore.Value : 0,
+                                                   ContactTypeId = contactTypeId,
+                                                   ProductId = productId.Value,
+                                                   Value = peso.Value
+                                               };
+
+                            pesoCorrenteId = AddOrUpdateAnswerWeight(answerWeight);                            
+                        }
+
+                        detail.QuestionCategoryId = categoriaDomandaCorrenteId;
+                        detail.QuestionId = domandaCorrenteId;
+                        detail.AnswerId = rispostaCorrenteId;
+                        detail.AnswerWeightId = pesoCorrenteId;
+
+                    }
+                    transation.Complete();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error in line " + numRowExcel + " " + ex.Message);
+            }
+
+            return questionnaireImport;
+        }
     }
 }

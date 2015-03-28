@@ -23,7 +23,7 @@ namespace MyGenomics.Data.Migrations
             context.Languages.AddOrUpdate(new Language()
                                           {
                                               Id = 1,
-                                              Name = "IT",
+                                              Code = "IT",
                                               InsertDate = DateTime.Now,
                                               UpdateDate = DateTime.Now
                                           });

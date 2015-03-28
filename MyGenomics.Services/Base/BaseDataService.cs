@@ -19,6 +19,8 @@ namespace MyGenomics.Services
             Mapper.CreateMap<DataModel.Contact, DomainModel.Contact>();
             Mapper.CreateMap<DomainModel.Contact, DataModel.Contact>();
             Mapper.CreateMap<DomainModel.ContactGivenAnswer, DataModel.ContactAnswer>();
+            Mapper.CreateMap<DataModel.Product, DomainModel.Product>();
+            Mapper.CreateMap<DataModel.Questionnaire, DomainModel.Questionnaire>();
 
             Mapper.CreateMap<DomainModel.SubmitContactQuestionnaire, DataModel.ContactQuestionnaire>()
                 .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.GivenAnswers)); ;

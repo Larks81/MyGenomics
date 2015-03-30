@@ -27,10 +27,7 @@ namespace MyGenomics.Data.Context
         public DbSet<ContactType> ContactTypes { get; set; }
         public DbSet<QuestionnaireResult> QuestionnaireResults { get; set; }
         public DbSet<Package> Packages { get; set; }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        //}
+        public DbSet<WebApiLog> WebApiLogs { get; set; }
+       
     }
 }

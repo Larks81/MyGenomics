@@ -23,24 +23,25 @@
        
         $scope.getQuestionnaires = function () {
             var questionnaireDefault = "MYGENOMICS_IT";
-            var questionnaireDefaultId;
-            Questionnaire.query( function (data) {
-                $scope.Questionnaires = data;
+            $scope.selectQuestionnaire(questionnaireDefault);
+            //var questionnaireDefaultId;
+            //Questionnaire.query( function (data) {
+            //    $scope.Questionnaires = data;
 
-                for (quest = 0; quest < data.length; quest++) {
-                    if (data[quest].Code == questionnaireDefault) {
-                        questionnaireDefaultId = data[quest].Id;
-                    }
-                }
+            //    for (quest = 0; quest < data.length; quest++) {
+            //        if (data[quest].Code == questionnaireDefault) {
+            //            questionnaireDefaultId = data[quest].Id;
+            //        }
+            //    }
 
-                if (questionnaireDefaultId > 0) {
-                    $scope.selectQuestionnaire(questionnaireDefaultId);
-                }                
-            });                        
+            //    if (questionnaireDefaultId > 0) {
+            //        $scope.selectQuestionnaire(questionnaireDefaultId);
+            //    }                
+            //});                        
         };
 
-        $scope.selectQuestionnaire = function (questionnaireId) {            
-            Questionnaire.get({ id: questionnaireId }, function (data) {
+        $scope.selectQuestionnaire = function (questionnaireCode) {            
+            Questionnaire.get({ code: questionnaireCode }, function (data) {
                 $scope.SelectedQuestionnaire = data;
                 $scope.buildContactQuestionnaire(data);
             });            

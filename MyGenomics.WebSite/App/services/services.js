@@ -27,7 +27,8 @@ appServices.factory('ContactQuestionnaire', [
     '$resource', 'configs',
     function ($resource, configs) {
         return $resource(configs.baseWebApiUrl + 'api/ContactQuestionnaires/:id', {}, {
-            get: { method: 'GET', params: { id: '@id' }, isArray: false }
+            get: { method: 'GET', params: { id: '@id' }, isArray: false },
+            save: { method: 'POST' }
         });
     }
 ]);

@@ -21,9 +21,9 @@ namespace MyGenomics.Controllers
         }
 
         // GET api/questionnaire/5
-        public Questionnaire Get(int id)
+        public Questionnaire Get(string code)
         {            
-            return _questionnairesService.Get(id);
+            return _questionnairesService.Get(code);
         }
 
         public ImportQuestionnaire ImportQuestionnaire(ImportQuestionnaire importQuestionnaire, string password)

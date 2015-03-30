@@ -53,6 +53,7 @@
     <Compile Include="QuestionnaireImport.cs" />
     <Compile Include="QuestionnaireResult.cs" />
     <Compile Include="SubmitPersonQuestionnaire.cs" />
+    <Compile Include="WebApiLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">

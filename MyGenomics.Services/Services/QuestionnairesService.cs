@@ -15,7 +15,7 @@ namespace MyGenomics.Services
 {
     public class QuestionnairesService
     {
-        public Domainmodel.Questionnaire Get(int id)
+        public Domainmodel.Questionnaire Get(string code)
         {
             Datamodel.Questionnaire questionnaireDataModel;
             var retQuestionnaire = new Domainmodel.Questionnaire();
@@ -26,7 +26,7 @@ namespace MyGenomics.Services
                     .Include(i => i.Questions.Select(a=>a.Anwers))
                     .Include(i => i.Questions.Select(a => a.Category))
                     .Include(i => i.Questions.Select(q => q.Anwers.Select(a => a.AnswerWeight)))                    
-                    .FirstOrDefault(q=>q.Id==id);
+                    .FirstOrDefault(q=>q.Code==code);
 
                 questionnaireDataModel.Questions = questionnaireDataModel.Questions.OrderBy(q => q.StepNumber).ToList();                
             }

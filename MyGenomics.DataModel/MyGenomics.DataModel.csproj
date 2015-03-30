@@ -55,6 +55,7 @@
     <Compile Include="QuestionCategory.cs" />
     <Compile Include="Questionnaire.cs" />
     <Compile Include="QuestionnaireResult.cs" />
+    <Compile Include="WebApiLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

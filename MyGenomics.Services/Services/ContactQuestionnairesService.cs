@@ -44,6 +44,8 @@ namespace MyGenomics.Services
             var contactTypeId = 0;
             var password = "";
 
+            ContactService contactService = new ContactService();
+
             //Prelevo la password che perderei nel caso abbia a che fare con 
             //un utente registrato, così da poterla reimpostare
             if (contactQuestionnaire.ContactId > 0)
@@ -67,6 +69,7 @@ namespace MyGenomics.Services
             contactQuestionnaireToInsert.CreatedDate = DateTime.Now;
             contactQuestionnaireToInsert.Results = CalculateQuestionnaireResult(contactQuestionnaireToInsert, contactTypeId);
 
+
             using (var context = new MyGenomicsContext())
             {
                 //Se gia presente aggiorno la contacta
@@ -74,6 +77,8 @@ namespace MyGenomics.Services
                 if (contactQuestionnaireToInsert.ContactId > 0 &&
                     contactQuestionnaireToInsert.Contact.Id == contactQuestionnaireToInsert.ContactId)
                 {
+                    contactService.UpdateCrmContact(contactQuestionnaire.Contact);
+
                     contactQuestionnaireToInsert.Contact.Password = password;
                     context.Entry(contactQuestionnaireToInsert.Contact).State = EntityState.Modified;
                     contactQuestionnaireToInsert.Contact = null;
@@ -81,6 +86,11 @@ namespace MyGenomics.Services
 
                 context.ContactQuestionnaires.Add(contactQuestionnaireToInsert);
                 context.SaveChanges();
+
+                SetResultInCrm(contactQuestionnaire.Contact,
+                    contactQuestionnaireToInsert.Results
+                    .Select(s => Mapper.Map<DataModel.QuestionnaireResult, DomainModel.QuestionnaireResult>(s)).ToList()); 
+
                 return contactQuestionnaireToInsert.Id;
             }
         }

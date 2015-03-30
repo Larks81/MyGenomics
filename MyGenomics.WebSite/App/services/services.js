@@ -3,7 +3,7 @@
 appServices.factory('Contact', [
     '$resource', 'configs',
     function ($resource, configs) {
-        return $resource(configs.baseWebApiUrl + 'api/contact', {}, {
+        return $resource(configs.baseWebApiUrl + 'api/contacts', {}, {
             login: { method: 'GET', isArray: false }
         });
     }

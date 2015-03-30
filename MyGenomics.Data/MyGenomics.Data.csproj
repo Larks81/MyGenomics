@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201503280951334_patch1.Designer.cs">
       <DependentUpon>201503280951334_patch1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503300954494_fixPersonalDoctor.cs" />
+    <Compile Include="Migrations\201503300954494_fixPersonalDoctor.Designer.cs">
+      <DependentUpon>201503300954494_fixPersonalDoctor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503280951334_patch1.resx">
       <DependentUpon>201503280951334_patch1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503300954494_fixPersonalDoctor.resx">
+      <DependentUpon>201503300954494_fixPersonalDoctor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -225,7 +225,7 @@ namespace MyGenomics.Services
             contextContact.Gender = crmContact.Gender;
             contextContact.LastName = crmContact.LastName;
             contextContact.Password = CryptPassword(crmContact.Password);
-            contextContact.ContactalDoctor = crmContact.ContactalDoctor;
+            contextContact.PersonalDoctor = crmContact.PersonalDoctor;
             contextContact.ContactType = crmContact.ContactType;
             contextContact.ContactTypeId = crmContact.ContactTypeId;
             contextContact.PhoneNumber = crmContact.PhoneNumber;

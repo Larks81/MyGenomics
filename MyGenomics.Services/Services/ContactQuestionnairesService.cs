@@ -46,8 +46,7 @@ namespace MyGenomics.Services
 
             //Prelevo la password che perderei nel caso abbia a che fare con 
             //un utente registrato, così da poterla reimpostare
-            if (contactQuestionnaireToInsert.ContactId > 0 &&
-                contactQuestionnaireToInsert.Contact.Id == contactQuestionnaireToInsert.ContactId)
+            if (contactQuestionnaire.ContactId > 0)
             {
                 using (var context = new MyGenomicsContext())
                 {

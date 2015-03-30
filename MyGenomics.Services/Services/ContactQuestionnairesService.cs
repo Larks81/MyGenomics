@@ -9,6 +9,7 @@ using MyGenomics.DataModel;
 using System.Data.Entity;
 using MyGenomics.DomainModel;
 using SugarCRM = MyGenomics.Data.SugarCRM;
+using System.Threading.Tasks;
 
 namespace MyGenomics.Services
 {
@@ -77,7 +78,11 @@ namespace MyGenomics.Services
                 if (contactQuestionnaireToInsert.ContactId > 0 &&
                     contactQuestionnaireToInsert.Contact.Id == contactQuestionnaireToInsert.ContactId)
                 {
-                    contactService.UpdateCrmContact(contactQuestionnaire.Contact);
+                    Task t = new Task(() =>
+                        { contactService.UpdateCrmContact(contactQuestionnaire.Contact); });
+
+                    t.Start();
+
 
                     contactQuestionnaireToInsert.Contact.Password = password;
                     context.Entry(contactQuestionnaireToInsert.Contact).State = EntityState.Modified;
@@ -87,9 +92,10 @@ namespace MyGenomics.Services
                 context.ContactQuestionnaires.Add(contactQuestionnaireToInsert);
                 context.SaveChanges();
 
-                SetResultInCrm(contactQuestionnaire.Contact,
-                    contactQuestionnaireToInsert.Results
-                    .Select(s => Mapper.Map<DataModel.QuestionnaireResult, DomainModel.QuestionnaireResult>(s)).ToList()); 
+                Task t1 = new Task(() =>
+                    { SetResultInCrm(contactQuestionnaire.Contact, contactQuestionnaireToInsert.Results); });
+
+                t1.Start();
 
                 return contactQuestionnaireToInsert.Id;
             }
@@ -253,13 +259,18 @@ namespace MyGenomics.Services
 
         public void SetResultInCrm(DomainModel.Contact contact, List<DomainModel.QuestionnaireResult> result)
         {
+            SetResultInCrm(contact, result.Select(r => Mapper.Map<DomainModel.QuestionnaireResult, DataModel.QuestionnaireResult>(r)).ToList());
+        }
+
+        private void SetResultInCrm(DomainModel.Contact contact, List<DataModel.QuestionnaireResult> result)
+        {
             SugarCRM.Client sugarClient = new SugarCRM.Client();
             string sugarSession = sugarClient.Authenticate();
             List<DataModel.Product> products = new List<DataModel.Product>();
             using (var context = new MyGenomicsContext())
             {
                 products = context.Products.ToList()
-                    .Where(p => result.Where(r => r.Result > 3).Select(r => r.ProductId).Contains(p.Id)).ToList();
+                    .Where(p => result.Where(r => r.Result > 1).Select(r => r.ProductId).Contains(p.Id)).ToList();
             }
 
             sugarClient.SetQuestionnaireResult(Mapper.Map<DomainModel.Contact, DataModel.Contact>(contact), products, sugarSession);

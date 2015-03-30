@@ -16,6 +16,7 @@ namespace MyGenomics.Services
         public static void InitAutomapper()
         {
             Mapper.CreateMap<DataModel.ContactQuestionnaire, DomainModel.ContactQuestionnaire>();
+            Mapper.CreateMap<DomainModel.ContactQuestionnaire, DataModel.ContactQuestionnaire>();
             Mapper.CreateMap<DataModel.Contact, DomainModel.Contact>();
             Mapper.CreateMap<DomainModel.Contact, DataModel.Contact>();
             Mapper.CreateMap<DomainModel.ContactGivenAnswer, DataModel.ContactAnswer>();

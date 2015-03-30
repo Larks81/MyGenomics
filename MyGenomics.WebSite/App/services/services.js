@@ -4,7 +4,12 @@ appServices.factory('Contact', [
     '$resource', 'configs',
     function ($resource, configs) {
         return $resource(configs.baseWebApiUrl + 'api/contacts', {}, {
-            login: { method: 'GET', isArray: false }
+            login: { method: 'GET', 
+                transformResponse: function (data) { 
+                    data = angular.fromJson(data); 
+                    data.BirthDate = new Date(data.BirthDate); 
+                    return data; },
+                isArray: false }
         });
     }
 ]);

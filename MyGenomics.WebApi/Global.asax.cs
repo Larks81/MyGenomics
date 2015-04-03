@@ -17,12 +17,12 @@ namespace MyGenomics
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            //AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageHandler());
+            //WebApiConfig.Register(GlobalConfiguration.Configuration);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageHandler());
         }
     }
 }

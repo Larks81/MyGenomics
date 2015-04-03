@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using MyGenomics.Services;
+using System.Net.Http.Formatting;
+using Newtonsoft.Json.Serialization;
 
 
 namespace MyGenomics
@@ -15,6 +17,8 @@ namespace MyGenomics
     {
         public static void Register(HttpConfiguration config)
         {
+            config.MapHttpAttributeRoutes();
+
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
 
@@ -24,14 +28,8 @@ namespace MyGenomics
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            // Per abilitare il supporto query per le azioni con tipo restituito IQueryable o IQueryable<T>, rimuovere il commento dalla seguente riga di codice.
-            // Per evitare l'elaborazione di query dannose o impreviste, utilizzare le impostazioni di convalida definite in QueryableAttribute per convalidare le query in ingresso.
-            // Per ulteriori informazioni, visitare il sito Web all'indirizzo http://go.microsoft.com/fwlink/?LinkId=279712.
-            //config.EnableQuerySupport();
-
-            // Per disabilitare la funzionalità di traccia nell'applicazione, impostare come commento o rimuovere la seguente riga di codice
-            // Per ulteriori informazioni, visitare: http://www.asp.net/web-api
-            //config.EnableSystemDiagnosticsTracing();
+            //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             
             BaseDataService.InitializeServices();
 

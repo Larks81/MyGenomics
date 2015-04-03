@@ -13,14 +13,14 @@
         color: #737373;
     }
 </style>
-<!--<button ng-click="fakeResult()"></button>-->
+<!--<button ng-click="fakeResult()"></button> ciao-->
 <div ng-show="!ReadyToLoad">
     <img src="../../Content/themes/base/images/loading.gif" />
 </div>
 <div ng-init="getQuestionnaires()" class="center">
     <wizard on-finish="finishedWizard()" ng-show="ReadyToLoad && !QuestionnaireFinished">
         <wz-step title="">
-            <div class="panel panel-default">
+            <div class="panel panel-default"> 
                 <div class="panel-heading">Questionario GenoTest</div>
                 <div class="panel-body" style="padding-left: 25px;">                    
                     <div class="row">                        

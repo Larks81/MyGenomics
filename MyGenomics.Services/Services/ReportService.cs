@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Pechkin;
-using WkHtmlToXDotNet;
 
 namespace MyGenomics.Services.Services
 {

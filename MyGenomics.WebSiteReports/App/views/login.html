@@ -1,6 +1,6 @@
 ﻿<div class="full-screen">
     <div class="middle-box text-center loginscreen animated fadeInDown">
-        <h1 class="logo-name">MyGenomics Kreo</h1>
+        <h1 class="logo-name">Kreo</h1>
         <form role="form" ng-submit="login()">
             <div class="form-group">
                 <input type="text" class="form-control" id="username" placeholder="Username" ng-model="UserName">
@@ -10,5 +10,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
+        {{LoginErrorMessage}}
     </div>
 </div>

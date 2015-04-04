@@ -18,6 +18,21 @@ app.config([
             controller: 'mainController',
             title: 'Pannelli'
         })
+        .when('/capitoli', {
+            templateUrl: '/App/views/capitoli.html',
+            controller: 'mainController',
+            title: 'Capitoli'
+        })
+        .when('/genotests', {
+            templateUrl: '/App/views/genotests.html',
+            controller: 'mainController',
+            title: 'Genotests'
+        })
+        .when('/livelli', {
+            templateUrl: '/App/views/livelli.html',
+            controller: 'mainController',
+            title: 'Livelli'
+        })
         .otherwise({
             redirectTo: '/login'
         });
@@ -28,14 +43,23 @@ app.config([
     }]);
 app.run(function ($rootScope, $route, $window, $location) {
 
-    $rootScope.$on("$locationChangeStart", function (event, next, current) {
-        if ($window.sessionStorage.token == undefined) {
+    $rootScope.$on("$locationChangeStart", function (event, next, current) {        
+        var nextPath = $location.path();
+        if ($window.sessionStorage.token == undefined || $window.sessionStorage.token=="") {
             // no logged user, we should be going to #login
-            if (next.templateUrl != "html/Login.html") {
+            if (nextPath != "/login") {
                 //event.preventDefault();
                 $location.path("/login");
             }
-        }
+            $rootScope.isLogged = false;            
+        } else {
+            if (nextPath == "/login" || nextPath == undefined) {
+                //event.preventDefault();
+                $location.path("/dashboard");
+            }
+            $rootScope.isLogged = true;
+            $rootScope.userLogged = $window.sessionStorage.userLogged;
+        } 
     });
 
     $rootScope.$on("$routeChangeSuccess", function (currentRoute, previousRoute) {
@@ -49,21 +73,23 @@ app.factory('authHttpResponseInterceptor', ['$rootScope', '$window', '$q', '$loc
     function ($rootScope, $window, $q, $location) {
         return {
             request: function(config) {
-
+                $rootScope.isLoading = true;
                 config.headers = config.headers || {};
                 if ($window.sessionStorage.token && $window.sessionStorage.token != "") {
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
                 }
                 return config;
             },
-            response: function(response) {
+            response: function (response) {
+                $rootScope.isLoading = false;
                 if (response.status === 401) {
                     var returnPath = $location.$$url;
                     $location.path('/login').search('returnTo', returnPath);
                 }
                 return response || $q.when(response);
             },
-            responseError: function(rejection) {
+            responseError: function (rejection) {
+                $rootScope.isLoading = false;
                 if (rejection.status === 401) {
                     var returnPath = $location.$$url;
                     $location.path('/login').search('returnTo', returnPath);

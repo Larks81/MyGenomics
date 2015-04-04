@@ -136,6 +136,9 @@
     <Content Include="App\services\services.js" />
     <Content Include="App\views\dashboard.html" />
     <Content Include="App\views\login.html" />
+    <Content Include="App\views\capitoli.html" />
+    <Content Include="App\views\genotests.html" />
+    <Content Include="App\views\livelli.html" />
     <Content Include="App\views\pannelli.html" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
@@ -349,6 +352,7 @@
     <Content Include="img\sprite-skin-nice.png" />
     <Content Include="img\user-bg.png" />
     <Content Include="img\user.jpg" />
+    <Content Include="img\user.png" />
     <Content Include="img\user2.jpg" />
     <Content Include="js\AdminLTE\app.js" />
     <Content Include="js\AdminLTE\dashboard.js" />

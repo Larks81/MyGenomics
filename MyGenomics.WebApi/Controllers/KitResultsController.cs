@@ -13,7 +13,7 @@ namespace MyGenomics.Controllers
         [Authorize(Roles = "customer")]
         public IEnumerable<string> Get()
         {
-            ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
+            var principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
             var customClaimValue = principal.Claims.Where(c => c.Type == ClaimTypes.Role).Single().Value;
 
             return new List<string>() { "ciao", "miao", "bao" };

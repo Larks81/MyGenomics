@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using AutoMapper;
 using MyGenomics.Data.Context;
 
@@ -35,6 +37,39 @@ namespace MyGenomics.Services
                 .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.Product.Price))
                 .ForMember(dest => dest.ProductShortDescription, opt => opt.MapFrom(src => src.Product.ShortDescription))
                 .ForMember(dest => dest.ProductDescription, opt => opt.MapFrom(src => src.Product.Description));
+
+            Mapper.CreateMap<DataModel.Panel, DomainModel.PanelItemList>()
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Translations.Any() ? src.Translations.FirstOrDefault().Title : null))
+                .ForMember(dest => dest.ContentsCount, opt => opt.MapFrom(src => src.PanelContents.Count()));
+
+            Mapper.CreateMap<DomainModel.PanelDetail, DataModel.Panel>()
+                .ForMember(dest => dest.Chapters,
+                    opt => opt.MapFrom(src => src.Chapters.Select(c => new DataModel.Chapter() {Id = c.Id})))
+                .ForMember(dest => dest.Translations,
+                    opt => opt.MapFrom(src => new List<DataModel.PanelTranslation>(){
+                        new DataModel.PanelTranslation()
+                        {
+                            Id = src.TranslationId.Value,
+                            LanguageId = src.LanguageId,                        
+                            Title = src.Title,
+                            PanelId = src.Id
+                        }
+                    }));
+
+            Mapper.CreateMap<DomainModel.PanelContentDetail, DataModel.PanelContent>()
+                .ForMember(dest => dest.Translations,
+                    opt => opt.MapFrom(src => 
+                        new List<DataModel.PanelContentTranslation>(){
+                                new DataModel.PanelContentTranslation()
+                                {
+                                    Id = src.TranslationId ?? 0,
+                                    LanguageId = src.LanguageId,
+                                    ShortText = src.ShortText,
+                                    Text = src.Text,
+                                    Title = src.Title,
+                                    PanelContentId = src.Id
+                                } 
+                            }));             
 
             Mapper.CreateMap<DataModel.ContactAnswer, DomainModel.ContactGivenAnswer>()
             .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.Answer.Text))

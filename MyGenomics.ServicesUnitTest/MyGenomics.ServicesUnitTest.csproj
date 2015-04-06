@@ -70,6 +70,7 @@
     <Compile Include="ContactQuestionnaireServicesUnitTest.cs" />
     <Compile Include="ContactServicesUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportPdfServiceUnitTest.cs" />
     <Compile Include="ReportServiceUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>

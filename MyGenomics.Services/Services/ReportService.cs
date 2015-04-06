@@ -1,117 +1,179 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Printing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using Pechkin;
+using System.Data.Entity;
+using AutoMapper;
+using MyGenomics.Data.Context;
+using MyGenomics.Data.Migrations;
+using MyGenomics.DataModel;
 
 namespace MyGenomics.Services.Services
 {
     public class ReportService
     {
-        public void HtmlToPdf(string pdfOutputLocation, string html)
+        public List<DomainModel.PanelItemList> GetPanels(int languageId, string title = null)
         {
-            GlobalConfig gc = new GlobalConfig();
-            gc.SetMargins(new Margins(50, 50, 50, 50))
-              .SetDocumentTitle("Test document")
-              .SetPaperSize(PaperKind.A4);
-            IPechkin pechkin = new SimplePechkin(gc);
-
-            ObjectConfig oc = new ObjectConfig();
-            oc.SetCreateExternalLinks(false);
-            oc.SetFallbackEncoding(Encoding.ASCII);
-            oc.SetLoadImages(false);
-            oc.Footer.SetCenterText("I'm a footer!");
-            oc.Footer.SetLeftText("[page]");
-            oc.Header.SetCenterText("I'm a header!");
-
-            byte[] result = pechkin.Convert(oc, html);
-            System.IO.File.WriteAllBytes(pdfOutputLocation, result);
-
-            //var pdfData = HtmlToXConverter.ConvertToPdf(html);
-            //GeneratePdf("", html, pdfOutputLocation,180,277);    
-            //var configs = new GlobalConfig();
-
-
-            //byte[] pdfBuf = new SimplePechkin(configs).Convert(html);
-            //var fileStream = new System.IO.FileStream(pdfOutputLocation, FileMode.Create,FileAccess.Write);
-            //// Writes a block of bytes to this stream using data from
-            //// a byte array.
-            //fileStream.Write(pdfBuf, 0, pdfBuf.Length);
-
-            //// close file stream
-            //fileStream.Close();
-
-        }
-
-        
-
-
-        public const string HtmlToPdfExePath = "wkhtmltopdf.exe";
-
-        public static bool GeneratePdf(string commandLocation, string html, string pdfOutputPath, int pageSizeWidth, int pageSizeHeight)
-        {
-            Process p;
-            StreamWriter stdin;
-            ProcessStartInfo psi = new ProcessStartInfo();
-
-            psi.FileName = Path.Combine(commandLocation, HtmlToPdfExePath);
-            psi.WorkingDirectory = Path.GetDirectoryName(psi.FileName);
-
-            // run the conversion utility
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.RedirectStandardInput = true;
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardError = true;
-
-            // note: that we tell wkhtmltopdf to be quiet and not run scripts
-            psi.Arguments = "-q -n --disable-smart-shrinking -H --default-header " + 
-                "--page-width " + pageSizeWidth + 
-                "mm --page-height " + pageSizeHeight + "mm" +
-                " - -";
-
-            p = Process.Start(psi);
-
-            try
+            using (var context = new MyGenomicsContext())
             {
-                stdin = p.StandardInput;
-                stdin.AutoFlush = true;
-                stdin.Write(html);
-                stdin.Dispose();
-                CopyStreamToFile(p.StandardOutput.BaseStream, pdfOutputPath);
-                p.StandardOutput.Close();
-                //pdf.Position = 0;
+                if (string.IsNullOrWhiteSpace(title))
+                {
+                    return context.Panels
+                        .Include(i => i.Translations)
+                        .Include(i => i.PanelContents)                        
+                        .Select(p => new DomainModel.PanelItemList()
+                                     {
+                                         Id = p.Id,
+                                         Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
+                                     })
+                        .ToList();
+                }
+                else
+                {
+                    return context.Panels
+                        .Include(i => i.Translations)
+                        .Include(i => i.PanelContents)
+                        .Where(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId))
+                        .Select(p => new DomainModel.PanelItemList()
+                        {
+                            Id = p.Id,
+                            Title = p.Translations.FirstOrDefault().Title
+                        })
+                        .ToList();
+                }
                 
-                p.WaitForExit(10000);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-
-            }
-            finally
-            {
-                p.Dispose();
+                
             }
         }
 
-        public static void CopyStreamToFile(Stream input, string outputPath)
+        public DomainModel.PanelDetail GetPanelDetail(int languageId, int id)
         {
-            byte[] buffer = new byte[32768];
-            var file = File.Create(outputPath);
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                file.Write(buffer, 0, read);
+            using (var context = new MyGenomicsContext())
+            {                
+                return context.Panels
+                    .Include(i => i.Translations)
+                    .Include(i => i.PanelContents)
+                    .Include(i => i.Chapters)
+                    .Select(p => new DomainModel.PanelDetail()
+                        {
+                            Id = p.Id,
+                            LanguageId = languageId,
+                            TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
+                            Title = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                            PanelContents = p.PanelContents
+                                    .Select(c => new DomainModel.PanelContentDetail()
+                                    {
+                                        Id = c.Id,
+                                        TranslationId = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
+                                        LanguageId = languageId,
+                                        LevelId = c.LevelId,
+                                        Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                        ShortText = c.Translations.Any(t=>t.LanguageId==languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).ShortText : null,
+                                        Text = c.Translations.Any(t => t.LanguageId == languageId)  ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,
+                                        PanelId = p.Id
+
+                                    } ).ToList(),
+                            Chapters = p.Chapters
+                                    .Select(c => new DomainModel.ChapterItemList()
+                                    {
+                                        Id = c.Id,                                        
+                                        Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                    }).ToList()                            
+                        })
+                    .First();
+                
             }
-            file.Close();
+            
         }
+
+        public void AddOrUpdatePanel(DomainModel.PanelDetail panel)
+        {
+            var languageId = panel.LanguageId;
+            var panelMapped = Mapper.Map<DomainModel.PanelDetail, DataModel.Panel>(panel);
+            DataModel.Panel originalPanel;
+
+            using (var context = new MyGenomicsContext())
+            {
+                originalPanel = context.Panels
+                    .Include(i => i.Translations)
+                    .Include(i => i.PanelContents)
+                    .Include(i => i.PanelContents.Select(pc => pc.Translations))
+                    .FirstOrDefault(p => p.Id == panelMapped.Id);
+            }
+
+
+            using (var context = new MyGenomicsContext())
+            {
+
+                if (originalPanel != null)
+                {
+                    //Translations
+                    foreach (var translation in panelMapped.Translations)
+                    {
+                        if (translation.Id > 0)
+                        {
+                            context.Entry(translation).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            context.Entry(translation).State = EntityState.Added;
+                        }
+                    }
+
+                    //Contents
+                    foreach (var panelContents in panelMapped.PanelContents)
+                    {
+                        if (panelContents.Id > 0)
+                        {
+                            context.Entry(panelContents).State = EntityState.Modified;
+
+                            foreach (var panelContentTranslation in panelContents.Translations)
+                            {
+                                if (panelContentTranslation.Id > 0)
+                                {
+                                    context.Entry(panelContentTranslation).State = EntityState.Modified;
+                                }
+                                else
+                                {
+                                    context.Entry(panelContentTranslation).State = EntityState.Added;
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            context.Entry(panelContents).State = EntityState.Added;
+                        }
+                    }
+
+                    foreach (var panelContent in originalPanel.PanelContents)
+                    {
+                        if (panelMapped.PanelContents.All(pc => pc.Id != panelContent.Id))
+                        {
+                            context.PanelContents.Remove(
+                                context.PanelContents.FirstOrDefault(pc => pc.Id == panelContent.Id));
+                            //context.Entry(panelContent).State = EntityState.Deleted;
+                        }
+                    }
+
+                }
+                else
+                {
+                    panelMapped.Chapters = null;
+                    context.Entry(panelMapped).State = EntityState.Added;
+                }             
+
+                context.SaveChanges();
+            }            
+        }
+
+        public void RemovePanel(int panelId)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                context.Panels.Remove(context.Panels.FirstOrDefault(p => p.Id == panelId));
+                context.SaveChanges();
+            }
+        }
+
     }
 }

@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201503302051443_log_duration.Designer.cs">
       <DependentUpon>201503302051443_log_duration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504061929513_initial_kreo.cs" />
+    <Compile Include="Migrations\201504061929513_initial_kreo.Designer.cs">
+      <DependentUpon>201504061929513_initial_kreo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503302051443_log_duration.resx">
       <DependentUpon>201503302051443_log_duration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504061929513_initial_kreo.resx">
+      <DependentUpon>201504061929513_initial_kreo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

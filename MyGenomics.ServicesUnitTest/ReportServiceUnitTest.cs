@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyGenomics.Services;
 using MyGenomics.Services.Services;
@@ -11,18 +14,57 @@ namespace MyGenomics.ServicesUnitTest
     public class ReportServiceUnitTest
     {
         [TestMethod]
-        public void TestReportCreate()
+        public void TestGetPanelsList()
         {
             BaseDataService.InitializeServices();
 
-            string html = File.ReadAllText("fakeReports/fakeReport.html");
-            string pdfFilePath = "testReport.pdf";
+            var reportService = new ReportService();
+            var res = reportService.GetPanels(1,"");
 
-            var _reportService = new ReportService();            
-            _reportService.HtmlToPdf(pdfFilePath,html);
+            Assert.IsTrue(res.Any());
+        }
 
-            Assert.IsTrue(File.Exists(pdfFilePath));
-            //File.Delete(pdfFilePath);
+        [TestMethod]
+        public void TestGetPanelsDetail()
+        {
+            BaseDataService.InitializeServices();
+
+            var reportService = new ReportService();
+            var res = reportService.GetPanelDetail(1, 1);
+
+            Assert.IsTrue(res!=null);
+        }
+
+        [TestMethod]
+        public void AddOrUpdatePanelsDetail()
+        {
+            BaseDataService.InitializeServices();
+
+            var reportService = new ReportService();
+            var res = reportService.GetPanelDetail(1, 1);            
+            
+            res.Title = "Titolo nuovo 234";
+            res.PanelContents.Add(new DomainModel.PanelContentDetail()
+                                  {
+                                      LanguageId = 1,
+                                      PanelId = 1,
+                                      ShortText = "Vacca troglia",
+                                      Text = "mmmminchia",
+                                      Title = "pannello sostitutivo"                                      
+                                  });
+            reportService.AddOrUpdatePanel(res);
+
+            Assert.IsTrue(res != null);
+        }
+
+        [TestMethod]
+        public void RemovePanelsDetail()
+        {
+            BaseDataService.InitializeServices();
+
+            var reportService = new ReportService();
+            reportService.RemovePanel(3);
+            Assert.IsTrue(true);
         }
     }
 }

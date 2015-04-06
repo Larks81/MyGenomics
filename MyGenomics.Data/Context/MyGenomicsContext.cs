@@ -28,6 +28,19 @@ namespace MyGenomics.Data.Context
         public DbSet<QuestionnaireResult> QuestionnaireResults { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<WebApiLog> WebApiLogs { get; set; }
+
+        //Kreo
+        public DbSet<Chapter> Chapter { get; set; }
+        public DbSet<ChapterTranslation> ChapterTranslations { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<LevelTranslation> LevelTranslations { get; set; }
+        public DbSet<Panel> Panels { get; set; }
+        public DbSet<PanelTranslation> PanelTranslations { get; set; }
+        public DbSet<PanelContent> PanelContents { get; set; }
+        public DbSet<PanelContentTranslation> PanelContentTranslations { get; set; }        
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<ReportTranslation> ReportTranslations { get; set; }
+        public DbSet<Snp> Snps { get; set; }
        
     }
 }

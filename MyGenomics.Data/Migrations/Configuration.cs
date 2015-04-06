@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MyGenomics.Common.enums;
 using MyGenomics.DataModel;
 
@@ -179,7 +179,7 @@ namespace MyGenomics.Data.Migrations
                                                                     "http://www.mygenomics.eu/genotest/sport-potenza",
                                                                 Price = 400,
                                                                 ShortDescription =
-                                                                    "sollevamento pesi, salti e lanci dell�atletica legge ecc",
+                                                                    "sollevamento pesi, salti e lanci dell’atletica legge ecc",
                                                                 Code = "SPORT-POTENZA",
                                                                 InsertDate = DateTime.Now,
                                                                 UpdateDate = DateTime.Now
@@ -282,7 +282,224 @@ namespace MyGenomics.Data.Migrations
                                                         }
                                          });
 
-//            context.Questionnaires.AddOrUpdate(new Questionnaire()
+            //Livelli
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {   
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                                {
+                                    Id = 1,
+                                    InsertDate = DateTime.Now,
+                                    Name = "Level 1",
+                                    UpdateDate = DateTime.Now,
+                                    Value = 1
+                                },
+                UpdateDate = DateTime.Now,
+                Text = "Il livello di suscettibilità individuato dal test è pari a quello della popolazione normale di riferimento"                
+            });
+
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                {
+                    Id = 2,
+                    InsertDate = DateTime.Now,
+                    Name = "Level 2",
+                    UpdateDate = DateTime.Now,
+                    Value = 2
+                },
+                UpdateDate = DateTime.Now,
+                Text = "Il test indica un livello di suscettibilità moderatamente superiore a quello della popolazione di riferimento"
+            });
+
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                {
+                    Id = 3,
+                    InsertDate = DateTime.Now,
+                    Name = "Level 3",
+                    UpdateDate = DateTime.Now,
+                    Value = 3
+                },
+                UpdateDate = DateTime.Now,
+                Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"
+            });
+
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                {
+                    Id = 4,
+                    InsertDate = DateTime.Now,
+                    Name = "Level 4",
+                    UpdateDate = DateTime.Now,
+                    Value = 4
+                },
+                UpdateDate = DateTime.Now,
+                Text = "Il test indica poca compatibilità con la diagnosi clinica di CSF"
+            });
+
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                {
+                    Id = 5,
+                    InsertDate = DateTime.Now,
+                    Name = "Level 5",
+                    UpdateDate = DateTime.Now,
+                    Value = 5
+                },
+                UpdateDate = DateTime.Now,
+                Text = "Il test indica media compatibilità con la diagnosi clinica di CSF"
+            });
+
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                {
+                    Id = 6,
+                    InsertDate = DateTime.Now,
+                    Name = "Level 6",
+                    UpdateDate = DateTime.Now,
+                    Value = 6
+                },
+                UpdateDate = DateTime.Now,
+                Text = "Il test indica alta compatibilità con la diagnosi clinica di CSF"
+            });
+
+            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            {
+                ImageUri = "",
+                LanguageId = 1,
+                InsertDate = DateTime.Now,
+                Level = new Level()
+                {
+                    Id = 7,
+                    InsertDate = DateTime.Now,
+                    Name = "Level 7",
+                    UpdateDate = DateTime.Now,
+                    Value = 7
+                },
+                UpdateDate = DateTime.Now,
+                Text = "Il test indica alta compatibilità con la diagnosi clinica di CSF"
+            });
+
+            context.ReportTranslations.AddOrUpdate(new ReportTranslation()
+                {
+                    Id = 1,
+                    LanguageId = 1,
+                    ReportId = 1,
+                    Text = "Genomica",
+                    Title = "Genomica",
+                    Report = new Report()
+                             {
+                                 Id = 1,
+                                 ProductId = 1,
+                                 Chapters = new List<Chapter>()
+                                            {
+                                                new Chapter()
+                                                {
+                                                    Color = "#FFFFFF",
+                                                    Id = 1,
+                                                    Translations = new List<ChapterTranslation>()
+                                                                   {
+                                                                       new ChapterTranslation()
+                                                                       {
+                                                                           Id = 1,
+                                                                           LanguageId = 1,
+                                                                           Text = "Testp capitolo in italiano",
+                                                                           Title = "Capitolo 1",
+                                                                           InsertDate = DateTime.Now,
+                                                                           UpdateDate = DateTime.Now
+                                                                       }
+                                                                   },
+                                                    Panels = new List<Panel>()
+                                                             {
+                                                                 new Panel()
+                                                                 {
+                                                                     Id = 1,
+                                                                     InsertDate = DateTime.Now,
+                                                                     UpdateDate = DateTime.Now,
+                                                                     PanelContents = new List<PanelContent>()
+                                                                                     {
+                                                                                         new PanelContent()
+                                                                                         {
+                                                                                             Translations= new List<PanelContentTranslation>()
+                                                                                                           {
+                                                                                                               new PanelContentTranslation()
+                                                                                                               {
+                                                                                                                   LanguageId = 1,
+                                                                                                                   Title = "Testo introduzione pannello",
+                                                                                                                   ShortText = "La celiachia è una patologia su base alimentare che si manifesta sotto forma di una reazione immunitaria anche grave del tratto gastro-intestinale e sistemica. Questa reazione è provocata da proteine alimentari, contenute in diverse proporzioni in varie specie di frumento, quali: grano, orzo e segale. Queste proteine sono identificate col termine di “glutine” e la gliadina è la proteina glutinica che è ritenuta avere il ruolo maggiore nell’eziopatogenesi della celiachia. La malattia è caratterizzata da un’intolleranza permanente al glutine che, una volta ingerito, produce un’attivazione del sistema immunitario con conseguente risposta infiammatoria che può causare danni alla mucosa intestinale a livello del tenue. Le cause del morbo celiaco sono state definitivamente chiarite solo in epoche recenti e per lungo tempo questa condizione è stata significativamente sotto-diagnosticata. Gli sviluppi diagnostici e clinici hanno rivelato una prevalenza della sindrome celiaca superiore all’effettivo riscontro clinico che era basato essenzialmente sulla sola sintomatologia intestinale. Ciò è dovuto a numerosi fattori, tra i quali la presenza di situazioni iniziali equivoche o non conclamate e di difficile comprensione clinica, la genericità di alcuni sintomi che possono creare un quadro fuorviante o destare scarsa attenzione del clinico. Per questo l’indagine genetica ha un ruolo rilevante sia nelle indagini precliniche utili a aumentare l’attenzione sul rischio di sviluppare questa malattia, sia nelle indagini di significato diagnostico e prognostico per contribuire a identificare e chiarire quadri e disturbi gastroenterici e/o sistemici di non facile comprensione clinica. Se non adeguatamente e tempestivamente trattata, questa condizione predispone a una serie di patologie gravi, tra le quali figurano malassorbimento, infertilità, tendenza agli aborti spontanei, osteoporosi, disfunzioni immunitarie e alcuni tumori. Questa patologia può presentarsi a qualsiasi età, con diverse manifestazioni cliniche: stanchezza, dolore addominale e gonfiore addominale, diarrea intermittente, perdita di peso e nausea. In alcune persone tuttavia non si verificano sintomi aperti. Nei bambini e negli adolescenti possono presentare sintomi extraintestinali, tra cui la bassa statura, pubertà ritardata, anemia e sintomi neurologici causati da malassorbimento di sostanze nutritive. E’ stato dimostrato che i geni del complesso di istocompatibilità HLA II sono fortemente associati alla malattia: il 95% dei pazienti presenta l’eterodimero HLA-DQ2. La celiachia può colpire chiunque; tuttavia, tende ad essere più comune in soggetti con almeno un membro della famiglia affetto da malattia celiaca o dermatite erpetiforme, diabete di tipo 1, sindrome di Down o la sindrome di Turner, malattie autoimmuni della tiroide, sindrome di Sjogren e colite microscopica. Questa associazione tra condizioni che si manifestano a livello famigliare sottende a un interessamento del sistema immunitario e di sorveglianza tissutale (risposta tollero genica e di riconoscimento del “self”) che è trasmissibile sulla base degli stessi meccanismi di altri tratti somatici autosomici.",
+                                                                                                               }
+                                                                                                           },
+                                                                                            InsertDate = DateTime.Now,
+                                                                                            UpdateDate = DateTime.Now,
+                                                                                         },
+                                                                                         new PanelContent()
+                                                                                         {
+                                                                                             Translations= new List<PanelContentTranslation>()
+                                                                                                           {
+                                                                                                               new PanelContentTranslation()
+                                                                                                               {
+                                                                                                                   LanguageId = 1,
+                                                                                                                   Title = "Livello suscettibilita 1",
+                                                                                                                   ShortText = "In base ai polimorfismi saggiati, non si riscontra una suscettibilità aumentata a manifestare sintomi da sensibilità o intolleranza al glutine. Ciò, comunque, non esclude del tutto che ciò possa verificarsi in futuro e quindi, in caso di sintomi gastro-intestinali o di altro genere ascrivibili al quadro del morbo celiaco descritti nelle altre sezioni del referto, consigliamo di confrontarsi con uno specialista gastroenterologo per verificarne l‟origine. Raccomandiamo comunque l‟impostazione di un piano di stili di vita e alimentare idoneo a mantenere integra la funzione del tratto gastro-intestinale e immunitaria in genere. Evitare sovraccarichi metabolici da eccesso alimentare e abuso di alcol, farmaci e droghe e praticare regolarmente attività fisica, sono i primi presidi da mettere in atto per proteggere l‟integrità di queste funzioni. Curare l'integrità della microflora intestinale in particolare negli stati di disbiosi causati da stili di vita errati, malattie o terapie con antibiotici. In questi casi, è opportuno rivolgersi a uno specialista per verificare la diagnosi del problema e eventualmente si può ricorrere all'uso di pre e pro-biotici abbinato a opportuni regimi alimentari.",
+                                                                                                                   Text = "Non si riscontra una suscettibilità aumentata a manifestare sintomi da sensibilità o intolleranza al glutine. Ciò, comunque, non esclude del tutto che ciò possa verificarsi in futuro e quindi, sia in assenza sia in presenza di sintomi gastro-intestinali o di altro genere ascrivibili al quadro del morbo celiaco descritti nelle altre sezioni del referto, consigliamo di confrontarsi con uno specialista gastroenterologo per svolgere le opportune verifiche cliniche e eventualmente una prova di esclusione alimentare del glutine.Anche nei soggetti asintomatici si raccomanda l'impostazione di un piano di stili di vita e alimentare idoneo a mantenere integra la funzione del tratto gastro-intestinale e immunitaria in genere. Evitare sovraccarichi metabolici da eccesso alimentare e abuso di alcol, farmaci e droghe e praticare regolarmente attività fisica, sono i primi presidi da mettere in atto per proteggere l'integrità di queste funzioni. Curare l'integrità della microflora intestinale in particolare negli stati di disbiosi causati da stili di vita errati, malattie o terapie con antibiotici. In questi casi, è opportuno rivolgersi a uno specialista per verificare la diagnosi del problema e eventualmente si può ricorrere all''uso di pre e pro-biotici abbinato a opportuni regimi alimentari.",
+                                                                                                               }
+                                                                                                           },
+                                                                                             LevelId = 1,
+                                                                                             InsertDate = DateTime.Now,
+                                                                                             UpdateDate = DateTime.Now
+                                                                                         }
+                                                                                     },
+                                                                     Translations = new List<PanelTranslation>(){
+                                                                        new PanelTranslation()
+                                                                        {
+                                                                            LanguageId = 1,
+                                                                            Title = "Pannello 1",                                                                            
+                                                                            InsertDate = DateTime.Now,
+                                                                            UpdateDate = DateTime.Now
+                                                                        }
+                                                                     }
+                                                                 }
+                                                             }
+                                                }  
+                                            },
+                                 InsertDate = DateTime.Now,
+                                 UpdateDate = DateTime.Now
+                             },
+
+                    InsertDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+
+
+
+            
+
+
+            #region Seed Questionario
+
+            //            context.Questionnaires.AddOrUpdate(new Questionnaire()
 //                                               {
 //                                                   Id = 1,
 //                                                   Name = "Test",
@@ -502,7 +719,7 @@ namespace MyGenomics.Data.Migrations
 //                                                        //{
 //                                                        //    CategoryId = 1,
 //                                                        //    StepNumber = 3,
-//                                                        //    Text = "Le sue gengive si sono ritirate e i denti sono pi� �lunghi�?",
+//                                                        //    Text = "Le sue gengive si sono ritirate e i denti sono più “lunghi”?",
 //                                                        //    IsRequired = true,
 //                                                        //    Anwers = new List<Answer>()
 //                                                        //             {
@@ -1112,7 +1329,7 @@ namespace MyGenomics.Data.Migrations
 //                                                        {
 //                                                            CategoryId = 5,
 //                                                            StepNumber = 8,
-//                                                            Text = "Quanti caff� assume al giorno?",
+//                                                            Text = "Quanti caffè assume al giorno?",
 //                                                            IsRequired = true,
 //                                                            QuestionType = QuestionType.ValueOnly,
 //                                                            Anwers = new List<Answer>()
@@ -1179,7 +1396,7 @@ namespace MyGenomics.Data.Migrations
 //                                                                },
 //                                                                new Answer()
 //                                                                {
-//                                                                    Text = "Ho smesso da pi� di un anno",
+//                                                                    Text = "Ho smesso da più di un anno",
 //                                                                    AnswerWeight = new List<AnswerWeight>()
 //                                                                    {
 //                                                                        new AnswerWeight()
@@ -1239,7 +1456,7 @@ namespace MyGenomics.Data.Migrations
 //                                                                },
 //                                                                new Answer()
 //                                                                {
-//                                                                    Text = "Fumo pi� di 20 sigarette al giorno",
+//                                                                    Text = "Fumo più di 20 sigarette al giorno",
 //                                                                    AnswerWeight = new List<AnswerWeight>()
 //                                                                    {
 //                                                                        new AnswerWeight()
@@ -1615,14 +1832,14 @@ namespace MyGenomics.Data.Migrations
 //                                                        {
 //                                                            CategoryId = 6,
 //                                                            StepNumber = 18,
-//                                                            Text = "In quale tra i seguenti stili di vita le piacerebbe di pi� migliorare? ",
+//                                                            Text = "In quale tra i seguenti stili di vita le piacerebbe di più migliorare? ",
 //                                                            IsRequired = false,
 //                                                            QuestionType = QuestionType.MultipleNotExclusive,
 //                                                            Anwers = new List<Answer>()
 //                                                            {
 //                                                                new Answer()
 //                                                                {
-//                                                                    Text ="Avere una alimentazione pi� corretta",
+//                                                                    Text ="Avere una alimentazione più corretta",
 //                                                                    AnswerWeight = new List<AnswerWeight>()
 //                                                                    {
 //                                                                        new AnswerWeight()
@@ -1634,7 +1851,7 @@ namespace MyGenomics.Data.Migrations
 //                                                                },
 //                                                                new Answer()
 //                                                                {
-//                                                                    Text ="Fare attivit� fisica con maggiore regolarit�",
+//                                                                    Text ="Fare attività fisica con maggiore regolarità",
 //                                                                    AnswerWeight = new List<AnswerWeight>()
 //                                                                    {
 //                                                                        new AnswerWeight()
@@ -2024,7 +2241,9 @@ namespace MyGenomics.Data.Migrations
 
 
 
-//        }
+            //        }
+
+            #endregion
         }
     }
 }

@@ -53,10 +53,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionnaireImport.cs" />
     <Compile Include="QuestionnaireResult.cs" />
+    <Compile Include="Report\ChapterDetail.cs" />
     <Compile Include="Report\ChapterItemList.cs" />
+    <Compile Include="Report\LevelDetail.cs" />
+    <Compile Include="Report\LevelItemList.cs" />
     <Compile Include="Report\PanelContentDetail.cs" />
     <Compile Include="Report\PanelDetail.cs" />
     <Compile Include="Report\PanelItemList.cs" />
+    <Compile Include="Report\ReportDetail.cs" />
+    <Compile Include="Report\ReportItemList.cs" />
     <Compile Include="SubmitPersonQuestionnaire.cs" />
     <Compile Include="WebApiLog.cs" />
   </ItemGroup>

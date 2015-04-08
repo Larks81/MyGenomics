@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyGenomics.DataModel
+namespace MyGenomics.DomainModel
 {
-    public class Level : ModelBase
+    public class LevelItemList
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Value { get; set; }
-        public List<LevelTranslation> Translations { get; set; }
     }
 }

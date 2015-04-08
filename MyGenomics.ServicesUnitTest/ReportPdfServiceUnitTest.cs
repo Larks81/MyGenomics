@@ -16,10 +16,11 @@ namespace MyGenomics.ServicesUnitTest
             BaseDataService.InitializeServices();
 
             string html = File.ReadAllText("fakeReports/fakeReport.html");
+            string tocPath = "fakeReports/toc.xsl";
             string pdfFilePath = "testReport.pdf";
 
-            var _reportService = new ReportPdfService();            
-            _reportService.HtmlToPdf(pdfFilePath,html);
+            var _reportService = new ReportPdfService();
+            _reportService.HtmlToPdf(pdfFilePath, tocPath, html);
 
             Assert.IsTrue(File.Exists(pdfFilePath));
             //File.Delete(pdfFilePath);

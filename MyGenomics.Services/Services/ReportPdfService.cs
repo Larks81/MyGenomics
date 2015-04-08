@@ -6,7 +6,7 @@ namespace MyGenomics.Services.Services
 {
     public class ReportPdfService
     {
-        public void HtmlToPdf(string pdfOutputLocation, string html)
+        public void HtmlToPdf(string pdfOutputLocation,string tocFilePath, string html)
         {
             var gc = new GlobalConfig();
             gc.SetMargins(new Margins(50, 50, 50, 50))
@@ -21,7 +21,8 @@ namespace MyGenomics.Services.Services
             oc.Footer.SetCenterText("I'm a footer!");
             oc.Footer.SetLeftText("[page]");
             oc.Header.SetCenterText("I'm a header!");
-
+            //oc.SetTocXsl(tocFilePath);
+            oc.SetCreateToc(true);
             byte[] result = pechkin.Convert(oc, html);
             System.IO.File.WriteAllBytes(pdfOutputLocation, result);            
 

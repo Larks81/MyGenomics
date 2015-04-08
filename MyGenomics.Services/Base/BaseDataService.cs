@@ -56,6 +56,24 @@ namespace MyGenomics.Services
                         }
                     }));
 
+            Mapper.CreateMap<DomainModel.ChapterDetail, DataModel.Chapter>()
+                .ForMember(dest => dest.Panels,
+                    opt => opt.MapFrom(src => src.Panels.Select(c => new DataModel.Panel() { Id = c.Id })))
+                .ForMember(dest => dest.Reports,
+                    opt => opt.MapFrom(src => src.Panels.Select(c => new DataModel.Report() { Id = c.Id })))
+                .ForMember(dest => dest.Translations,
+                    opt => opt.MapFrom(src => new List<DataModel.ChapterTranslation>(){
+                        new DataModel.ChapterTranslation()
+                        {
+                            Id = src.TranslationId.Value,
+                            LanguageId = src.LanguageId,                        
+                            Title = src.Title,
+                            ChapterId = src.Id,
+                            ImageUri = src.ImageUri,
+                            Text = src.Text                            
+                        }
+                    }));
+
             Mapper.CreateMap<DomainModel.PanelContentDetail, DataModel.PanelContent>()
                 .ForMember(dest => dest.Translations,
                     opt => opt.MapFrom(src => 
@@ -69,7 +87,37 @@ namespace MyGenomics.Services
                                     Title = src.Title,
                                     PanelContentId = src.Id
                                 } 
-                            }));             
+                            }));
+
+            Mapper.CreateMap<DomainModel.ReportDetail, DataModel.Report>()
+               .ForMember(dest => dest.Chapters,
+                   opt => opt.MapFrom(src => src.Chapters.Select(c => new DataModel.Chapter() { Id = c.Id })))
+               .ForMember(dest => dest.Translations,
+                   opt => opt.MapFrom(src => new List<DataModel.ReportTranslation>(){
+                        new DataModel.ReportTranslation()
+                        {
+                            Id = src.TranslationId.Value,
+                            LanguageId = src.LanguageId,                        
+                            Title = src.Title,
+                            Cover = src.Cover,
+                            ImageUri = src.ImageUri,
+                            ReportId = src.Id,
+                            Text = src.Text                            
+                        }
+                    }));
+
+            Mapper.CreateMap<DomainModel.LevelDetail, DataModel.Level>()               
+               .ForMember(dest => dest.Translations,
+                   opt => opt.MapFrom(src => new List<DataModel.LevelTranslation>(){
+                        new DataModel.LevelTranslation()
+                        {
+                            Id = src.TranslationId.Value,
+                            LanguageId = src.LanguageId,                                                                                
+                            ImageUri = src.ImageUri,                            
+                            Text = src.Text,      
+                            LevelId = src.Id                            
+                        }
+                    }));
 
             Mapper.CreateMap<DataModel.ContactAnswer, DomainModel.ContactGivenAnswer>()
             .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.Answer.Text))

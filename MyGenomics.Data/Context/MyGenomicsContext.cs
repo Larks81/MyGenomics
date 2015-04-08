@@ -30,7 +30,7 @@ namespace MyGenomics.Data.Context
         public DbSet<WebApiLog> WebApiLogs { get; set; }
 
         //Kreo
-        public DbSet<Chapter> Chapter { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
         public DbSet<ChapterTranslation> ChapterTranslations { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<LevelTranslation> LevelTranslations { get; set; }

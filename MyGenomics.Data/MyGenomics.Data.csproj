@@ -75,6 +75,14 @@
     <Compile Include="Migrations\201504061929513_initial_kreo.Designer.cs">
       <DependentUpon>201504061929513_initial_kreo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504091739295_reportheader.cs" />
+    <Compile Include="Migrations\201504091739295_reportheader.Designer.cs">
+      <DependentUpon>201504091739295_reportheader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504091751293_versionInReport.cs" />
+    <Compile Include="Migrations\201504091751293_versionInReport.Designer.cs">
+      <DependentUpon>201504091751293_versionInReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -113,6 +121,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504061929513_initial_kreo.resx">
       <DependentUpon>201504061929513_initial_kreo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504091739295_reportheader.resx">
+      <DependentUpon>201504091739295_reportheader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504091751293_versionInReport.resx">
+      <DependentUpon>201504091751293_versionInReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

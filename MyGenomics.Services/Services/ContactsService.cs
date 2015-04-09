@@ -103,7 +103,7 @@ namespace MyGenomics.Services
         {
             using (var context = new MyGenomicsContext())
             {
-                var contactToRemove = context.Contacts.First(p => p.Id == id);
+                var contactToRemove = context.Contacts.FirstOrDefault(p => p.Id == id);
                 if (contactToRemove != null)
                 {
                     context.Contacts.Remove(contactToRemove);
@@ -182,7 +182,7 @@ namespace MyGenomics.Services
                         else
                         {
                             // l'utente è presente ma la pwd è stata modificata, lo leggo e lo allineo 
-                            UpdateContact(context.Contacts.First(p => p.UserName == username), crmContact);
+                            UpdateContact(context.Contacts.FirstOrDefault(p => p.UserName == username), crmContact);
                             context.SaveChanges();
                         }
                     }

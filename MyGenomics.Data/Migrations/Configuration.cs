@@ -27,6 +27,14 @@ namespace MyGenomics.Data.Migrations
                                               InsertDate = DateTime.Now,
                                               UpdateDate = DateTime.Now
                                           });
+
+            context.Languages.AddOrUpdate(new Language()
+                                        {
+                                            Id = 2,
+                                            Code = "EN",
+                                            InsertDate = DateTime.Now,
+                                            UpdateDate = DateTime.Now
+                                        });
             
 
             context.ContactTypes.AddOrUpdate(new ContactType()
@@ -283,124 +291,174 @@ namespace MyGenomics.Data.Migrations
                                          });
 
             //Livelli
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {   
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 1,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                                {
-                                    Id = 1,
-                                    InsertDate = DateTime.Now,
-                                    Name = "Level 1",
-                                    UpdateDate = DateTime.Now,
-                                    Value = 1
-                                },
+                Name = "Level 1",
                 UpdateDate = DateTime.Now,
-                Text = "Il livello di suscettibilità individuato dal test è pari a quello della popolazione normale di riferimento"                
+                Value = 1,                
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 1,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il livello di suscettibilità individuato dal test è pari a quello della popolazione normale di riferimento"            
+                    }                                    
+                }                        
             });
 
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 2,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                {
-                    Id = 2,
-                    InsertDate = DateTime.Now,
-                    Name = "Level 2",
-                    UpdateDate = DateTime.Now,
-                    Value = 2
-                },
+                Name = "Level 2",
                 UpdateDate = DateTime.Now,
-                Text = "Il test indica un livello di suscettibilità moderatamente superiore a quello della popolazione di riferimento"
+                Value = 2,
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 2,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il test indica un livello di suscettibilità moderatamente superiore a quello della popolazione di riferimento"            
+                    }                                    
+                }
             });
 
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 3,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                {
-                    Id = 3,
-                    InsertDate = DateTime.Now,
-                    Name = "Level 3",
-                    UpdateDate = DateTime.Now,
-                    Value = 3
-                },
+                Name = "Level 3",
                 UpdateDate = DateTime.Now,
-                Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"
+                Value = 3,
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 3,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"            
+                    }                                    
+                }
             });
 
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 4,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                {
-                    Id = 4,
-                    InsertDate = DateTime.Now,
-                    Name = "Level 4",
-                    UpdateDate = DateTime.Now,
-                    Value = 4
-                },
+                Name = "Level 4",
                 UpdateDate = DateTime.Now,
-                Text = "Il test indica poca compatibilità con la diagnosi clinica di CSF"
+                Value = 4,
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 4,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"            
+                    }                                    
+                }
             });
 
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 5,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                {
-                    Id = 5,
-                    InsertDate = DateTime.Now,
-                    Name = "Level 5",
-                    UpdateDate = DateTime.Now,
-                    Value = 5
-                },
+                Name = "Level 5",
                 UpdateDate = DateTime.Now,
-                Text = "Il test indica media compatibilità con la diagnosi clinica di CSF"
+                Value = 5,
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 5,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"            
+                    }                                    
+                }
             });
 
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 6,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                {
-                    Id = 6,
-                    InsertDate = DateTime.Now,
-                    Name = "Level 6",
-                    UpdateDate = DateTime.Now,
-                    Value = 6
-                },
+                Name = "Level 6",
                 UpdateDate = DateTime.Now,
-                Text = "Il test indica alta compatibilità con la diagnosi clinica di CSF"
+                Value = 6,
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 6,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"            
+                    }                                    
+                }
             });
 
-            context.LevelTranslations.AddOrUpdate(new LevelTranslation()
+            context.Levels.AddOrUpdate(new Level()
             {
-                ImageUri = "",
-                LanguageId = 1,
+                Id = 7,
                 InsertDate = DateTime.Now,
-                Level = new Level()
-                {
-                    Id = 7,
-                    InsertDate = DateTime.Now,
-                    Name = "Level 7",
-                    UpdateDate = DateTime.Now,
-                    Value = 7
-                },
+                Name = "Level 7",
                 UpdateDate = DateTime.Now,
-                Text = "Il test indica alta compatibilità con la diagnosi clinica di CSF"
+                Value = 7,
+                Translations = new List<LevelTranslation>()
+                {
+                    new LevelTranslation()
+                    {
+                        Id = 7,
+                        ImageUri = "",
+                        LanguageId = 1,
+                        InsertDate = DateTime.Now,
+                        UpdateDate = DateTime.Now,
+                        Text = "Il test indica un livello di suscettibilità particolarmente elevato rispetto a quello della popolazione di riferimento, il livello di attenzione da prestare alle raccomandazioni fornite a corredo di questo risultato è molto elevato"            
+                    }                                    
+                }
             });
+
+            context.ReportHeaders.AddOrUpdate(new ReportHeader()
+                                              {
+                                                  Id = 1,
+                                                  BaseColor = "#FFFFFF",
+                                                  TextColor = "#FFFFFF",
+                                                  InsertDate = DateTime.Now,
+                                                  UpdateDate = DateTime.Now,
+                                                  Translations = new List<ReportHeaderTranslation>()
+                                                                 {
+                                                                     new ReportHeaderTranslation()
+                                                                     {
+                                                                         Id = 1,
+                                                                         FirstPage = "Text of first page",
+                                                                         LanguageId = 1,
+                                                                         ReportHeaderId = 1,
+                                                                         SecondPage = "Text of second page",                                                                         
+                                                                         InsertDate = DateTime.Now,
+                                                                         UpdateDate = DateTime.Now
+                                                                     }
+                                                                 }
+                                              });
 
             context.ReportTranslations.AddOrUpdate(new ReportTranslation()
                 {

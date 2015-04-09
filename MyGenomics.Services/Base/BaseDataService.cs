@@ -44,12 +44,12 @@ namespace MyGenomics.Services
 
             Mapper.CreateMap<DomainModel.PanelDetail, DataModel.Panel>()
                 .ForMember(dest => dest.Chapters,
-                    opt => opt.MapFrom(src => src.Chapters.Select(c => new DataModel.Chapter() {Id = c.Id})))
+                opt => opt.MapFrom(src => src.Chapters != null ? src.Chapters.Select(c => new DataModel.Chapter() {Id = c.Id}) : null))
                 .ForMember(dest => dest.Translations,
                     opt => opt.MapFrom(src => new List<DataModel.PanelTranslation>(){
                         new DataModel.PanelTranslation()
                         {
-                            Id = src.TranslationId.Value,
+                            Id = src.TranslationId.GetValueOrDefault(0),
                             LanguageId = src.LanguageId,                        
                             Title = src.Title,
                             PanelId = src.Id
@@ -58,14 +58,14 @@ namespace MyGenomics.Services
 
             Mapper.CreateMap<DomainModel.ChapterDetail, DataModel.Chapter>()
                 .ForMember(dest => dest.Panels,
-                    opt => opt.MapFrom(src => src.Panels.Select(c => new DataModel.Panel() { Id = c.Id })))
+                    opt => opt.MapFrom(src => src.Panels!=null ? src.Panels.Select(c => new DataModel.Panel() { Id = c.Id }) : null))
                 .ForMember(dest => dest.Reports,
-                    opt => opt.MapFrom(src => src.Panels.Select(c => new DataModel.Report() { Id = c.Id })))
+                    opt => opt.MapFrom(src => src.Reports!=null ? src.Reports.Select(c => new DataModel.Report() { Id = c.Id }) : null ))
                 .ForMember(dest => dest.Translations,
                     opt => opt.MapFrom(src => new List<DataModel.ChapterTranslation>(){
                         new DataModel.ChapterTranslation()
                         {
-                            Id = src.TranslationId.Value,
+                            Id = src.TranslationId.GetValueOrDefault(0),
                             LanguageId = src.LanguageId,                        
                             Title = src.Title,
                             ChapterId = src.Id,
@@ -80,7 +80,7 @@ namespace MyGenomics.Services
                         new List<DataModel.PanelContentTranslation>(){
                                 new DataModel.PanelContentTranslation()
                                 {
-                                    Id = src.TranslationId ?? 0,
+                                    Id = src.TranslationId.GetValueOrDefault(0),
                                     LanguageId = src.LanguageId,
                                     ShortText = src.ShortText,
                                     Text = src.Text,
@@ -96,7 +96,7 @@ namespace MyGenomics.Services
                    opt => opt.MapFrom(src => new List<DataModel.ReportTranslation>(){
                         new DataModel.ReportTranslation()
                         {
-                            Id = src.TranslationId.Value,
+                            Id = src.TranslationId.GetValueOrDefault(0),
                             LanguageId = src.LanguageId,                        
                             Title = src.Title,
                             Cover = src.Cover,
@@ -111,7 +111,7 @@ namespace MyGenomics.Services
                    opt => opt.MapFrom(src => new List<DataModel.LevelTranslation>(){
                         new DataModel.LevelTranslation()
                         {
-                            Id = src.TranslationId.Value,
+                            Id = src.TranslationId.GetValueOrDefault(0),
                             LanguageId = src.LanguageId,                                                                                
                             ImageUri = src.ImageUri,                            
                             Text = src.Text,      
@@ -124,10 +124,11 @@ namespace MyGenomics.Services
                    opt => opt.MapFrom(src => new List<DataModel.ReportHeaderTranslation>(){
                         new DataModel.ReportHeaderTranslation()
                         {
-                            Id = src.TranslationId.Value,
+                            Id = src.TranslationId.GetValueOrDefault(0),
                             LanguageId = src.LanguageId,                                                                                
                             FirstPage = src.FirstPage,
-                            SecondPage = src.SecondPage
+                            SecondPage = src.SecondPage,
+                            ReportHeaderId = src.Id
                         }
                     }));
 

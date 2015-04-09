@@ -37,7 +37,7 @@ namespace MyGenomics.Services.Services
                         .Select(p => new DomainModel.PanelItemList()
                         {
                             Id = p.Id,
-                            Title = p.Translations.FirstOrDefault().Title
+                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
                         })
                         .ToList();
                 }
@@ -54,6 +54,7 @@ namespace MyGenomics.Services.Services
                     .Include(i => i.Translations)
                     .Include(i => i.PanelContents)
                     .Include(i => i.Chapters)
+                    .Where(p=>p.Id == id)
                     .Select(p => new DomainModel.PanelDetail()
                         {
                             Id = p.Id,
@@ -80,13 +81,13 @@ namespace MyGenomics.Services.Services
                                         Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                     }).ToList()                            
                         })
-                    .First();
+                    .FirstOrDefault();
                 
             }
             
         }
 
-        public void AddOrUpdatePanel(DomainModel.PanelDetail panel)
+        public int AddOrUpdatePanel(DomainModel.PanelDetail panel)
         {
             var languageId = panel.LanguageId;
             var panelMapped = Mapper.Map<DomainModel.PanelDetail, DataModel.Panel>(panel);
@@ -162,11 +163,14 @@ namespace MyGenomics.Services.Services
                 else
                 {
                     panelMapped.Chapters = null;
-                    context.Entry(panelMapped).State = EntityState.Added;
+                    //context.Entry(panelMapped).State = EntityState.Added;
+                    context.Panels.Add(panelMapped);
                 }             
 
                 context.SaveChanges();
-            }            
+            }
+
+            return panelMapped.Id;
         }
 
         public void RemovePanel(int panelId)
@@ -204,7 +208,7 @@ namespace MyGenomics.Services.Services
                         .Select(p => new DomainModel.ChapterItemList()
                         {
                             Id = p.Id,
-                            Title = p.Translations.FirstOrDefault().Title
+                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
                         })
                         .ToList();
                 }
@@ -219,6 +223,7 @@ namespace MyGenomics.Services.Services
                     .Include(i => i.Translations)
                     .Include(i => i.Panels)
                     .Include(i => i.Reports)
+                    .Where(c=>c.Id == id)
                     .Select(p => new DomainModel.ChapterDetail()
                     {
                         Id = p.Id,
@@ -226,26 +231,26 @@ namespace MyGenomics.Services.Services
                         TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
                         Title = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,                        
                         Panels = p.Panels
-                                .Select(c => new DomainModel.PanelItemList()
+                                .Select(c => c!=null ? new DomainModel.PanelItemList()
                                 {
                                     Id = c.Id,
                                     Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
-                                }).ToList(),
+                                } : null).ToList(),
                         Color = p.Color,
                         ImageUri = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).ImageUri : null,
                         Reports = p.Reports
-                                .Select(c => new DomainModel.ReportItemList()
+                                .Select(c => c!=null ? new DomainModel.ReportItemList()
                                 {
                                     Id = c.Id,
                                     Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
-                                }).ToList(),
+                                } : null).ToList(),
                     })
-                    .First();
+                    .FirstOrDefault();
             }
 
         }
 
-        public void AddOrUpdateChapter(DomainModel.ChapterDetail chapter)
+        public int AddOrUpdateChapter(DomainModel.ChapterDetail chapter)
         {
             var languageId = chapter.LanguageId;
             var chapterMapped = Mapper.Map<DomainModel.ChapterDetail, DataModel.Chapter>(chapter);
@@ -262,10 +267,11 @@ namespace MyGenomics.Services.Services
 
             using (var context = new MyGenomicsContext())
             {
-                context.Entry(chapterMapped).State = EntityState.Modified;
-
+                
                 if (originalChapter != null)
                 {
+                    context.Entry(chapterMapped).State = EntityState.Modified;
+
                     //Translations
                     foreach (var translation in chapterMapped.Translations)
                     {
@@ -280,41 +286,49 @@ namespace MyGenomics.Services.Services
                     }                                       
                 }
                 else
-                {                    
+                {
+                    //context.Chapters.Add(chapterMapped);
                     context.Entry(chapterMapped).State = EntityState.Added;
                 }                
 
                 context.SaveChanges();
             }
 
-            //Update panels associations
-            using (var context = new MyGenomicsContext())
+            if (chapter.Panels != null && chapter.Panels.Any())
             {
-                var original = context.Chapters
-                    .Include(i=>i.Panels)
-                    .FirstOrDefault(c => c.Id == chapterMapped.Id);
+                //Update panels associations
+                using (var context = new MyGenomicsContext())
+                {
+                    var original = context.Chapters
+                        .Include(i => i.Panels)
+                        .FirstOrDefault(c => c.Id == chapterMapped.Id);
 
-                if (original.Panels.Any())
-                {
-                    original.Panels.Clear();
-                }
-                else
-                {
-                    original.Panels = new List<Panel>();
-                }
-                    
-                //Pannelli associati
-                foreach (var panel in chapter.Panels)
-                {                                                             
-                    var pan = context.Panels.FirstOrDefault(p => p.Id == panel.Id);
-                    if (pan != null)
+                    context.Chapters.Attach(original);
+
+                    if (original.Panels.Any())
                     {
-                        original.Panels.Add(pan);
-                    }                                                              
-                }
+                        original.Panels.Clear();
+                    }
+                    else
+                    {
+                        original.Panels = new List<Panel>();
+                    }
 
-                context.SaveChanges();
+                    //Pannelli associati
+                    foreach (var panel in chapter.Panels)
+                    {
+                        var pan = context.Panels.FirstOrDefault(p => p.Id == panel.Id);
+                        if (pan != null)
+                        {
+                            original.Panels.Add(pan);
+                        }
+                    }
+
+                    context.SaveChanges();
+                }
             }
+
+            return chapterMapped.Id;
         }
 
         public void RemoveChapter(int chapterId)
@@ -354,7 +368,7 @@ namespace MyGenomics.Services.Services
                         .Select(p => new DomainModel.ReportItemList()
                         {
                             Id = p.Id,
-                            Title = p.Translations.FirstOrDefault().Title,
+                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
                             ProductId = p.ProductId
                         })
                         .ToList();
@@ -368,7 +382,8 @@ namespace MyGenomics.Services.Services
             {
                 return context.Reports
                     .Include(i => i.Translations)
-                    .Include(i => i.Chapters)                    
+                    .Include(i => i.Chapters)          
+                    .Where(r=> r.Id == id)
                     .Select(p => new DomainModel.ReportDetail()
                     {
                         Id = p.Id,
@@ -386,11 +401,11 @@ namespace MyGenomics.Services.Services
                         ProductId = p.ProductId,
                         Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null                        
                     })
-                    .First();
+                    .FirstOrDefault();
             }
         }
 
-        public void AddOrUpdateReport(DomainModel.ReportDetail report)
+        public int AddOrUpdateReport(DomainModel.ReportDetail report)
         {
             var languageId = report.LanguageId;
             var reportMapped = Mapper.Map<DomainModel.ReportDetail, DataModel.Report>(report);
@@ -407,10 +422,11 @@ namespace MyGenomics.Services.Services
 
             using (var context = new MyGenomicsContext())
             {
-                context.Entry(reportMapped).State = EntityState.Modified;
-
+                
                 if (originalReport != null)
                 {
+                    context.Entry(reportMapped).State = EntityState.Modified;
+
                     //Translations
                     foreach (var translation in reportMapped.Translations)
                     {
@@ -439,6 +455,8 @@ namespace MyGenomics.Services.Services
                     .Include(i => i.Chapters)
                     .FirstOrDefault(c => c.Id == reportMapped.Id);
 
+                context.Reports.Attach(original);
+
                 if (original.Chapters.Any())
                 {
                     original.Chapters.Clear();
@@ -460,6 +478,8 @@ namespace MyGenomics.Services.Services
 
                 context.SaveChanges();
             }
+
+            return reportMapped.Id;
         }
 
         public void RemoveReport(int reportId)
@@ -510,7 +530,8 @@ namespace MyGenomics.Services.Services
             using (var context = new MyGenomicsContext())
             {
                 return context.Levels
-                    .Include(i => i.Translations)                    
+                    .Include(i => i.Translations)  
+                    .Where(l => l.Id == id)
                     .Select(p => new DomainModel.LevelDetail()
                     {
                         Id = p.Id,
@@ -518,14 +539,15 @@ namespace MyGenomics.Services.Services
                         TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
                         ImageUri = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).ImageUri : null,
                         Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,
-                        Name = p.Name                        
+                        Name = p.Name,
+                        Value = p.Value
                     })
-                    .First();
+                    .FirstOrDefault();
             }
 
         }
 
-        public void AddOrUpdateLevel(DomainModel.LevelDetail level)
+        public int AddOrUpdateLevel(DomainModel.LevelDetail level)
         {
             var languageId = level.LanguageId;
             var levelMapped = Mapper.Map<DomainModel.LevelDetail, DataModel.Level>(level);
@@ -566,6 +588,8 @@ namespace MyGenomics.Services.Services
 
                 context.SaveChanges();
             }
+
+            return levelMapped.Id;
         }
 
         public void RemoveLevel(int levelId)
@@ -584,6 +608,7 @@ namespace MyGenomics.Services.Services
             {
                 return context.ReportHeaders
                     .Include(i => i.Translations)
+                    .Where(rh => rh.Id == id)
                     .Select(p => new DomainModel.ReportHeaderDetail()
                     {
                         Id = p.Id,
@@ -592,12 +617,12 @@ namespace MyGenomics.Services.Services
                         FirstPage = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).FirstPage : null,
                         SecondPage = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).SecondPage : null,
                     })
-                    .First();
+                    .FirstOrDefault();
             }
 
         }
 
-        public void AddOrUpdateReportHeader(DomainModel.ReportHeaderDetail reportHeader)
+        public int AddOrUpdateReportHeader(DomainModel.ReportHeaderDetail reportHeader)
         {
             var languageId = reportHeader.LanguageId;
             var reportHeaderMapped = Mapper.Map<DomainModel.ReportHeaderDetail, DataModel.ReportHeader>(reportHeader);
@@ -636,6 +661,17 @@ namespace MyGenomics.Services.Services
                     context.Entry(reportHeaderMapped).State = EntityState.Added;
                 }
 
+                context.SaveChanges();
+            }
+
+            return reportHeaderMapped.Id;
+        }
+
+        public void RemoveReportHeader(int reportHeaderId)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                context.ReportHeaders.Remove(context.ReportHeaders.FirstOrDefault(p => p.Id == reportHeaderId));
                 context.SaveChanges();
             }
         }

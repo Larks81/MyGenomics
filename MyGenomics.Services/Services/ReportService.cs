@@ -473,6 +473,7 @@ namespace MyGenomics.Services.Services
 
         #endregion
 
+        #region Crud Levels
 
         public List<DomainModel.LevelItemList> GetLevels(int languageId, string name = null)
         {
@@ -575,6 +576,68 @@ namespace MyGenomics.Services.Services
                 context.SaveChanges();
             }
         }
+        #endregion
 
+        public DomainModel.ReportHeaderDetail GetReportHeaderDetail(int languageId, int id)
+        {
+            using (var context = new MyGenomicsContext())
+            {
+                return context.ReportHeaders
+                    .Include(i => i.Translations)
+                    .Select(p => new DomainModel.ReportHeaderDetail()
+                    {
+                        Id = p.Id,
+                        LanguageId = languageId,
+                        TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
+                        FirstPage = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).FirstPage : null,
+                        SecondPage = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).SecondPage : null,
+                    })
+                    .First();
+            }
+
+        }
+
+        public void AddOrUpdateReportHeader(DomainModel.ReportHeaderDetail reportHeader)
+        {
+            var languageId = reportHeader.LanguageId;
+            var reportHeaderMapped = Mapper.Map<DomainModel.ReportHeaderDetail, DataModel.ReportHeader>(reportHeader);
+            DataModel.ReportHeader originalReportHeader;
+
+            using (var context = new MyGenomicsContext())
+            {
+                originalReportHeader = context.ReportHeaders
+                    .Include(i => i.Translations)
+                    .FirstOrDefault(p => p.Id == reportHeaderMapped.Id);
+            }
+
+
+            using (var context = new MyGenomicsContext())
+            {
+
+                if (originalReportHeader != null)
+                {
+                    context.Entry(reportHeaderMapped).State = EntityState.Modified;
+
+                    //Translations
+                    foreach (var translation in reportHeaderMapped.Translations)
+                    {
+                        if (translation.Id > 0)
+                        {
+                            context.Entry(translation).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            context.Entry(translation).State = EntityState.Added;
+                        }
+                    }
+                }
+                else
+                {
+                    context.Entry(reportHeaderMapped).State = EntityState.Added;
+                }
+
+                context.SaveChanges();
+            }
+        }
     }
 }

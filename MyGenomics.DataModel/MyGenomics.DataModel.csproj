@@ -66,6 +66,8 @@
     <Compile Include="Report\PanelContentTranslation.cs" />
     <Compile Include="Report\PanelTranslation.cs" />
     <Compile Include="Report\Report.cs" />
+    <Compile Include="Report\ReportHeader.cs" />
+    <Compile Include="Report\ReportHeaderTranslation.cs" />
     <Compile Include="Report\ReportTranslation.cs" />
     <Compile Include="Report\Snp.cs" />
   </ItemGroup>

@@ -61,6 +61,7 @@
     <Compile Include="Report\PanelDetail.cs" />
     <Compile Include="Report\PanelItemList.cs" />
     <Compile Include="Report\ReportDetail.cs" />
+    <Compile Include="Report\ReportHeaderDetail.cs" />
     <Compile Include="Report\ReportItemList.cs" />
     <Compile Include="SubmitPersonQuestionnaire.cs" />
     <Compile Include="WebApiLog.cs" />

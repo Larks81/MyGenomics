@@ -119,6 +119,18 @@ namespace MyGenomics.Services
                         }
                     }));
 
+            Mapper.CreateMap<DomainModel.ReportHeaderDetail, DataModel.ReportHeader>()
+               .ForMember(dest => dest.Translations,
+                   opt => opt.MapFrom(src => new List<DataModel.ReportHeaderTranslation>(){
+                        new DataModel.ReportHeaderTranslation()
+                        {
+                            Id = src.TranslationId.Value,
+                            LanguageId = src.LanguageId,                                                                                
+                            FirstPage = src.FirstPage,
+                            SecondPage = src.SecondPage
+                        }
+                    }));
+
             Mapper.CreateMap<DataModel.ContactAnswer, DomainModel.ContactGivenAnswer>()
             .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.Answer.Text))
             .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.Question.Text));

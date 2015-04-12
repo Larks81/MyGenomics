@@ -267,3 +267,9 @@ table > tbody > tr:nth-child(odd) {
 	margin-left: 80px;
 }
 .phoca-flagbg {}
+
+.right-aligned {
+    float:right;
+    margin-top:8px;
+    margin-right:8px;    
+}

@@ -1,4 +1,4 @@
-﻿var app = angular.module('MyGenomicsApp', ['ngResource', 'appServices', 'ngRoute', 'ui.bootstrap']);
+﻿var app = angular.module('MyGenomicsApp', ['ngResource', 'appServices', 'ngRoute', 'ui.bootstrap', 'toastr']);
 
 app.config([
     '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -23,6 +23,11 @@ app.config([
             controller: 'panelsController',
             title: 'Pannelli'
         })
+        .when('/capitoli', {
+            templateUrl: '/App/views/capitoli.html',
+            controller: 'mainController',
+            title: 'Capitoli'
+        })
         .when('/capitoli/:param', {
             templateUrl: '/App/views/capitoli.html',
             controller: 'mainController',
@@ -33,7 +38,17 @@ app.config([
             controller: 'mainController',
             title: 'Genotests'
         })
+        .when('/genotests', {
+            templateUrl: '/App/views/genotests.html',
+            controller: 'mainController',
+            title: 'Genotests'
+        })
         .when('/livelli/:param', {
+            templateUrl: '/App/views/livelli.html',
+            controller: 'mainController',
+            title: 'Livelli'
+        })
+        .when('/livelli', {
             templateUrl: '/App/views/livelli.html',
             controller: 'mainController',
             title: 'Livelli'
@@ -49,7 +64,7 @@ app.config([
 app.run(function ($rootScope, $route, $window, $location, configs) {
 
     $rootScope.languages = configs.languages;
-    $rootScope.selectedLanguageId = 1;
+    $rootScope.selectedLanguageId = 1;       
 
     $rootScope.$on("$locationChangeStart", function (event, next, current) {        
         var nextPath = $location.path();

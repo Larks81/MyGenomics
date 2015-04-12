@@ -8,9 +8,9 @@
             <div class="modal-body">
                 Sei sicuro di voler eliminare questo pannello?
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer"> <!---->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
-                <button ng-click="removeDetail()" type="button" class="btn btn-primary">Elimina</button>
+                <button ng-click="removeDetail()" data-dismiss="modal" type="button" class="btn btn-primary">Elimina</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -38,8 +38,7 @@
         <div class="box-body">
             <form role="form">
                 <div class="form-group">
-                    <label>Id</label>
-                    <input type="text" ng-model="detail.Id" disabled class="form-control" placeholder="Enter ..." />
+                    <label>Id: {{detail.Id}}</label>                    
                 </div>
                 <div class="form-group">
                     <label>Titolo</label>
@@ -54,24 +53,47 @@
     <div class="box box-warning">
         <div class="box-header">
             <h3 class="box-title">Contenuti</h3>
+            <button ng-click="addNewPanelContent()" class="btn btn-default right-aligned">Aggiungi nuovo contenuto</button>            
         </div>
         <div class="box-body">
             <form role="form">
+                <small  ng-show="detail.PanelContents.length==0 || detail.PanelContents==undefined">Nessun contenuto ancora inserito</small>
+                
                 <accordion close-others="oneAtATime">
-                    <accordion-group heading="Titolo: {{content.Title}}" ng-repeat="content in detail.PanelContents">
-                        <h4 ng-show="content.LevelId>0">Livello di suscettibilità {{content.LevelId}}</h4>
-                        <div class="form-group">
-                            <label>Titolo</label>
-                            <input type="text" ng-model="content.Title" class="form-control" placeholder="Enter ..." />
-                        </div>
+                    <accordion-group ng-repeat="content in detail.PanelContents | orderBy:'OrderPosition'">
+
+                        <accordion-heading>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>
+                                        <h4>Titolo: {{content.Title}} Posizione: {{content.OrderPosition}}</h4>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <button ng-click="content.OrderPosition = content.OrderPosition+1" class="btn btn-small"><i class="fa fa-arrow-down"></i></button>
+                                        <button ng-click="content.OrderPosition = content.OrderPosition-1" class="btn btn-small"><i class="fa fa-arrow-up"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </accordion-heading>
+                        
+                        <fieldset>
+                            <legend>Titolo</legend>
+                            <input type="text" ng-model="content.Title" class="form-control" placeholder="Inserisci un titolo per il pannello..." />
+                        </fieldset>
+                        <br />
+                        <fieldset>
+                            <legend>Livello di suscettibilità</legend>
+                            <select ng-model="content.LevelId" class="form-control" ng-options="level.Id as level.Name for level in levels"></select>
+                        </fieldset>
+                        <br />
                         <fieldset>
                             <legend>Testo breve</legend>
-                            <div richtexteditor ng-model="content.ShortText"></div>
+                            <div richtexteditor ng-model="content.ShortText" placeholder="Inserisci qui un testo breve per il pannello..."></div>
                         </fieldset>
                         <br />
                         <fieldset>
                             <legend>Testo</legend>
-                            <div richtexteditor ng-model="content.Text"></div>
+                            <div richtexteditor ng-model="content.Text" placeholder="Inserisci qui un testo per il pannello..."></div>
                         </fieldset>
                     </accordion-group>
                 </accordion>
@@ -87,6 +109,7 @@
         </div>
         <div class="box-body">
             <form role="form">
+                <small ng-show="detail.Chapters.length==0 || detail.Chapters==undefined">Nessun capitolo ancora ha associato questo pannello</small>
                 <ul>
                     <li ng-repeat="chapter in detail.Chapters">Titolo: {{chapter.Title}}</li>
                 </ul>               

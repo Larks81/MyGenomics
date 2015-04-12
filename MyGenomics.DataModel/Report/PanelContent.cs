@@ -12,6 +12,7 @@ namespace MyGenomics.DataModel
         public int PanelId { get; set; }
         public Level Level { get; set; }
         public int? LevelId { get; set; }
+        public int OrderPosition { get; set; }
         public List<PanelContentTranslation> Translations { get; set; }    
     }
 }

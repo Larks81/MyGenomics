@@ -25,7 +25,7 @@ namespace MyGenomics.WebSiteReports
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/site.css")
-                //.Include("~/Content/phoca-flags.css")
+                .Include("~/Content/angular-toastr.css")
                 );
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
@@ -53,7 +53,9 @@ namespace MyGenomics.WebSiteReports
                 "~/Scripts/angular-wizard.js",
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/angular-ui/ui-bootstrap.js",
-                "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
+                "~/Scripts/angular-toastr.js",
+                "~/Scripts/angular-toastr.tpls.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app-base").Include(
                 "~/App/*.js",

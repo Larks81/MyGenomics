@@ -18,6 +18,17 @@ appServices.factory('Panel', [
     function ($resource, configs) {
         return $resource(configs.baseWebApiUrl + 'api/Panels', {}, {
             get: { method: 'GET', isArray: false },
+            save: { method: 'POST', isArray: false},
+        });
+    }
+]);
+
+appServices.factory('Level', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/Levels', {}, {
+            get: { method: 'GET', isArray: true },
+            save: { method: 'POST', isArray: false},
         });
     }
 ]);

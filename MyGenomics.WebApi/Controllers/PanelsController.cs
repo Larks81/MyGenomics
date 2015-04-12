@@ -25,9 +25,10 @@ namespace MyGenomics.Controllers
         }
 
         // POST api/panels
-        public int Post([FromBody]PanelDetail value)
+        public object Post([FromBody]PanelDetail value)
         {
-            return _reportService.AddOrUpdatePanel(value);
+            var Id = _reportService.AddOrUpdatePanel(value);
+            return new { Id };
         }        
 
         // DELETE api/panels/5

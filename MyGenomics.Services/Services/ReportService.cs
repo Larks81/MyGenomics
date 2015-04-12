@@ -36,7 +36,8 @@ namespace MyGenomics.Services.Services
                         .Select(p => new DomainModel.PanelItemList()
                                      {
                                          Id = p.Id,
-                                         Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
+                                         Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
+                                         ContentsCount = p.PanelContents.Count()
                                      })
                         .ToList();
                 }
@@ -55,7 +56,8 @@ namespace MyGenomics.Services.Services
                         .Select(p => new DomainModel.PanelItemList()
                         {
                             Id = p.Id,
-                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
+                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
+                            ContentsCount = p.PanelContents != null ? p.PanelContents.Count : 0
                         })
                         .ToList();
                 }                               
@@ -79,7 +81,7 @@ namespace MyGenomics.Services.Services
                             LanguageId = languageId,
                             TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
                             Title = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
-                            PanelContents = p.PanelContents
+                            PanelContents = p.PanelContents.OrderBy(pc=>pc.OrderPosition)
                                     .Select(c => new DomainModel.PanelContentDetail()
                                     {
                                         Id = c.Id,
@@ -89,8 +91,8 @@ namespace MyGenomics.Services.Services
                                         Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                         ShortText = c.Translations.Any(t=>t.LanguageId==languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).ShortText : null,
                                         Text = c.Translations.Any(t => t.LanguageId == languageId)  ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,
-                                        PanelId = p.Id
-
+                                        PanelId = p.Id,
+                                        OrderPosition = c.OrderPosition
                                     } ).ToList(),
                             Chapters = p.Chapters
                                     .Select(c => new DomainModel.ChapterItemList()

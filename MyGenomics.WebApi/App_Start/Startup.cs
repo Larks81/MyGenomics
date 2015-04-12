@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using System.Web.Security;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
@@ -62,7 +63,7 @@ namespace MyGenomics
                 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.UserData, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "customer"));
+            identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
 
             context.Validated(identity);
 

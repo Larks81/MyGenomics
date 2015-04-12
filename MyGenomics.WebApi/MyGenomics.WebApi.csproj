@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ContactQuestionnairesController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\KitResultsController.cs" />
+    <Compile Include="Controllers\PanelsController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

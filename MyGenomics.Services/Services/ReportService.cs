@@ -6,21 +6,33 @@ using AutoMapper;
 using MyGenomics.Data.Context;
 using MyGenomics.Data.Migrations;
 using MyGenomics.DataModel;
+using MyGenomics.DomainModel;
 
 namespace MyGenomics.Services.Services
 {
     public class ReportService
     {
+        private const int maxItemInPage = 10;
+
         #region Crud Panels
-        public List<DomainModel.PanelItemList> GetPanels(int languageId, string title = null)
+        public SearchList<DomainModel.PanelItemList> GetPanels(int languageId, string title = null, int page = 1)
         {
+            var result = new SearchList<DomainModel.PanelItemList>();
+
             using (var context = new MyGenomicsContext())
             {
                 if (string.IsNullOrWhiteSpace(title))
                 {
-                    return context.Panels
+                    
+                    result.TotRec = context.Panels.Count();
+                    result.CurrentPage = page;
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Panels
                         .Include(i => i.Translations)
-                        .Include(i => i.PanelContents)                        
+                        .Include(i => i.PanelContents)
+                        .OrderBy(p => p.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.PanelItemList()
                                      {
                                          Id = p.Id,
@@ -30,9 +42,15 @@ namespace MyGenomics.Services.Services
                 }
                 else
                 {
-                    return context.Panels
+                    result.TotRec = context.Panels.Count();
+                    result.CurrentPage = page;
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Panels
                         .Include(i => i.Translations)
                         .Include(i => i.PanelContents)
+                        .OrderBy(p => p.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Where(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId))
                         .Select(p => new DomainModel.PanelItemList()
                         {
@@ -40,10 +58,10 @@ namespace MyGenomics.Services.Services
                             Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
                         })
                         .ToList();
-                }
-                
-                
+                }                               
             }
+
+            return result;
         }
 
         public DomainModel.PanelDetail GetPanelDetail(int languageId, int id)
@@ -177,8 +195,12 @@ namespace MyGenomics.Services.Services
         {
             using (var context = new MyGenomicsContext())
             {
-                context.Panels.Remove(context.Panels.FirstOrDefault(p => p.Id == panelId));
-                context.SaveChanges();
+                var panel = context.Panels.FirstOrDefault(p => p.Id == panelId);
+                if (panel != null)
+                {
+                    context.Panels.Remove(panel);
+                    context.SaveChanges();
+                }
             }
         }
 

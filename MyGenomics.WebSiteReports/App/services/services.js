@@ -13,6 +13,15 @@ appServices.factory('Authorization', [
     }
 ]);
 
+appServices.factory('Panel', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/Panels', {}, {
+            get: { method: 'GET', isArray: false },
+        });
+    }
+]);
+
 appServices.factory('KitResult', [
     '$resource', 'configs',
     function ($resource, configs) {

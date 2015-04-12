@@ -1,0 +1,96 @@
+﻿<div class="modal fade" id="modalremove">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Elimina</h4>
+            </div>
+            <div class="modal-body">
+                Sei sicuro di voler eliminare questo pannello?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+                <button ng-click="removeDetail()" type="button" class="btn btn-primary">Elimina</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="btn-group" style="padding-left:13px;" role="group" aria-label="...">
+    <a class="btn btn-app">
+        <i ng-click="getDetail(detail.Id)" class="fa fa-repeat"></i> Aggiorna
+    </a>
+    <a class="btn btn-app">
+        <i ng-click="saveDetail()" class="fa fa-save"></i> Salva
+    </a>
+    <a class="btn btn-app">
+        <!--<button data-toggle="modal" data-target="#modalRemove" >Elimina</button>--> 
+        <i type="button" data-toggle="modal" data-target="#modalremove" class="fa fa-times"></i>Elimina
+    </a>
+</div> 
+<br/>
+<br />
+<div class="col-md-12">    
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Info generali</h3>
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Id</label>
+                    <input type="text" ng-model="detail.Id" disabled class="form-control" placeholder="Enter ..." />
+                </div>
+                <div class="form-group">
+                    <label>Titolo</label>
+                    <input type="text" ng-model="detail.Title" class="form-control" placeholder="Enter ..." />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">    
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Contenuti</h3>
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <accordion close-others="oneAtATime">
+                    <accordion-group heading="Titolo: {{content.Title}}" ng-repeat="content in detail.PanelContents">
+                        <h4 ng-show="content.LevelId>0">Livello di suscettibilità {{content.LevelId}}</h4>
+                        <div class="form-group">
+                            <label>Titolo</label>
+                            <input type="text" ng-model="content.Title" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <fieldset>
+                            <legend>Testo breve</legend>
+                            <div richtexteditor ng-model="content.ShortText"></div>
+                        </fieldset>
+                        <br />
+                        <fieldset>
+                            <legend>Testo</legend>
+                            <div richtexteditor ng-model="content.Text"></div>
+                        </fieldset>
+                    </accordion-group>
+                </accordion>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">    
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Capitoli che hanno associato questo pannello</h3>
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <ul>
+                    <li ng-repeat="chapter in detail.Chapters">Titolo: {{chapter.Title}}</li>
+                </ul>               
+            </form>
+        </div>
+    </div>
+</div>

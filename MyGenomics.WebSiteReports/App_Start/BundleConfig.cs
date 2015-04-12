@@ -23,7 +23,10 @@ namespace MyGenomics.WebSiteReports
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css")
+                .Include("~/Content/site.css")
+                //.Include("~/Content/phoca-flags.css")
+                );
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -58,9 +61,9 @@ namespace MyGenomics.WebSiteReports
 
             bundles.Add(new ScriptBundle("~/bundles/app-controllers").Include(
                 "~/App/controllers/*.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/app-directives").Include(                
-                "~/App/directives/*.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/app-directives").IncludeDirectory(                
+                "~/App/directives","*.js", true));
         }
     }
 }

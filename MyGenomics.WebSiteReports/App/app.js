@@ -13,22 +13,27 @@ app.config([
             controller: 'mainController',
             title: 'Dashboard'
         })
-        .when('/pannelli', {
-            templateUrl: '/App/views/pannelli.html',
-            controller: 'mainController',
+        .when('/pannelli/:param', {
+            templateUrl: '/App/views/panelDetail.html',
+            controller: 'panelsController',
             title: 'Pannelli'
         })
-        .when('/capitoli', {
+        .when('/pannelli', {
+            templateUrl: '/App/views/panelsList.html',
+            controller: 'panelsController',
+            title: 'Pannelli'
+        })
+        .when('/capitoli/:param', {
             templateUrl: '/App/views/capitoli.html',
             controller: 'mainController',
             title: 'Capitoli'
         })
-        .when('/genotests', {
+        .when('/genotests/:param', {
             templateUrl: '/App/views/genotests.html',
             controller: 'mainController',
             title: 'Genotests'
         })
-        .when('/livelli', {
+        .when('/livelli/:param', {
             templateUrl: '/App/views/livelli.html',
             controller: 'mainController',
             title: 'Livelli'
@@ -41,7 +46,10 @@ app.config([
     $locationProvider.html5Mode(true).hashPrefix('!');
 
     }]);
-app.run(function ($rootScope, $route, $window, $location) {
+app.run(function ($rootScope, $route, $window, $location, configs) {
+
+    $rootScope.languages = configs.languages;
+    $rootScope.selectedLanguageId = 1;
 
     $rootScope.$on("$locationChangeStart", function (event, next, current) {        
         var nextPath = $location.path();
@@ -77,6 +85,9 @@ app.factory('authHttpResponseInterceptor', ['$rootScope', '$window', '$q', '$loc
                 config.headers = config.headers || {};
                 if ($window.sessionStorage.token && $window.sessionStorage.token != "") {
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+                    if (config.url.indexOf("/api/") > -1) {
+                        config.url = config.url + '?languageId=' + $rootScope.selectedLanguageId;
+                    }                        
                 }
                 return config;
             },

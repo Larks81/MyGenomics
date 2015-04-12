@@ -60,9 +60,9 @@ namespace MyGenomics.ServicesUnitTest
 
             //Test if exists in list
             var listIta = reportService.GetPanels(1, "Nuovo titolo in italiano");
-            Assert.IsTrue(listIta.Any(p => p.Id == idUpdated && p.Title == "Nuovo titolo in italiano"));
+            Assert.IsTrue(listIta.Results.Any(p => p.Id == idUpdated && p.Title == "Nuovo titolo in italiano"));
             var listEng = reportService.GetPanels(2, "New title in english");
-            Assert.IsTrue(listEng.Any(p => p.Id == idUpdated && p.Title == "New title in english"));
+            Assert.IsTrue(listEng.Results.Any(p => p.Id == idUpdated && p.Title == "New title in english"));
             
             //Test delete
             reportService.RemovePanel(idUpdated);

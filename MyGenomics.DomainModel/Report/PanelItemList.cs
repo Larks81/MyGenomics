@@ -11,5 +11,6 @@ namespace MyGenomics.DomainModel
         public int Id { get; set; }
         public string Title { get; set; }
         public int ContentsCount { get; set; }
+        public int OrderPosition { get; set; }
     }
 }

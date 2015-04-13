@@ -58,6 +58,7 @@
     <Compile Include="Questionnaire\QuestionnaireResult.cs" />
     <Compile Include="Common\WebApiLog.cs" />
     <Compile Include="Report\Chapter.cs" />
+    <Compile Include="Report\ChaptersPanels.cs" />
     <Compile Include="Report\ChapterTranslation.cs" />
     <Compile Include="Report\Level.cs" />
     <Compile Include="Report\LevelTranslation.cs" />

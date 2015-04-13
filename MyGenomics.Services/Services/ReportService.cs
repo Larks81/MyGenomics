@@ -22,8 +22,7 @@ namespace MyGenomics.Services.Services
             using (var context = new MyGenomicsContext())
             {
                 if (string.IsNullOrWhiteSpace(title))
-                {
-                    
+                {                    
                     result.TotRec = context.Panels.Count();
                     result.CurrentPage = page;
                     result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
@@ -43,7 +42,7 @@ namespace MyGenomics.Services.Services
                 }
                 else
                 {
-                    result.TotRec = context.Panels.Count();
+                    result.TotRec = context.Panels.Count(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId));
                     result.CurrentPage = page;
                     result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
 
@@ -69,8 +68,9 @@ namespace MyGenomics.Services.Services
         public DomainModel.PanelDetail GetPanelDetail(int languageId, int id)
         {
             using (var context = new MyGenomicsContext())
-            {                
-                return context.Panels
+            {
+                
+                var res = context.Panels
                     .Include(i => i.Translations)
                     .Include(i => i.PanelContents)
                     .Include(i => i.Chapters)
@@ -91,18 +91,27 @@ namespace MyGenomics.Services.Services
                                         Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                         ShortText = c.Translations.Any(t=>t.LanguageId==languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).ShortText : null,
                                         Text = c.Translations.Any(t => t.LanguageId == languageId)  ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,
-                                        PanelId = p.Id,
-                                        OrderPosition = c.OrderPosition
+                                        PanelId = p.Id                                        
                                     } ).ToList(),
                             Chapters = p.Chapters
                                     .Select(c => new DomainModel.ChapterItemList()
                                     {
-                                        Id = c.Id,                                        
-                                        Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                        Id = c.Chapter.Id,
+                                        Title = c.Chapter.Translations.Any(t => t.LanguageId == languageId) ? c.Chapter.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                     }).ToList()                            
                         })
                     .FirstOrDefault();
-                
+
+                if (res != null && res.PanelContents.Any())
+                {
+                    int count = 1;
+                    foreach (var pc in res.PanelContents)
+                    {
+                        pc.OrderPosition = count++;
+                    }
+                }
+
+                return res;
             }
             
         }
@@ -209,43 +218,60 @@ namespace MyGenomics.Services.Services
         #endregion
 
         #region Crud Chapters
-        public List<DomainModel.ChapterItemList> GetChapters(int languageId, string title = null)
+        public SearchList<DomainModel.ChapterItemList> GetChapters(int languageId, string title = null, int page = 1)
         {
+            var result = new SearchList<DomainModel.ChapterItemList>();
+
             using (var context = new MyGenomicsContext())
             {
+                result.CurrentPage = page;
+
                 if (string.IsNullOrWhiteSpace(title))
                 {
-                    return context.Chapters
+                    result.TotRec = context.Chapters.Count();                    
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Chapters
                         .Include(i => i.Translations)
+                        .OrderBy(c => c.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.ChapterItemList()
                         {
                             Id = p.Id,
-                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
+                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
+                            PanelsCount = p.Panels.Count()
                         })
                         .ToList();
                 }
                 else
                 {
-                    return context.Chapters
+                    result.TotRec = context.Chapters.Count(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId));
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Chapters
                         .Include(i => i.Translations)                        
                         .Where(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId))
+                        .OrderBy(c=>c.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.ChapterItemList()
                         {
                             Id = p.Id,
-                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title
+                            Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
+                            PanelsCount = p.Panels.Count()
                         })
                         .ToList();
-                }
+                }                
             }
+            return result;
         }
 
         public DomainModel.ChapterDetail GetChapterDetail(int languageId, int id)
         {
             using (var context = new MyGenomicsContext())
             {
-                return context.Chapters
+                var res = context.Chapters
                     .Include(i => i.Translations)
-                    .Include(i => i.Panels)
+                    .Include(i => i.Panels.Select(p=>p.Panel))
                     .Include(i => i.Reports)
                     .Where(c=>c.Id == id)
                     .Select(p => new DomainModel.ChapterDetail()
@@ -254,11 +280,11 @@ namespace MyGenomics.Services.Services
                         LanguageId = languageId,
                         TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
                         Title = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,                        
-                        Panels = p.Panels
+                        Panels = p.Panels.OrderBy(pc=>pc.OrderPosition)
                                 .Select(c => c!=null ? new DomainModel.PanelItemList()
                                 {
-                                    Id = c.Id,
-                                    Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                    Id = c.Panel.Id,
+                                    Title = c.Panel.Translations.Any(t => t.LanguageId == languageId) ? c.Panel.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                 } : null).ToList(),
                         Color = p.Color,
                         ImageUri = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).ImageUri : null,
@@ -270,6 +296,17 @@ namespace MyGenomics.Services.Services
                                 } : null).ToList(),
                     })
                     .FirstOrDefault();
+
+                if (res != null && res.Panels.Any())
+                {
+                    int count = 1;
+                    foreach (var pc in res.Panels)
+                    {
+                        pc.OrderPosition = count++;
+                    }
+                }
+
+                return res;
             }
 
         }
@@ -323,28 +360,28 @@ namespace MyGenomics.Services.Services
                 //Update panels associations
                 using (var context = new MyGenomicsContext())
                 {
+                    
+                    context.ChaptersPanels.RemoveRange(
+                        context.ChaptersPanels.Where(cp => cp.ChapterId == chapterMapped.Id));
+
+                    context.SaveChanges();
+
                     var original = context.Chapters
-                        .Include(i => i.Panels)
+                        .Include(i => i.Panels.Select(p => p.Panel))
                         .FirstOrDefault(c => c.Id == chapterMapped.Id);
-
-                    context.Chapters.Attach(original);
-
-                    if (original.Panels.Any())
-                    {
-                        original.Panels.Clear();
-                    }
-                    else
-                    {
-                        original.Panels = new List<Panel>();
-                    }
 
                     //Pannelli associati
                     foreach (var panel in chapter.Panels)
                     {
+                        
                         var pan = context.Panels.FirstOrDefault(p => p.Id == panel.Id);
                         if (pan != null)
                         {
-                            original.Panels.Add(pan);
+                            original.Panels.Add(new ChaptersPanels()
+                                                {
+                                                    PanelId = pan.Id,
+                                                    ChapterId = chapterMapped.Id
+                                                });
                         }
                     }
 

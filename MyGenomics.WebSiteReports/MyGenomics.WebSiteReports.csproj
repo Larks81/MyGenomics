@@ -129,7 +129,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App\app.js" />
+    <Content Include="App\components\angular-dragdrop\angular-dragdrop.js" />
+    <Content Include="App\components\angular-dragdrop\angular-dragdrop.min.js" />
     <Content Include="App\configs.js" />
+    <Content Include="App\controllers\chaptersController.js" />
     <Content Include="App\controllers\loginController.js" />
     <Content Include="App\controllers\mainController.js" />
     <Content Include="App\controllers\panelsController.js" />
@@ -139,9 +142,10 @@
     <Content Include="App\services\services.js" />
     <Content Include="App\views\dashboard.html" />
     <Content Include="App\views\login.html" />
-    <Content Include="App\views\capitoli.html" />
     <Content Include="App\views\genotests.html" />
     <Content Include="App\views\livelli.html" />
+    <Content Include="App\views\chaptersList.html" />
+    <Content Include="App\views\chapterDetail.html" />
     <Content Include="App\views\panelsList.html" />
     <Content Include="App\views\panelDetail.html" />
     <Content Include="Content\angular-toastr.css" />

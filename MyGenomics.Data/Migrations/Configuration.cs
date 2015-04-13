@@ -489,9 +489,10 @@ namespace MyGenomics.Data.Migrations
                                                                            UpdateDate = DateTime.Now
                                                                        }
                                                                    },
-                                                    Panels = new List<Panel>()
+                                                    Panels = new List<ChaptersPanels>()
                                                              {
-                                                                 new Panel()
+                                                                 new ChaptersPanels(){
+                                                                 Panel = new Panel()
                                                                  {
                                                                      Id = 1,
                                                                      InsertDate = DateTime.Now,
@@ -541,7 +542,9 @@ namespace MyGenomics.Data.Migrations
                                                                         }
                                                                      }
                                                                  }
+
                                                              }
+                                                        }
                                                 }  
                                             },
                                  InsertDate = DateTime.Now,

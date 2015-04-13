@@ -10,7 +10,7 @@ namespace MyGenomics.DataModel
     {
         public List<Report> Reports { get; set; }
         public string Color { get; set; }
-        public List<Panel> Panels { get; set; }
+        public List<ChaptersPanels> Panels { get; set; }
         public List<ChapterTranslation> Translations { get; set; }
     }
 }

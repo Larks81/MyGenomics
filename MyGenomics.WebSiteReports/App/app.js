@@ -1,4 +1,4 @@
-﻿var app = angular.module('MyGenomicsApp', ['ngResource', 'appServices', 'ngRoute', 'ui.bootstrap', 'toastr']);
+﻿var app = angular.module('MyGenomicsApp', ['ngResource', 'appServices', 'ngRoute', 'ui.bootstrap', 'toastr', 'ngDragDrop']);
 
 app.config([
     '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -24,13 +24,13 @@ app.config([
             title: 'Pannelli'
         })
         .when('/capitoli', {
-            templateUrl: '/App/views/capitoli.html',
-            controller: 'mainController',
+            templateUrl: '/App/views/chaptersList.html',
+            controller: 'chaptersController',
             title: 'Capitoli'
         })
         .when('/capitoli/:param', {
-            templateUrl: '/App/views/capitoli.html',
-            controller: 'mainController',
+            templateUrl: '/App/views/chapterDetail.html',
+            controller: 'chaptersController',
             title: 'Capitoli'
         })
         .when('/genotests/:param', {

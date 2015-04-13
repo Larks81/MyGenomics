@@ -1,0 +1,121 @@
+﻿<style>
+    .thumbnail {
+        height: 280px !important;
+    }
+
+    .btn-droppable {
+        width: 180px;
+        height: 30px;
+        padding-left: 4px;
+    }
+
+    .btn-draggable {
+        width: 160px;
+    }
+</style>
+
+<div class="modal fade" id="modalremove">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Elimina</h4>
+            </div>
+            <div class="modal-body">
+                Sei sicuro di voler eliminare questo capitolo?
+            </div>
+            <div class="modal-footer"> <!---->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+                <button ng-click="removeDetail()" data-dismiss="modal" type="button" class="btn btn-primary">Elimina</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="btn-group" style="padding-left:13px;" role="group" aria-label="...">
+    <a class="btn btn-app">
+        <i ng-click="getDetail(detail.Id)" class="fa fa-repeat"></i> Aggiorna
+    </a>
+    <a class="btn btn-app">
+        <i ng-click="saveDetail()" class="fa fa-save"></i> Salva
+    </a>
+    <a class="btn btn-app">
+        <!--<button data-toggle="modal" data-target="#modalRemove" >Elimina</button>--> 
+        <i type="button" data-toggle="modal" data-target="#modalremove" class="fa fa-times"></i>Elimina
+    </a>
+</div> 
+<br/>
+<br />
+<!--public string Color { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public string ImageUri { get; set; }-->
+<div class="col-md-12">    
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Info generali</h3>
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <div class="form-group">
+                    <label>Id: {{detail.Id}}</label>                    
+                </div>
+                <div class="form-group">
+                    <label>Titolo</label>
+                    <input type="text" ng-model="detail.Title" class="form-control" placeholder="Enter ..." />
+                </div>
+                <div class="form-group">
+                    <label>Colore</label>
+                    <input type="text" ng-model="detail.Color" class="form-control" placeholder="Enter ..." />
+                </div>
+                <fieldset>
+                    <legend>Testo</legend>
+                    <div richtexteditor ng-model="detail.Text" placeholder="Inserisci qui un testo per il capitolo..."></div>
+                </fieldset>
+                <fieldset>
+                    <legend>Immagine</legend>
+                    <input type="text" ng-model="detail.ImageUri" class="form-control" placeholder="Enter ..." />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">    
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Pannelli associati</h3>
+            <button ng-click="addNewPanelContent()" class="btn btn-default right-aligned">Aggiungi nuovo contenuto</button>            
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <!--<span data-drag="true" jqyoui-draggable>So you think you can drag</span>-->
+                <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="lista1" jqyoui-draggable="{animate:true}" ng-hide="!lista1.title">{{lista1.title}}</div>
+                <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="lista2" jqyoui-draggable="{animate:true}" ng-hide="!lista2.title">{{lista2.title}}</div>
+                <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="lista3" jqyoui-draggable="{animate:true}" ng-hide="!lista2.title">{{lista3.title}}</div>
+                
+                <div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:50px;'>
+                    <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">    
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Reports che hanno associato questo capitolo</h3>
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <small ng-show="detail.Reports.length==0 || detail.Reports==undefined">Nessun capitolo ancora ha associato questo pannello</small>
+                <ul>
+                    <li ng-repeat="report in detail.Reports">Titolo: {{report.Title}}</li>
+                </ul>               
+            </form>
+        </div>
+    </div>
+</div>

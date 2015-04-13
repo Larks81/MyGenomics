@@ -9,6 +9,8 @@ namespace MyGenomics.DomainModel
     public class ChapterItemList
     {
         public int Id { get; set; }
-        public string Title { get; set; }        
+        public string Title { get; set; }
+        public int PanelsCount { get; set; }
+        public int OrderPosition { get; set; }
     }
 }

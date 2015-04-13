@@ -64,8 +64,9 @@ namespace MyGenomics.WebSiteReports
             bundles.Add(new ScriptBundle("~/bundles/app-controllers").Include(
                 "~/App/controllers/*.js"));
             
-            bundles.Add(new ScriptBundle("~/bundles/app-directives").IncludeDirectory(                
-                "~/App/directives","*.js", true));
+            bundles.Add(new ScriptBundle("~/bundles/app-directives")
+                .IncludeDirectory("~/App/directives","*.js", true)
+                .IncludeDirectory("~/App/components","*.js", true));
         }
     }
 }

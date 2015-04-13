@@ -56,9 +56,14 @@
             var newContent = new Object();
             newContent.PanelId = $scope.selectedId;
             newContent.LanguageId = $rootScope.selectedLanguageId;
+            newContent.OrderPosition = $scope.detail.PanelContents.length + 1;
             $scope.detail.PanelContents.push(newContent);
         };
 
+        $scope.removePanelContent = function (contents, index) {
+            if(confirm("Vuoi realmente eliminare questo contenuto?"))
+            contents.splice(index, 1);
+        };
 
         //Startup
 
@@ -85,8 +90,26 @@
             return new Array(num);
         };
 
-        $scope.sortableOptions = {
-            handle: '> .handle'
-        }
+        $scope.changeOrderUp = function(content) {
+            var oldPos = content.OrderPosition;            
+            var newPos = content.OrderPosition - 1;
+            for (var k = 0; k < $scope.detail.PanelContents.length; k++) {
+                if ($scope.detail.PanelContents[k].OrderPosition == newPos) {
+                    $scope.detail.PanelContents[k].OrderPosition = oldPos;
+                }
+            }                
+            content.OrderPosition=newPos;
+        };
+
+        $scope.changeOrderDown = function (content) {
+            var oldPos = content.OrderPosition;
+            var newPos = content.OrderPosition + 1;
+            for (var k = 0; k < $scope.detail.PanelContents.length; k++) {
+                if ($scope.detail.PanelContents[k].OrderPosition == newPos) {
+                    $scope.detail.PanelContents[k].OrderPosition = oldPos;
+                }
+            }
+            content.OrderPosition = newPos;
+        };
 
     }]);

@@ -31,6 +31,7 @@ namespace MyGenomics.Data.Context
 
         //Kreo
         public DbSet<Chapter> Chapters { get; set; }
+        public DbSet<ChaptersPanels> ChaptersPanels { get; set; }
         public DbSet<ChapterTranslation> ChapterTranslations { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<LevelTranslation> LevelTranslations { get; set; }

@@ -112,9 +112,9 @@ namespace MyGenomics.ServicesUnitTest
             
             //Test if exists in list
             var listIta = reportService.GetChapters(1, "Nuovo capitolo titolo ITA");
-            Assert.IsTrue(listIta.Any(p => p.Id == idUpdated && p.Title == "Nuovo capitolo titolo ITA"));
+            Assert.IsTrue(listIta.Results.Any(p => p.Id == idUpdated && p.Title == "Nuovo capitolo titolo ITA"));
             var listEng = reportService.GetChapters(2, "Title in english");
-            Assert.IsTrue(listEng.Any(p => p.Id == idUpdated && p.Title == "Title in english"));
+            Assert.IsTrue(listEng.Results.Any(p => p.Id == idUpdated && p.Title == "Title in english"));
 
             //Test delete
             reportService.RemoveChapter(idUpdated);

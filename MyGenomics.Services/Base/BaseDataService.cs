@@ -43,8 +43,7 @@ namespace MyGenomics.Services
                 .ForMember(dest => dest.ContentsCount, opt => opt.MapFrom(src => src.PanelContents.Count()));
 
             Mapper.CreateMap<DomainModel.PanelDetail, DataModel.Panel>()
-                .ForMember(dest => dest.Chapters,
-                opt => opt.MapFrom(src => src.Chapters != null ? src.Chapters.Select(c => new DataModel.Chapter() {Id = c.Id}) : null))
+                .ForMember(dest => dest.Chapters, opt => opt.MapFrom(src => new List<DataModel.ChaptersPanels>()))
                 .ForMember(dest => dest.Translations,
                     opt => opt.MapFrom(src => new List<DataModel.PanelTranslation>(){
                         new DataModel.PanelTranslation()
@@ -58,7 +57,12 @@ namespace MyGenomics.Services
 
             Mapper.CreateMap<DomainModel.ChapterDetail, DataModel.Chapter>()
                 .ForMember(dest => dest.Panels,
-                    opt => opt.MapFrom(src => src.Panels!=null ? src.Panels.Select(c => new DataModel.Panel() { Id = c.Id }) : null))
+                    opt => opt.MapFrom(src => src.Panels!=null ? src.Panels.Select(c =>                        
+                        new DataModel.ChaptersPanels()
+                        {
+                            PanelId = c.Id,
+                            ChapterId = src.Id
+                        }) : null))
                 .ForMember(dest => dest.Reports,
                     opt => opt.MapFrom(src => src.Reports!=null ? src.Reports.Select(c => new DataModel.Report() { Id = c.Id }) : null ))
                 .ForMember(dest => dest.Translations,

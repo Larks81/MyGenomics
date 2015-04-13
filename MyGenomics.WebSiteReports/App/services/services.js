@@ -23,6 +23,16 @@ appServices.factory('Panel', [
     }
 ]);
 
+appServices.factory('Chapter', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/Chapters', {}, {
+            get: { method: 'GET', isArray: false },
+            save: { method: 'POST', isArray: false },
+        });
+    }
+]);
+
 appServices.factory('Level', [
     '$resource', 'configs',
     function ($resource, configs) {

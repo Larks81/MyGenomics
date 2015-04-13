@@ -16,6 +16,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
 <div class="btn-group" style="padding-left:13px;" role="group" aria-label="...">
     <a class="btn btn-app">
         <i ng-click="getDetail(detail.Id)" class="fa fa-repeat"></i> Aggiorna
@@ -60,25 +61,26 @@
                 <small  ng-show="detail.PanelContents.length==0 || detail.PanelContents==undefined">Nessun contenuto ancora inserito</small>
                 
                 <accordion close-others="oneAtATime">
-                    <accordion-group ng-repeat="content in detail.PanelContents | orderBy:'OrderPosition'">
-
+                    <accordion-group ng-repeat="content in detail.PanelContents | orderBy:'OrderPosition'">                                                
                         <accordion-heading>
-                            <table style="width:100%;">
-                                <tr>
-                                    <td>
-                                        <h4>Titolo: {{content.Title}} Posizione: {{content.OrderPosition}}</h4>
-                                    </td>
-                                    <td style="text-align:right;">
-                                        <button ng-click="content.OrderPosition = content.OrderPosition+1" class="btn btn-small"><i class="fa fa-arrow-down"></i></button>
-                                        <button ng-click="content.OrderPosition = content.OrderPosition-1" class="btn btn-small"><i class="fa fa-arrow-up"></i></button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </accordion-heading>
-                        
+                            <h4>Titolo: {{content.Title}}</h4>                                    
+                        </accordion-heading>                                                                                                                                                  
                         <fieldset>
                             <legend>Titolo</legend>
                             <input type="text" ng-model="content.Title" class="form-control" placeholder="Inserisci un titolo per il pannello..." />
+                        </fieldset>
+                        <br />
+                        <fieldset>
+                            <legend>Posizione</legend>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input type="text" ng-model="content.OrderPosition" disabled class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <button ng-click="changeOrderDown(content)" ng-disabled="content.OrderPosition>=detail.PanelContents.length" class="btn btn-small"><i class="fa fa-arrow-down"></i></button>
+                                    <button ng-click="changeOrderUp(content)" ng-disabled="content.OrderPosition<=1" class="btn btn-small"><i class="fa fa-arrow-up"></i></button>
+                                </div>
+                            </div>
                         </fieldset>
                         <br />
                         <fieldset>
@@ -95,6 +97,8 @@
                             <legend>Testo</legend>
                             <div richtexteditor ng-model="content.Text" placeholder="Inserisci qui un testo per il pannello..."></div>
                         </fieldset>
+                        <br />
+                        <button type="button" class="btn btn-danger" ng-click="removePanelContent(detail.PanelContents, $index)">Elimina contenuto</button>
                     </accordion-group>
                 </accordion>
             </form>

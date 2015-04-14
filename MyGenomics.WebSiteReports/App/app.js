@@ -1,4 +1,16 @@
-﻿var app = angular.module('MyGenomicsApp', ['ngResource', 'appServices', 'ngRoute', 'ui.bootstrap', 'toastr', 'ngDragDrop']);
+﻿var app = angular.module('MyGenomicsApp', ['ngResource', 'appServices', 'ngRoute', 'ui.bootstrap', 'toastr', 'ngDragDrop', 'ngSanitize', 'froala']).
+    factory('froalaConfig', function(configs) {
+        return {
+            inlineMode: false,
+            imageUploadURL: configs.baseWebApiUrl + 'api/Images',
+            imageParams: { postId: "123" },
+            events: {
+                align: function(e, editor, alignment) {
+                    console.log(alignment + ' aligned');
+                }
+            }
+        };
+    });		
 
 app.config([
     '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -53,9 +65,10 @@ app.config([
             controller: 'mainController',
             title: 'Livelli'
         })
-        .otherwise({
-            redirectTo: '/login'
-        });
+        //.otherwise({
+        //    redirectTo: '/login'
+        //})
+        ;
 
         // Specify HTML5 mode (using the History APIs) or HashBang syntax.
     $locationProvider.html5Mode(true).hashPrefix('!');

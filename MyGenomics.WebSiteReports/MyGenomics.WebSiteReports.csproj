@@ -131,13 +131,46 @@
     <Content Include="App\app.js" />
     <Content Include="App\components\angular-dragdrop\angular-dragdrop.js" />
     <Content Include="App\components\angular-dragdrop\angular-dragdrop.min.js" />
+    <Content Include="App\components\angular-froala\angular-froala.js" />
+    <Content Include="App\components\angular-froala\css\font-awesome.css" />
+    <Content Include="App\components\angular-froala\css\font-awesome.min.css" />
+    <Content Include="App\components\angular-froala\css\froala_content.css" />
+    <Content Include="App\components\angular-froala\css\froala_content.min.css" />
+    <Content Include="App\components\angular-froala\css\froala_editor.css" />
+    <Content Include="App\components\angular-froala\css\froala_editor.min.css" />
+    <Content Include="App\components\angular-froala\css\froala_style.css" />
+    <Content Include="App\components\angular-froala\css\froala_style.min.css" />
+    <Content Include="App\components\angular-froala\css\themes\dark.css" />
+    <Content Include="App\components\angular-froala\css\themes\dark.min.css" />
+    <Content Include="App\components\angular-froala\css\themes\gray.css" />
+    <Content Include="App\components\angular-froala\css\themes\gray.min.css" />
+    <Content Include="App\components\angular-froala\css\themes\red.css" />
+    <Content Include="App\components\angular-froala\css\themes\red.min.css" />
+    <Content Include="App\components\angular-froala\css\themes\royal.css" />
+    <Content Include="App\components\angular-froala\css\themes\royal.min.css" />
+    <Content Include="App\components\angular-froala\fonts\fontawesome-webfont.svg" />
+    <Content Include="App\components\angular-froala\froala-sanitize.js" />
+    <Content Include="App\components\angular-froala\js\froala_editor.js" />
+    <Content Include="App\components\angular-froala\js\langs\it.js" />
+    <Content Include="App\components\angular-froala\js\libs\jquery-1.11.1.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\block_styles.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\char_counter.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\colors.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\file_upload.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\font_family.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\font_size.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\fullscreen.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\inline_styles.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\lists.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\media_manager.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\tables.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\urls.min.js" />
+    <Content Include="App\components\angular-froala\js\plugins\video.min.js" />
     <Content Include="App\configs.js" />
     <Content Include="App\controllers\chaptersController.js" />
     <Content Include="App\controllers\loginController.js" />
     <Content Include="App\controllers\mainController.js" />
     <Content Include="App\controllers\panelsController.js" />
-    <Content Include="App\directives\htmlEditor\htmlEditor.html" />
-    <Content Include="App\directives\htmlEditor\htmlEditor.js" />
     <Content Include="App\services\authService.js" />
     <Content Include="App\services\services.js" />
     <Content Include="App\views\dashboard.html" />
@@ -152,13 +185,9 @@
     <Content Include="Content\angular-toastr.min.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\phoca-flags.css" />
     <Content Include="Content\Site.css" />
     <Content Include="css\AdminLTE.css" />
     <Content Include="css\bootstrap-slider\slider.css" />
@@ -1491,9 +1520,13 @@
     <Content Include="js\plugins\jqueryKnob\.DS_Store" />
     <Content Include="js\plugins\jvectormap\.DS_Store" />
     <Content Include="js\plugins\slimScroll\slimScroll.jquery.json" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="App\components\angular-froala\fonts\fontawesome-webfont.eot" />
+    <Content Include="App\components\angular-froala\fonts\fontawesome-webfont.ttf" />
+    <Content Include="App\components\angular-froala\fonts\fontawesome-webfont.woff" />
+    <Content Include="App\components\angular-froala\fonts\FontAwesome.otf" />
+    <None Include="Scripts\jquery-2.0.2.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.2.js" />
+    <Content Include="Scripts\jquery-2.0.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Web.config" />
@@ -1504,14 +1537,15 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Angular\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Scripts\jquery-2.0.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\directives\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

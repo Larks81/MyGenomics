@@ -90,12 +90,12 @@
                         <br />
                         <fieldset>
                             <legend>Testo breve</legend>
-                            <div richtexteditor ng-model="content.ShortText" placeholder="Inserisci qui un testo breve per il pannello..."></div>
+                            <textarea froala ng-model="content.ShortText"></textarea>                            
                         </fieldset>
                         <br />
                         <fieldset>
                             <legend>Testo</legend>
-                            <div richtexteditor ng-model="content.Text" placeholder="Inserisci qui un testo per il pannello..."></div>
+                            <textarea froala ng-model="content.Text"></textarea>                            
                         </fieldset>
                         <br />
                         <button type="button" class="btn btn-danger" ng-click="removePanelContent(detail.PanelContents, $index)">Elimina contenuto</button>

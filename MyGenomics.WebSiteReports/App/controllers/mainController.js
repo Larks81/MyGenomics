@@ -1,19 +1,23 @@
 ﻿angular.module('MyGenomicsApp')
     .controller('mainController', function ($scope, $window, AuthService) {
-        //$scope.isLoggedIn = false;
+        
+    $scope.options = {
+        placeholder: 'My Placeholder'
+    };
 
-        //$scope.$watch($window.sessionStorage.token, function (isLoggedIn) {
-        //    alert($window.sessionStorage.token);
-        //    if ($window.sessionStorage.token != undefined) {
-        //        $scope.isLoggedIn = true;
-        //    } else {
-        //        $scope.isLoggedIn = false;
-        //    }
-            
-        //    //$scope.currentUser = AuthService.currentUser();
-        //});        
+    $scope.froalaAction = function (action) {
+        $scope.options.froala(action);
+    };
 
-        $scope.logout = function () {            
-            AuthService.logout();
-        };
+    $scope.onPaste = function(e, editor, html) {
+        return 'Hijacked ' + html;
+    };
+
+    $scope.onEvent = function(e, editor, a, b) {
+        console.log('onEvent', e.namespace, a, b);
+    };
+
+    $scope.logout = function () {            
+        AuthService.logout();
+    };
 });

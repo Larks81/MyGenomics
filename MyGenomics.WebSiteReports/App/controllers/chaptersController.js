@@ -6,11 +6,8 @@
         $scope.searchResult = null;
         $scope.detail = null;
         $scope.panels = null;
-
-        $scope.lista1 = { title: 'AngularJS - 3 Me' };
-        $scope.lista2 = { title: 'AngularJS - 3 Me' };
-        $scope.lista3 = { title: 'AngularJS - 3 Me' };
-        $scope.list2 = {};
+        $scope.allPanels = null;
+        
 
         $scope.search = function (page) {
 
@@ -31,6 +28,7 @@
             Chapter.get({ id: id }).$promise
             .then(function (data) {
                 $scope.detail = data;
+                $scope.loadAllPanelAndRemoveAlreadyPresents(data.Panels);
                 toastr.info('Capitolo caricato correttamnete', 'Info');
             }, function (reason) {
                 toastr.error('Errore', reason);
@@ -63,16 +61,48 @@
 
         //Startup
 
-        //Load Panels todo
-        //if ($routeParams.param != undefined) {
-        //    Level.get({ filter: "" }).$promise
-        //        .then(function (data) {
-        //            $scope.levels = data;
-        //            $scope.levels.unshift(new Object({ Id: null, Name: 'Nessuno (contenuto sempre presente)' }));
-        //        }, function (reason) {
-        //            toastr.error('Errore durante il caricamento dei livelli', reason);
-        //        });
-        //}        
+        //Load Panels
+        $scope.loadAllPanelAndRemoveAlreadyPresents = function(panelsPresent) {
+            Panel.get({ filter: "" }).$promise
+                .then(function (data) {
+                    $scope.allPanels = new Array();
+                    
+                    for (var k = 0 ; k < data.Results.length; k++) {
+                        var id = data.Results[k].Id;
+                        var existId = false;
+                        for (var j = 0 ; j < panelsPresent.length; j++) {
+                            if (panelsPresent[j].Id == id) {
+                                existId = true;
+                                break;
+                            }
+                        }
+
+                        if (!existId) {
+                            $scope.allPanels.push(data.Results[k]);
+                        }
+                    }
+
+                }, function (reason) {
+                    toastr.error('Errore durante il caricamento dei livelli', reason);
+                });                
+        }
+
+        $scope.$watch(
+                    $scope.Panels,
+                    function (newValue, oldValue) {
+
+                        alert("change");
+
+                    }
+                );
+
+        $scope.changePanelsPosition = function () {
+            for (var j = 0 ; j < detail.Panels.length; j++) {
+                panelsPresent[j].OrderPosition = j;                
+            }
+        }
+
+
 
         if ($routeParams.param > 0) {
             $scope.getDetail($scope.selectedId);

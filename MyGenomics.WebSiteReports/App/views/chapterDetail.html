@@ -90,15 +90,24 @@
         </div>
         <div class="box-body">
             <form role="form">
-                <!--<span data-drag="true" jqyoui-draggable>So you think you can drag</span>-->
-                <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="lista1" jqyoui-draggable="{animate:true}" ng-hide="!lista1.title">{{lista1.title}}</div>
-                <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="lista2" jqyoui-draggable="{animate:true}" ng-hide="!lista2.title">{{lista2.title}}</div>
-                <div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="lista3" jqyoui-draggable="{animate:true}" ng-hide="!lista2.title">{{lista3.title}}</div>
-                
-                <div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:50px;'>
-                    <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
-                </div>
-
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="thumbnail" data-drop="true" ng-model='detail.Panels' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+                            <div class="caption">
+                                <div class="well well-sm" ng-repeat="panel in detail.Panels" ng-change="changePanelsPosition()" ng-show="panel.Title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="detail.Panels" jqyoui-draggable="{index: {{$index}},animate:true}">{{panel.Title}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="thumbnail" data-drop="true" ng-model='allPanels' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+                            <div class="caption">
+                                <div class="well well-sm" ng-repeat="panel in allPanels" ng-show="panel.Title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="allPanels" jqyoui-draggable="{index: {{$index}},animate:true}">{{panel.Title}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                                
+                {{detail.Panels | json}}
             </form>
         </div>
     </div>

@@ -40,6 +40,7 @@ namespace MyGenomics.Data.Context
         public DbSet<PanelContent> PanelContents { get; set; }
         public DbSet<PanelContentTranslation> PanelContentTranslations { get; set; }        
         public DbSet<Report> Reports { get; set; }
+        public DbSet<ReportsChapters> ReportsChapters { get; set; }
         public DbSet<ReportTranslation> ReportTranslations { get; set; }
         public DbSet<ReportHeader> ReportHeaders { get; set; }
         public DbSet<ReportHeaderTranslation> ReportHeaderTranslations { get; set; }

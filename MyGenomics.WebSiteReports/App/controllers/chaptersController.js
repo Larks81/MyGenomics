@@ -36,6 +36,7 @@
         };
 
         $scope.saveDetail = function () {
+            $scope.changePanelsPosition();
             Chapter.save($scope.detail).$promise
             .then(function (data) {
                 $scope.selectedId = data.Id;
@@ -64,13 +65,13 @@
         //Load Panels
         $scope.loadAllPanelAndRemoveAlreadyPresents = function(panelsPresent) {
             Panel.get({ filter: "" }).$promise
-                .then(function (data) {
+                .then(function(data) {
                     $scope.allPanels = new Array();
-                    
-                    for (var k = 0 ; k < data.Results.length; k++) {
+
+                    for (var k = 0; k < data.Results.length; k++) {
                         var id = data.Results[k].Id;
                         var existId = false;
-                        for (var j = 0 ; j < panelsPresent.length; j++) {
+                        for (var j = 0; j < panelsPresent.length; j++) {
                             if (panelsPresent[j].Id == id) {
                                 existId = true;
                                 break;
@@ -82,25 +83,16 @@
                         }
                     }
 
-                }, function (reason) {
+                }, function(reason) {
                     toastr.error('Errore durante il caricamento dei livelli', reason);
-                });                
-        }
-
-        $scope.$watch(
-                    $scope.Panels,
-                    function (newValue, oldValue) {
-
-                        alert("change");
-
-                    }
-                );
-
-        $scope.changePanelsPosition = function () {
-            for (var j = 0 ; j < detail.Panels.length; j++) {
-                panelsPresent[j].OrderPosition = j;                
+                });
+        };
+        
+        $scope.changePanelsPosition = function() {
+            for (var j = 0; j < $scope.detail.Panels.length; j++) {
+                $scope.detail.Panels[j].OrderPosition = j+1;
             }
-        }
+        };
 
 
 

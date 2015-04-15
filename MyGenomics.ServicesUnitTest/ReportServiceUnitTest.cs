@@ -133,7 +133,8 @@ namespace MyGenomics.ServicesUnitTest
             //Test insert new report in ITA
             var fakeReport = new ReportDetail()
                                 {
-                                    Cover = "cover.jpg",
+                                    FrontCover = "cover.jpg",
+                                    BackCover = "backcover",
                                     ImageUri = "new ImageUri",
                                     LanguageId = 1,
                                     ProductId = 1,
@@ -167,9 +168,9 @@ namespace MyGenomics.ServicesUnitTest
 
             //Test if exists in list
             var listIta = reportService.GetReports(1, "Titolo nuovo report");
-            Assert.IsTrue(listIta.Any(p => p.Id == idUpdated && p.Title == "Titolo nuovo report"));
+            Assert.IsTrue(listIta.Results.Any(p => p.Id == idUpdated && p.Title == "Titolo nuovo report"));
             var listEng = reportService.GetReports(2, "Title in english");
-            Assert.IsTrue(listEng.Any(p => p.Id == idUpdated && p.Title == "Title in english"));
+            Assert.IsTrue(listEng.Results.Any(p => p.Id == idUpdated && p.Title == "Title in english"));
 
             //Test delete
             reportService.RemoveReport(idUpdated);

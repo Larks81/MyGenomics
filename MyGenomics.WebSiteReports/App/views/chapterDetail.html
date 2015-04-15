@@ -66,16 +66,20 @@
                     <input type="text" ng-model="detail.Title" class="form-control" placeholder="Enter ..." />
                 </div>
                 <div class="form-group">
-                    <label>Colore</label>
-                    <input type="text" ng-model="detail.Color" class="form-control" placeholder="Enter ..." />
-                </div>
+                    <label>Colore</label>                    
+                    <div colorpicker class="input-group">
+                        <div class="input-group-addon">
+                            <i></i>
+                        </div>
+                        <input ng-model="detail.Color" type="text" class="form-control" />                        
+                    </div>                                  
+                </div>                                
+                <label>Immagine</label>
+                <input type="text" ng-model="detail.ImageUri" class="form-control" placeholder="Enter ..." />                
+                <br />
                 <fieldset>
                     <legend>Testo</legend>
-                    <div richtexteditor ng-model="detail.Text" placeholder="Inserisci qui un testo per il capitolo..."></div>
-                </fieldset>
-                <fieldset>
-                    <legend>Immagine</legend>
-                    <input type="text" ng-model="detail.ImageUri" class="form-control" placeholder="Enter ..." />
+                    <textarea froala ng-model="detail.Text"></textarea>
                 </fieldset>
             </form>
         </div>
@@ -94,7 +98,13 @@
                     <div class="col-md-6">
                         <div class="thumbnail" data-drop="true" ng-model='detail.Panels' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
                             <div class="caption">
-                                <div class="well well-sm" ng-repeat="panel in detail.Panels" ng-change="changePanelsPosition()" ng-show="panel.Title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="detail.Panels" jqyoui-draggable="{index: {{$index}},animate:true}">{{panel.Title}}</div>
+                                <div class="well well-sm" ng-repeat="panel in detail.Panels" ng-change="changePanelsPosition()" ng-show="panel.Title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="detail.Panels" jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    <div class="row">
+                                        <div class="col-md-8">{{panel.Title}}</div>
+                                        <div class="col-md-4 text-right"><a href="pannelli/{{panel.Id}}" class="btn btn-default">Vai al pannello</a> </div>
+                                    </div> 
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -105,9 +115,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
-                                
-                {{detail.Panels | json}}
+                </div>                                                                
             </form>
         </div>
     </div>

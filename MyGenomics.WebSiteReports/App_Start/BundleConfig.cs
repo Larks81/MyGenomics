@@ -52,7 +52,7 @@ namespace MyGenomics.WebSiteReports
                 .IncludeDirectory("~/App/components", "*.js", true)
                 .IncludeDirectory("~/js/AdminLTE", "*.js", true)
                 .IncludeDirectory("~/js/plugins/sparkline", "*.js", true)
-                //.IncludeDirectory("~/js/plugins/jvectormap", "*.js", true)
+                .IncludeDirectory("~/js/plugins/colorpicker", "*.js", true)
                 .IncludeDirectory("~/js/plugins/fullcalendar", "*.js", true)
                 .IncludeDirectory("~/js/plugins/jqueryKnob", "*.js", true)
                 .IncludeDirectory("~/js/plugins/daterangepicker", "*.js", true)

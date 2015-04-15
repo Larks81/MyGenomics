@@ -11,7 +11,7 @@ namespace MyGenomics.DataModel
         public Product Product { get; set; }
         public int ProductId { get; set; }
         public string Version { get; set; }
-        public List<Chapter> Chapters { get; set; }
+        public List<ReportsChapters> Chapters { get; set; }
         public List<ReportTranslation> Translations { get; set; }
     }
 }

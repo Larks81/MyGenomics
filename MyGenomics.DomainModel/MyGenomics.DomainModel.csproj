@@ -40,19 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Answer.cs" />
-    <Compile Include="Contact.cs" />
-    <Compile Include="ContactGivenAnswer.cs" />
-    <Compile Include="ContactQuestionnaire.cs" />
-    <Compile Include="ContactType.cs" />
-    <Compile Include="ImportQuestionnaireDetail.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="Question.cs" />
-    <Compile Include="QuestionCategory.cs" />
-    <Compile Include="Questionnaire.cs" />
+    <Compile Include="Product\ProductItemList.cs" />
+    <Compile Include="Questionnaire\Answer.cs" />
+    <Compile Include="Contact\Contact.cs" />
+    <Compile Include="Questionnaire\ContactGivenAnswer.cs" />
+    <Compile Include="Questionnaire\ContactQuestionnaire.cs" />
+    <Compile Include="Contact\ContactType.cs" />
+    <Compile Include="Questionnaire\ImportQuestionnaireDetail.cs" />
+    <Compile Include="Product\Product.cs" />
+    <Compile Include="Questionnaire\Question.cs" />
+    <Compile Include="Questionnaire\QuestionCategory.cs" />
+    <Compile Include="Questionnaire\Questionnaire.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuestionnaireImport.cs" />
-    <Compile Include="QuestionnaireResult.cs" />
+    <Compile Include="Questionnaire\QuestionnaireImport.cs" />
+    <Compile Include="Questionnaire\QuestionnaireResult.cs" />
     <Compile Include="Report\ChapterDetail.cs" />
     <Compile Include="Report\ChapterItemList.cs" />
     <Compile Include="Report\LevelDetail.cs" />
@@ -64,8 +65,8 @@
     <Compile Include="Report\ReportDetail.cs" />
     <Compile Include="Report\ReportHeaderDetail.cs" />
     <Compile Include="Report\ReportItemList.cs" />
-    <Compile Include="SubmitPersonQuestionnaire.cs" />
-    <Compile Include="WebApiLog.cs" />
+    <Compile Include="Questionnaire\SubmitPersonQuestionnaire.cs" />
+    <Compile Include="Log\WebApiLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">

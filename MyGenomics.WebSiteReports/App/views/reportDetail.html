@@ -1,0 +1,155 @@
+﻿<style>
+    .thumbnail {
+        height: 280px !important;
+    }
+
+    .btn-droppable {
+        width: 180px;
+        height: 30px;
+        padding-left: 4px;
+    }
+
+    .btn-draggable {
+        width: 160px;
+    }
+</style>
+
+<div class="modal fade" id="modalremove">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Elimina</h4>
+            </div>
+            <div class="modal-body">
+                Sei sicuro di voler eliminare questo genotest?
+            </div>
+            <div class="modal-footer"> <!---->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+                <button ng-click="removeDetail()" data-dismiss="modal" type="button" class="btn btn-primary">Elimina</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="btn-group" style="padding-left:13px;" role="group" aria-label="...">
+    <a class="btn btn-app">
+        <i ng-click="getDetail(detail.Id)" class="fa fa-repeat"></i> Aggiorna
+    </a>
+    <a class="btn btn-app">
+        <i ng-click="saveDetail()" class="fa fa-save"></i> Salva
+    </a>
+    <a class="btn btn-app">
+        <!--<button data-toggle="modal" data-target="#modalRemove" >Elimina</button>--> 
+        <i type="button" data-toggle="modal" data-target="#modalremove" class="fa fa-times"></i>Elimina
+    </a>
+</div> 
+<br/>
+<br />
+<!--public int Id { get; set; }
+    public int LanguageId { get; set; }
+    public int? TranslationId { get; set; }
+    public string Version { get; set; }
+    public int ProductId { get; set; }
+    public string Title { get; set; }
+    public string Text { get; set; }
+    public string Cover { get; set; }
+    public string ImageUri { get; set; }
+    public List<chapteritemlist> Chapters { get; set; }-->
+
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header">
+                <h3 class="box-title">Info generali</h3>
+            </div>
+            <div class="box-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label>Id: {{detail.Id}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Titolo</label>
+                        <input type="text" ng-model="detail.Title" class="form-control" placeholder="Enter ..." />
+                    </div>
+                    <div class="form-group">
+                        <label>Versione</label>
+                        <input type="text" ng-model="detail.Version" class="form-control" placeholder="Enter ..." />
+                    </div>
+                    <label>Prodotto</label>
+                    <br />
+                    <select ng-model="detail.ProductId">
+                        <option value="{{product.Id}}" ng-repeat="product in allProducts">
+                            {{product.Name}}
+                        </option>
+                    </select>
+                    <br /><br />
+                    <fieldset>
+                        <legend>Copertina Fronte</legend>
+                        <textarea froala ng-model="detail.FrontCover"></textarea>
+                    </fieldset>
+                    <br /><br />
+                    <fieldset>
+                        <legend>Copertina Retro</legend>
+                        <textarea froala ng-model="detail.BackCover"></textarea>
+                    </fieldset>
+                    <br /><br />
+                    <fieldset>
+                        <legend>Testo</legend>
+                        <textarea froala ng-model="detail.Text"></textarea>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header">
+                <h3 class="box-title">Capitoli associati</h3>                
+            </div>
+            <div class="box-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="thumbnail" data-drop="true" ng-model='detail.Chapters' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+                                <div class="caption">
+                                    <div class="well well-sm" ng-repeat="chapter in detail.Chapters" ng-change="changeChaptersPosition()" ng-show="chapter.Title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="detail.Chapters" jqyoui-draggable="{index: {{$index}},animate:true}">
+                                        <div class="row">
+                                            <div class="col-md-8">{{chapter.Title}}</div>
+                                            <div class="col-md-4 text-right"><a href="capitoli/{{chapter.Id}}" class="btn btn-default">Vai al capitolo</a> </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="thumbnail" data-drop="true" ng-model='allChapters' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+                                <div class="caption">
+                                    <div class="well well-sm" ng-repeat="chapter in allChapters" ng-show="chapter.Title" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="allChapters" jqyoui-draggable="{index: {{$index}},animate:true}">{{chapter.Title}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+allChapters: {{allChapters | json}}
+detail.Chapters: {{detail.Chapters | json}}
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header">
+                <h3 class="box-title">Reports che hanno associato questo capitolo</h3>
+            </div>
+            <div class="box-body">
+                <form role="form">
+                    <small ng-show="detail.Reports.length==0 || detail.Reports==undefined">Nessun capitolo ancora ha associato questo pannello</small>
+                    <ul>
+                        <li ng-repeat="report in detail.Reports">Titolo: {{report.Title}}</li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>

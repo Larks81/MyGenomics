@@ -9,7 +9,9 @@ namespace MyGenomics.DomainModel
     public class ReportItemList
     {
         public int Id { get; set; }
-        public int ProductId { get; set; }        
-        public string Title { get; set; }        
+        public string ProductName { get; set; }        
+        public string Title { get; set; }
+        public string Version { get; set; }
+        public int ChaptersCount { get; set; }     
     }
 }

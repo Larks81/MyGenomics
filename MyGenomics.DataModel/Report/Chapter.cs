@@ -8,7 +8,7 @@ namespace MyGenomics.DataModel
 {
     public class Chapter : ModelBase
     {
-        public List<Report> Reports { get; set; }
+        public List<ReportsChapters> Reports { get; set; }
         public string Color { get; set; }
         public List<ChaptersPanels> Panels { get; set; }
         public List<ChapterTranslation> Translations { get; set; }

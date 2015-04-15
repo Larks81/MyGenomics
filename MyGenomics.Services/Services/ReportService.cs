@@ -292,8 +292,9 @@ namespace MyGenomics.Services.Services
                                 .Select(c => c!=null ? new DomainModel.ReportItemList()
                                 {
                                     Id = c.Id,
-                                    Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                    Title = c.Report.Translations.Any(t => t.LanguageId == languageId) ? c.Report.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                 } : null).ToList(),
+                        Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,                        
                     })
                     .FirstOrDefault();
 
@@ -331,6 +332,9 @@ namespace MyGenomics.Services.Services
                 
                 if (originalChapter != null)
                 {
+                    chapterMapped.Panels = null;
+                    chapterMapped.Reports = null;                    
+
                     context.Entry(chapterMapped).State = EntityState.Modified;
 
                     //Translations
@@ -355,17 +359,18 @@ namespace MyGenomics.Services.Services
                 context.SaveChanges();
             }
 
-            if (chapter.Panels != null && chapter.Panels.Any())
+            
+            //Update panels associations
+            using (var context = new MyGenomicsContext())
             {
-                //Update panels associations
-                using (var context = new MyGenomicsContext())
-                {
                     
-                    context.ChaptersPanels.RemoveRange(
-                        context.ChaptersPanels.Where(cp => cp.ChapterId == chapterMapped.Id));
+                context.ChaptersPanels.RemoveRange(
+                    context.ChaptersPanels.Where(cp => cp.ChapterId == chapterMapped.Id));
 
-                    context.SaveChanges();
+                context.SaveChanges();
 
+                if (chapter.Panels != null && chapter.Panels.Any())
+                {
                     var original = context.Chapters
                         .Include(i => i.Panels.Select(p => p.Panel))
                         .FirstOrDefault(c => c.Id == chapterMapped.Id);
@@ -373,7 +378,7 @@ namespace MyGenomics.Services.Services
                     //Pannelli associati
                     foreach (var panel in chapter.Panels)
                     {
-                        
+
                         var pan = context.Panels.FirstOrDefault(p => p.Id == panel.Id);
                         if (pan != null)
                         {
@@ -387,7 +392,7 @@ namespace MyGenomics.Services.Services
 
                     context.SaveChanges();
                 }
-            }
+            }            
 
             return chapterMapped.Id;
         }
@@ -405,36 +410,55 @@ namespace MyGenomics.Services.Services
 
         #region Crud Reports
 
-        public List<DomainModel.ReportItemList> GetReports(int languageId, string title = null)
+        public SearchList<DomainModel.ReportItemList> GetReports(int languageId, string title = null, int page = 1)
         {
+            var result = new SearchList<DomainModel.ReportItemList>();
+            result.CurrentPage = page;
+
             using (var context = new MyGenomicsContext())
             {
+                
                 if (string.IsNullOrWhiteSpace(title))
                 {
-                    return context.Reports
+                    result.TotRec = context.Chapters.Count();
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Reports
                         .Include(i => i.Translations)
+                        .Include(i => i.Product)
+                        .Include(i => i.Chapters)
                         .Select(p => new DomainModel.ReportItemList()
                         {
                             Id = p.Id,
                             Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
-                            ProductId = p.ProductId
+                            ProductName = p.Product.Name,
+                            Version = p.Version,
+                            ChaptersCount = p.Chapters.Count()
                         })
                         .ToList();
                 }
                 else
                 {
-                    return context.Reports
+                    result.TotRec = context.Chapters.Count();
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Reports
                         .Include(i => i.Translations)
+                        .Include(i => i.Product)
+                        .Include(i => i.Chapters)
                         .Where(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId))
                         .Select(p => new DomainModel.ReportItemList()
                         {
                             Id = p.Id,
                             Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
-                            ProductId = p.ProductId
+                            ProductName = p.Product.Name,
+                            Version = p.Version,
+                            ChaptersCount = p.Chapters.Count()
                         })
                         .ToList();
                 }
             }
+            return result;
         }
 
         public DomainModel.ReportDetail GetReportDetail(int languageId, int id)
@@ -443,7 +467,7 @@ namespace MyGenomics.Services.Services
             {
                 return context.Reports
                     .Include(i => i.Translations)
-                    .Include(i => i.Chapters)          
+                    .Include(i => i.Chapters.Select(c=>c.Chapter))          
                     .Where(r=> r.Id == id)
                     .Select(p => new DomainModel.ReportDetail()
                     {
@@ -455,9 +479,10 @@ namespace MyGenomics.Services.Services
                                 .Select(c => new DomainModel.ChapterItemList()
                                 {
                                     Id = c.Id,
-                                    Title = c.Translations.Any(t => t.LanguageId == languageId) ? c.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                    Title = c.Chapter.Translations.Any(t => t.LanguageId == languageId) ? c.Chapter.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
                                 }).ToList(),
-                        Cover = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Cover : null,
+                        FrontCover = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).FrontCover : null,
+                        BackCover = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).BackCover : null,
                         ImageUri = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).ImageUri : null,
                         ProductId = p.ProductId,
                         Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null                        
@@ -512,36 +537,35 @@ namespace MyGenomics.Services.Services
             //Update panels associations
             using (var context = new MyGenomicsContext())
             {
+
+                context.ReportsChapters.RemoveRange(context.ReportsChapters.Where(cp => cp.ReportId == reportMapped.Id));
+                context.SaveChanges();
+
                 var original = context.Reports
-                    .Include(i => i.Chapters)
-                    .FirstOrDefault(c => c.Id == reportMapped.Id);
-
-                context.Reports.Attach(original);
-
-                if (original.Chapters.Any())
-                {
-                    original.Chapters.Clear();
-                }
-                else
-                {
-                    original.Chapters = new List<Chapter>();
-                }
+                        .Include(i => i.Chapters.Select(p => p.Chapter))
+                        .FirstOrDefault(c => c.Id == reportMapped.Id);
 
                 //Pannelli associati
                 foreach (var chapter in report.Chapters)
                 {
+
                     var chap = context.Chapters.FirstOrDefault(p => p.Id == chapter.Id);
                     if (chap != null)
                     {
-                        original.Chapters.Add(chap);
+                        original.Chapters.Add(new ReportsChapters()
+                                            {
+                                                ChapterId = chap.Id,
+                                                ReportId = reportMapped.Id
+                                            });
                     }
                 }
 
                 context.SaveChanges();
+                
             }
 
             return reportMapped.Id;
-        }
+        }       
 
         public void RemoveReport(int reportId)
         {

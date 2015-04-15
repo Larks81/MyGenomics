@@ -167,15 +167,18 @@
     <Content Include="App\components\angular-froala\js\plugins\urls.min.js" />
     <Content Include="App\components\angular-froala\js\plugins\video.min.js" />
     <Content Include="App\configs.js" />
+    <Content Include="App\controllers\reportsController.js" />
     <Content Include="App\controllers\chaptersController.js" />
     <Content Include="App\controllers\loginController.js" />
     <Content Include="App\controllers\mainController.js" />
     <Content Include="App\controllers\panelsController.js" />
+    <Content Include="App\directives\color-picker\color-picker.js" />
     <Content Include="App\services\authService.js" />
     <Content Include="App\services\services.js" />
+    <Content Include="App\views\reportDetail.html" />
     <Content Include="App\views\dashboard.html" />
     <Content Include="App\views\login.html" />
-    <Content Include="App\views\genotests.html" />
+    <Content Include="App\views\reportsList.html" />
     <Content Include="App\views\livelli.html" />
     <Content Include="App\views\chaptersList.html" />
     <Content Include="App\views\chapterDetail.html" />
@@ -1545,7 +1548,6 @@
     <Content Include="Scripts\jquery-2.0.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\directives\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

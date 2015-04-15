@@ -33,6 +33,25 @@ appServices.factory('Chapter', [
     }
 ]);
 
+appServices.factory('Report', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/Reports', {}, {
+            get: { method: 'GET', isArray: false },
+            save: { method: 'POST', isArray: false },
+        });
+    }
+]);
+
+appServices.factory('Product', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/Products', {}, {
+            get: { method: 'GET', isArray: false },            
+        });
+    }
+]);
+
 appServices.factory('Level', [
     '$resource', 'configs',
     function ($resource, configs) {

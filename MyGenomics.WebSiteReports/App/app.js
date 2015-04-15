@@ -46,13 +46,13 @@ app.config([
             title: 'Capitoli'
         })
         .when('/genotests/:param', {
-            templateUrl: '/App/views/genotests.html',
-            controller: 'mainController',
+            templateUrl: '/App/views/reportDetail.html',
+            controller: 'reportsController',
             title: 'Genotests'
         })
         .when('/genotests', {
-            templateUrl: '/App/views/genotests.html',
-            controller: 'mainController',
+            templateUrl: '/App/views/reportsList.html',
+            controller: 'reportsController',
             title: 'Genotests'
         })
         .when('/livelli/:param', {
@@ -65,9 +65,9 @@ app.config([
             controller: 'mainController',
             title: 'Livelli'
         })
-        //.otherwise({
-        //    redirectTo: '/login'
-        //})
+        .otherwise({
+            redirectTo: '/login'
+        })
         ;
 
         // Specify HTML5 mode (using the History APIs) or HashBang syntax.

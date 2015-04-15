@@ -15,7 +15,8 @@ namespace MyGenomics.DomainModel
         public int ProductId { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public string Cover { get; set; }
+        public string FrontCover { get; set; }
+        public string BackCover { get; set; }
         public string ImageUri { get; set; }
         public List<ChapterItemList> Chapters { get; set; }
     }

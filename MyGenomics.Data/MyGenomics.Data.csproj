@@ -91,6 +91,14 @@
     <Compile Include="Migrations\201504131858289_mmChaptersPanels.Designer.cs">
       <DependentUpon>201504131858289_mmChaptersPanels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504151942357_addReportsChapters.cs" />
+    <Compile Include="Migrations\201504151942357_addReportsChapters.Designer.cs">
+      <DependentUpon>201504151942357_addReportsChapters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504152109438_addcover.cs" />
+    <Compile Include="Migrations\201504152109438_addcover.Designer.cs">
+      <DependentUpon>201504152109438_addcover.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -141,6 +149,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504131858289_mmChaptersPanels.resx">
       <DependentUpon>201504131858289_mmChaptersPanels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504151942357_addReportsChapters.resx">
+      <DependentUpon>201504151942357_addReportsChapters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504152109438_addcover.resx">
+      <DependentUpon>201504152109438_addcover.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

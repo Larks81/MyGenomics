@@ -56,15 +56,20 @@ namespace MyGenomics.Services
                     }));
 
             Mapper.CreateMap<DomainModel.ChapterDetail, DataModel.Chapter>()
+                .ForMember(dest => dest.Reports,
+                    opt => opt.MapFrom(src => src.Reports != null ? src.Reports.Select(c =>
+                        new DataModel.ReportsChapters()
+                        {
+                            ReportId = c.Id,
+                            ChapterId = src.Id
+                        }) : null))
                 .ForMember(dest => dest.Panels,
                     opt => opt.MapFrom(src => src.Panels!=null ? src.Panels.Select(c =>                        
                         new DataModel.ChaptersPanels()
                         {
                             PanelId = c.Id,
                             ChapterId = src.Id
-                        }) : null))
-                .ForMember(dest => dest.Reports,
-                    opt => opt.MapFrom(src => src.Reports!=null ? src.Reports.Select(c => new DataModel.Report() { Id = c.Id }) : null ))
+                        }) : null))                
                 .ForMember(dest => dest.Translations,
                     opt => opt.MapFrom(src => new List<DataModel.ChapterTranslation>(){
                         new DataModel.ChapterTranslation()
@@ -94,8 +99,13 @@ namespace MyGenomics.Services
                             }));
 
             Mapper.CreateMap<DomainModel.ReportDetail, DataModel.Report>()
-               .ForMember(dest => dest.Chapters,
-                   opt => opt.MapFrom(src => src.Chapters.Select(c => new DataModel.Chapter() { Id = c.Id })))
+                .ForMember(dest => dest.Chapters,
+                    opt => opt.MapFrom(src => src.Chapters != null ? src.Chapters.Select(c =>
+                        new DataModel.ReportsChapters()
+                        {                            
+                            ReportId = src.Id,
+                            ChapterId = c.Id
+                        }) : null))               
                .ForMember(dest => dest.Translations,
                    opt => opt.MapFrom(src => new List<DataModel.ReportTranslation>(){
                         new DataModel.ReportTranslation()
@@ -103,12 +113,15 @@ namespace MyGenomics.Services
                             Id = src.TranslationId.GetValueOrDefault(0),
                             LanguageId = src.LanguageId,                        
                             Title = src.Title,
-                            Cover = src.Cover,
+                            FrontCover = src.FrontCover,
+                            BackCover = src.BackCover,
                             ImageUri = src.ImageUri,
                             ReportId = src.Id,
                             Text = src.Text                            
                         }
                     }));
+
+            Mapper.CreateMap<DataModel.Product, DomainModel.ProductItemList>();
 
             Mapper.CreateMap<DomainModel.LevelDetail, DataModel.Level>()               
                .ForMember(dest => dest.Translations,

@@ -1,20 +1,4 @@
-﻿<style>
-    .thumbnail {
-        height: 280px !important;
-    }
-
-    .btn-droppable {
-        width: 180px;
-        height: 30px;
-        padding-left: 4px;
-    }
-
-    .btn-draggable {
-        width: 160px;
-    }
-</style>
-
-<div class="modal fade" id="modalremove">
+﻿<div class="modal fade" id="modalremove">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,13 +8,13 @@
             <div class="modal-body">
                 Sei sicuro di voler eliminare questo genotest?
             </div>
-            <div class="modal-footer"> <!---->
+            <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
                 <button ng-click="removeDetail()" data-dismiss="modal" type="button" class="btn btn-primary">Elimina</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 
 <div class="btn-group" style="padding-left:13px;" role="group" aria-label="...">
@@ -40,24 +24,12 @@
     <a class="btn btn-app">
         <i ng-click="saveDetail()" class="fa fa-save"></i> Salva
     </a>
-    <a class="btn btn-app">
-        <!--<button data-toggle="modal" data-target="#modalRemove" >Elimina</button>--> 
+    <a class="btn btn-app">        
         <i type="button" data-toggle="modal" data-target="#modalremove" class="fa fa-times"></i>Elimina
     </a>
 </div> 
 <br/>
 <br />
-<!--public int Id { get; set; }
-    public int LanguageId { get; set; }
-    public int? TranslationId { get; set; }
-    public string Version { get; set; }
-    public int ProductId { get; set; }
-    public string Title { get; set; }
-    public string Text { get; set; }
-    public string Cover { get; set; }
-    public string ImageUri { get; set; }
-    public List<chapteritemlist> Chapters { get; set; }-->
-
     <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-header">
@@ -127,7 +99,7 @@
                         <div class="col-md-6">
                             <div class="thumbnail" data-drop="true" ng-model='allChapters' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
                                 <div class="caption">
-                                    <div class="well well-sm" ng-repeat="chapter in allChapters" ng-show="chapter.Title" data-drag="true" data-jqyoui-options="{revert: 'valid'}" ng-model="allChapters" jqyoui-draggable="{index: {{$index}},animate:true}">{{chapter.Title}}</div>
+                                    <div class="well well-sm" ng-repeat="chapter in allChapters" ng-show="chapter.Title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="allChapters" jqyoui-draggable="{index: {{$index}},animate:true}">{{chapter.Title}}</div>
                                 </div>
                             </div>
                         </div>
@@ -136,8 +108,6 @@
             </div>
         </div>
     </div>
-allChapters: {{allChapters | json}}
-detail.Chapters: {{detail.Chapters | json}}
     <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-header">

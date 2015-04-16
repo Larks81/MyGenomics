@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using MyGenomics.DomainModel;
 using MyGenomics.Services.Services;
 
 namespace MyGenomics.Controllers
@@ -12,30 +13,28 @@ namespace MyGenomics.Controllers
     {
         private ReportService _reportService = new ReportService();
 
-        public IEnumerable<DomainModel.LevelItemList> Get(int languageId, string filter)
+        public SearchList<DomainModel.LevelItemList> Get(int languageId, string filter)
         {
             return _reportService.GetLevels(languageId, filter);
         }
 
         // GET api/levels/5
-        public string Get(int id)
+        public LevelDetail Get(int languageId, int id)
         {
-            return "value";
+            return _reportService.GetLevelDetail(languageId,id);
         }
 
         // POST api/levels
-        public void Post([FromBody]string value)
+        public object Post([FromBody]LevelDetail value)
         {
-        }
-
-        // PUT api/levels/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+            var Id = _reportService.AddOrUpdateLevel(value);
+            return new { Id };
+        }        
 
         // DELETE api/levels/5
         public void Delete(int id)
         {
+            _reportService.RemoveLevel(id);
         }
     }
 }

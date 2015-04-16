@@ -56,7 +56,7 @@ appServices.factory('Level', [
     '$resource', 'configs',
     function ($resource, configs) {
         return $resource(configs.baseWebApiUrl + 'api/Levels', {}, {
-            get: { method: 'GET', isArray: true },
+            get: { method: 'GET', isArray: false },
             save: { method: 'POST', isArray: false},
         });
     }

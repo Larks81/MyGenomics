@@ -71,7 +71,7 @@
         if ($routeParams.param != undefined) {
             Level.get({ filter: "" }).$promise
                 .then(function(data) {
-                    $scope.levels = data;
+                    $scope.levels = data.Results;
                     $scope.levels.unshift(new Object({Id : null,Name : 'Nessuno (contenuto sempre presente)'}));
                 }, function(reason) {
                     toastr.error('Errore durante il caricamento dei livelli', reason);

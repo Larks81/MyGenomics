@@ -1,20 +1,4 @@
-﻿<style>
-    .thumbnail {
-        height: 280px !important;
-    }
-
-    .btn-droppable {
-        width: 180px;
-        height: 30px;
-        padding-left: 4px;
-    }
-
-    .btn-draggable {
-        width: 160px;
-    }
-</style>
-
-<div class="modal fade" id="modalremove">
+﻿<div class="modal fade" id="modalremove">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,10 +12,9 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
                 <button ng-click="removeDetail()" data-dismiss="modal" type="button" class="btn btn-primary">Elimina</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+        </div>
+    </div>
+</div>
 
 <div class="btn-group" style="padding-left:13px;" role="group" aria-label="...">
     <a class="btn btn-app">
@@ -40,17 +23,13 @@
     <a class="btn btn-app">
         <i ng-click="saveDetail()" class="fa fa-save"></i> Salva
     </a>
-    <a class="btn btn-app">
-        <!--<button data-toggle="modal" data-target="#modalRemove" >Elimina</button>--> 
+    <a class="btn btn-app">        
         <i type="button" data-toggle="modal" data-target="#modalremove" class="fa fa-times"></i>Elimina
     </a>
 </div> 
 <br/>
 <br />
-<!--public string Color { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
-        public string ImageUri { get; set; }-->
+
 <div class="col-md-12">    
     <div class="box box-warning">
         <div class="box-header">

@@ -56,13 +56,13 @@ app.config([
             title: 'Genotests'
         })
         .when('/livelli/:param', {
-            templateUrl: '/App/views/livelli.html',
-            controller: 'mainController',
+            templateUrl: '/App/views/levelDetail.html',
+            controller: 'levelsController',
             title: 'Livelli'
         })
         .when('/livelli', {
-            templateUrl: '/App/views/livelli.html',
-            controller: 'mainController',
+            templateUrl: '/App/views/levelsList.html',
+            controller: 'levelsController',
             title: 'Livelli'
         })
         .otherwise({

@@ -28,7 +28,7 @@
             Report.get({ id: id }).$promise
             .then(function (data) {
                 $scope.detail = data;
-                //$scope.loadAllPanelAndRemoveAlreadyPresents(data.Panels);
+                $scope.loadAllChaptersAndRemoveAlreadyPresents(data.Chapters);
                 toastr.info('Genotest caricato correttamente', 'Info');
             }, function (reason) {
                 toastr.error('Errore', reason);
@@ -36,7 +36,7 @@
         };
 
         $scope.saveDetail = function () {
-            //$scope.changePanelsPosition();
+            $scope.changeChaptersPosition();
             Report.save($scope.detail).$promise
             .then(function (data) {
                 $scope.selectedId = data.Id;
@@ -70,9 +70,15 @@
             return new Array(num);
         };
 
+        $scope.changeChaptersPosition = function () {
+            for (var j = 0; j < $scope.detail.Chapters.length; j++) {
+                $scope.detail.Chapters[j].OrderPosition = j + 1;
+            }
+        };
+
         //Startup
 
-        //Load Panels
+        //Load Chapters
         $scope.loadAllChaptersAndRemoveAlreadyPresents = function(chaptersPresent) {
             Chapter.get({ filter: "" }).$promise
                 .then(function(data) {

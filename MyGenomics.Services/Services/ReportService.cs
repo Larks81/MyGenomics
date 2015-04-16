@@ -56,7 +56,7 @@ namespace MyGenomics.Services.Services
                         {
                             Id = p.Id,
                             Title = p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title,
-                            ContentsCount = p.PanelContents != null ? p.PanelContents.Count : 0
+                            ContentsCount = p.PanelContents.Count()
                         })
                         .ToList();
                 }                               
@@ -439,7 +439,7 @@ namespace MyGenomics.Services.Services
                 }
                 else
                 {
-                    result.TotRec = context.Chapters.Count();
+                    result.TotRec = context.Chapters.Count(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId));
                     result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
 
                     result.Results = context.Reports
@@ -465,7 +465,7 @@ namespace MyGenomics.Services.Services
         {
             using (var context = new MyGenomicsContext())
             {
-                return context.Reports
+                var a = context.Reports
                     .Include(i => i.Translations)
                     .Include(i => i.Chapters.Select(c=>c.Chapter))          
                     .Where(r=> r.Id == id)
@@ -478,8 +478,9 @@ namespace MyGenomics.Services.Services
                         Chapters = p.Chapters
                                 .Select(c => new DomainModel.ChapterItemList()
                                 {
-                                    Id = c.Id,
+                                    Id = c.Chapter.Id,
                                     Title = c.Chapter.Translations.Any(t => t.LanguageId == languageId) ? c.Chapter.Translations.FirstOrDefault(t => t.LanguageId == languageId).Title : null,
+                                    OrderPosition = c.OrderPosition
                                 }).ToList(),
                         FrontCover = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).FrontCover : null,
                         BackCover = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).BackCover : null,
@@ -488,6 +489,7 @@ namespace MyGenomics.Services.Services
                         Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null                        
                     })
                     .FirstOrDefault();
+                return a;
             }
         }
 
@@ -511,6 +513,8 @@ namespace MyGenomics.Services.Services
                 
                 if (originalReport != null)
                 {
+                    reportMapped.Chapters = null;
+                    reportMapped.Product = null;                    
                     context.Entry(reportMapped).State = EntityState.Modified;
 
                     //Translations
@@ -555,7 +559,8 @@ namespace MyGenomics.Services.Services
                         original.Chapters.Add(new ReportsChapters()
                                             {
                                                 ChapterId = chap.Id,
-                                                ReportId = reportMapped.Id
+                                                ReportId = reportMapped.Id,
+                                                OrderPosition = chapter.OrderPosition
                                             });
                     }
                 }
@@ -578,36 +583,51 @@ namespace MyGenomics.Services.Services
 
         #endregion
 
+
+       
+
         #region Crud Levels
 
-        public List<DomainModel.LevelItemList> GetLevels(int languageId, string name = null)
+        public SearchList<DomainModel.LevelItemList> GetLevels(int languageId, string name = null, int page = 1)
         {
+            var result = new SearchList<DomainModel.LevelItemList>();
+            result.CurrentPage = page;
+
             using (var context = new MyGenomicsContext())
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    return context.Levels
+                    result.TotRec = context.Levels.Count();
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Levels
                         .Include(i => i.Translations)                        
                         .Select(p => new DomainModel.LevelItemList()
                         {
                             Id = p.Id,
-                            Name = p.Name
+                            Name = p.Name,
+                            Value = p.Value
                         })
                         .ToList();
                 }
                 else
                 {
-                    return context.Levels
+                    result.TotRec = context.Levels.Count(p => p.Name.Contains(name));
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Levels
                         .Include(i => i.Translations)
                         .Where(p => p.Name.Contains(name))
                         .Select(p => new DomainModel.LevelItemList()
                         {
                             Id = p.Id,
-                            Name = p.Name
+                            Name = p.Name,
+                            Value = p.Value
                         })
                         .ToList();
                 }
             }
+            return result;
         }
 
         public DomainModel.LevelDetail GetLevelDetail(int languageId, int id)

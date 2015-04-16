@@ -1,0 +1,45 @@
+﻿<div ng-init="search()">
+    <div class="input-group">
+        <input type="text" ng-keyup="$event.keyCode == 13 ? search() : null" ng-model="filter" class="form-control" placeholder="Cerca un livello...">
+        <span class="input-group-btn">
+            <button ng-click="search()" class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+        </span>
+    </div>        
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Trovati {{searchResult.TotRec}} livelli</h3>
+                    <button class="btn btn-default right-aligned"><a href="/livelli/0">Crea nuovo livello</a></button>
+                </div>
+                <div ng-show="searchResult.Results.length>0">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th style="width:70px;">Id</th>
+                                <th>Titolo</th>
+                                <th style="width:70px;">Valore</th>
+                                <th style="width:70px;">Azioni</th>
+                            </tr>
+                            <tr ng-repeat="level in searchResult.Results">
+                                <td>{{level.Id}}</td>
+                                <td>{{level.Name}}</td>
+                                <td>{{level.Value}}</td>
+                                <td><a style="float:right;" href="/livelli/{{level.Id}}">Dettaglio</a></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li ng-class="{active: searchResult.CurrentPage==($index+1)}" ng-repeat="i in getNumber(searchResult.TotPag) track by $index">
+                                <a ng-click="search($index+1)">{{$index+1}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

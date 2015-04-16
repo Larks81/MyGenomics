@@ -214,9 +214,9 @@ namespace MyGenomics.ServicesUnitTest
 
             //Test if exists in list
             var listIta = reportService.GetLevels(1, "nuovo nome");
-            Assert.IsTrue(listIta.Any(p => p.Id == idUpdated && p.Name == "nuovo nome"));
+            Assert.IsTrue(listIta.Results.Any(p => p.Id == idUpdated && p.Name == "nuovo nome"));
             var listEng = reportService.GetLevels(2, "nuovo nome");
-            Assert.IsTrue(listEng.Any(p => p.Id == idUpdated && p.Name == "nuovo nome"));
+            Assert.IsTrue(listEng.Results.Any(p => p.Id == idUpdated && p.Name == "nuovo nome"));
 
             //Test delete
             reportService.RemoveLevel(idUpdated);

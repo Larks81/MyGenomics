@@ -167,6 +167,7 @@
     <Content Include="App\components\angular-froala\js\plugins\urls.min.js" />
     <Content Include="App\components\angular-froala\js\plugins\video.min.js" />
     <Content Include="App\configs.js" />
+    <Content Include="App\controllers\reportHeadersController.js" />
     <Content Include="App\controllers\levelsController.js" />
     <Content Include="App\controllers\reportsController.js" />
     <Content Include="App\controllers\chaptersController.js" />
@@ -178,6 +179,7 @@
     <Content Include="App\directives\modal\modal.js" />
     <Content Include="App\services\authService.js" />
     <Content Include="App\services\services.js" />
+    <Content Include="App\views\reportHeaderDetail.html" />
     <Content Include="App\views\levelDetail.html" />
     <Content Include="App\views\levelsList.html" />
     <Content Include="App\views\reportDetail.html" />

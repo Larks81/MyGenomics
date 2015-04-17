@@ -486,7 +486,8 @@ namespace MyGenomics.Services.Services
                         BackCover = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).BackCover : null,
                         ImageUri = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).ImageUri : null,
                         ProductId = p.ProductId,
-                        Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null                        
+                        Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,
+                        Version = p.Version
                     })
                     .FirstOrDefault();
                 return a;

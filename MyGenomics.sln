@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.WebSitePrivateAr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.WebSiteReports", "MyGenomics.WebSiteReports\MyGenomics.WebSiteReports.csproj", "{D13B9315-CE38-497A-AA36-A61387A22D97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenomics.ReportTool", "MyGenomics.ReportTool\MyGenomics.ReportTool.csproj", "{7C446FC5-6D54-42AB-A03F-FE8069E1974B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{D13B9315-CE38-497A-AA36-A61387A22D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D13B9315-CE38-497A-AA36-A61387A22D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D13B9315-CE38-497A-AA36-A61387A22D97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C446FC5-6D54-42AB-A03F-FE8069E1974B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C446FC5-6D54-42AB-A03F-FE8069E1974B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C446FC5-6D54-42AB-A03F-FE8069E1974B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C446FC5-6D54-42AB-A03F-FE8069E1974B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

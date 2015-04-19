@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MyGenomics.DomainModel;
 using MyGenomics.Services;
 using MyGenomics.Services.Services;
 
@@ -23,6 +24,27 @@ namespace MyGenomics.ServicesUnitTest
             _reportService.HtmlToPdf(pdfFilePath, tocPath, html);
 
             Assert.IsTrue(File.Exists(pdfFilePath));
+            //File.Delete(pdfFilePath);
+        }
+
+        [TestMethod]
+        public void TestReportCreateHtml()
+        {
+            BaseDataService.InitializeServices();
+            var _reportPdfService = new ReportPdfService();
+
+            string template = File.ReadAllText("fakeReports/fakeReportRazor.html");            
+
+            var model = _reportPdfService.GetReportTemplateModel(1, 1);
+
+            var _reportService = new ReportPdfService();
+            string html = _reportService.GenerateHtml<ReportTemplate>(template, model);
+            string tocPath = "fakeReports/toc.xsl";
+            string pdfFilePath = "testReport.pdf";
+
+            _reportService.WritePDF(html, pdfFilePath, tocPath);
+
+            //Assert.IsTrue(File.Exists(pdfFilePath));
             //File.Delete(pdfFilePath);
         }
     }

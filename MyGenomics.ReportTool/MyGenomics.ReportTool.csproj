@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F3E2B37-5D61-4043-93C1-EF8CC6B0ABDD}</ProjectGuid>
+    <ProjectGuid>{7C446FC5-6D54-42AB-A03F-FE8069E1974B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyGenomics.DomainModel</RootNamespace>
-    <AssemblyName>MyGenomics.DomainModel</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>MyGenomics.ReportTool</RootNamespace>
+    <AssemblyName>MyGenomics.ReportTool</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RazorEngine, Version=3.6.5.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.6.5\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,40 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Product\ProductItemList.cs" />
-    <Compile Include="Questionnaire\Answer.cs" />
-    <Compile Include="Contact\Contact.cs" />
-    <Compile Include="Questionnaire\ContactGivenAnswer.cs" />
-    <Compile Include="Questionnaire\ContactQuestionnaire.cs" />
-    <Compile Include="Contact\ContactType.cs" />
-    <Compile Include="Questionnaire\ImportQuestionnaireDetail.cs" />
-    <Compile Include="Product\Product.cs" />
-    <Compile Include="Questionnaire\Question.cs" />
-    <Compile Include="Questionnaire\QuestionCategory.cs" />
-    <Compile Include="Questionnaire\Questionnaire.cs" />
+    <Compile Include="HtmlGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Questionnaire\QuestionnaireImport.cs" />
-    <Compile Include="Questionnaire\QuestionnaireResult.cs" />
-    <Compile Include="Report\ChapterDetail.cs" />
-    <Compile Include="Report\ChapterItemList.cs" />
-    <Compile Include="Report\LevelDetail.cs" />
-    <Compile Include="Report\LevelItemList.cs" />
-    <Compile Include="Report\PanelContentDetail.cs" />
-    <Compile Include="Report\PanelDetail.cs" />
-    <Compile Include="Report\PanelItemList.cs" />
-    <Compile Include="Report\ReportHeaderItemList.cs" />
-    <Compile Include="Report\ReportTemplate.cs" />
-    <Compile Include="Report\SearchList.cs" />
-    <Compile Include="Report\ReportDetail.cs" />
-    <Compile Include="Report\ReportHeaderDetail.cs" />
-    <Compile Include="Report\ReportItemList.cs" />
-    <Compile Include="Questionnaire\SubmitPersonQuestionnaire.cs" />
-    <Compile Include="Log\WebApiLog.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">
-      <Project>{05f6c81a-6f65-45e5-86c7-6b10b3081ca7}</Project>
-      <Name>MyGenomics.Common</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyGenomics.DomainModel\MyGenomics.DomainModel.csproj">
+      <Project>{9f3e2b37-5d61-4043-93c1-ef8cc6b0abdd}</Project>
+      <Name>MyGenomics.DomainModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

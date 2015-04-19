@@ -1,0 +1,25 @@
+﻿@using System.Web.Mvc.Html
+@model MyGenomics.DomainModel.ReportTemplate
+
+<h1>Questo è il report di @Model.ReportDetail.Title</h1>
+
+
+@foreach (var chapter in Model.ReportDetail.ChaptersDetail)
+{
+    <h1>@chapter.Title</h1>    
+    <p>@chapter.Text</p>
+    
+    foreach (var panel in chapter.PanelsDetail)
+    {
+        <h1>@panel.Title</h1>    
+        
+        foreach (var panelContent in panel.PanelContents)
+        {
+            <h2>@panelContent.Title</h2>   
+            <p>@panelContent.ShortText</p>    
+            <p>@panelContent.Text</p>   
+            
+        }
+    }
+
+}

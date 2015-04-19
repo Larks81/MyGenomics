@@ -1,0 +1,21 @@
+﻿<h1>Questo è il report di @Model.ReportDetail.Title</h1>
+
+@foreach (var chapter in Model.ReportDetail.ChaptersDetail)
+{
+    <h1>@chapter.Title</h1>
+    <p>@Html.Raw(@chapter.Text)</p>
+
+    foreach (var panel in chapter.PanelsDetail)
+    {
+        <h1>@panel.Title</h1>
+
+        foreach (var panelContent in panel.PanelContents)
+        {
+            <h2>@panelContent.Title</h2>
+            <p>@Html.Raw(panelContent.ShortText)</p>
+            <p>@Html.Raw(panelContent.Text)</p>            
+
+        }
+    }
+
+}

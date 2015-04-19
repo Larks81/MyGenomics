@@ -153,6 +153,15 @@ namespace MyGenomics.Services
             .ForMember(dest => dest.AnswerText, opt => opt.MapFrom(src => src.Answer.Text))
             .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.Question.Text));
 
+
+
+
+            Mapper.CreateMap<DomainModel.ReportDetail, DomainModel.ReportPrintable>();
+            Mapper.CreateMap<DomainModel.ReportHeaderDetail, DomainModel.ReportHeaderPrintable>();
+            Mapper.CreateMap<DomainModel.ChapterDetail, DomainModel.ChapterPrintable>();
+            Mapper.CreateMap<DomainModel.PanelDetail, DomainModel.PanelPrintable>();
+            Mapper.CreateMap<DomainModel.PanelContentDetail, DomainModel.PanelContentPrintable>();
+
         }
     }
 }

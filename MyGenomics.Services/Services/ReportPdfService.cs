@@ -81,7 +81,7 @@ namespace MyGenomics.Services.Services
         }
 
 
-        public void WritePDF(string HTML, string pdfOutputLocation, string tocFilePath)
+        public void WritePDF(string HTML,string headerPath, string pdfOutputLocation, string tocFilePath)
         {
             string inFileName,
                     outFileName,
@@ -103,8 +103,8 @@ namespace MyGenomics.Services.Services
             
 
             // note that we tell wkhtmltopdf to be quiet and not run scripts
-            // NOTE: I couldn't figure out a way to get both stdin and stdout redirected so we have to write to a file and then clean up afterwards
-            psi.Arguments = "-q -n - " + pdfOutputLocation;
+            // NOTE: I couldn't figure out a way to get both stdin and stdout redirected so we have to write to a file and then clean up afterwards            
+            psi.Arguments = string.Format("--header-html \"file:///{1}\" -q toc --xsl-style-sheet {2} -n - {0} ", pdfOutputLocation, headerPath, tocFilePath);
 
             p = Process.Start(psi);
 

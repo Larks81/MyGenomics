@@ -40,9 +40,10 @@ namespace MyGenomics.ServicesUnitTest
             var _reportService = new ReportPdfService();
             string html = _reportService.GenerateHtml<ReportTemplate>(template, model);
             string tocPath = "fakeReports/toc.xsl";
+            string headerPath = "C:/Users/Larks/Documents/GitHub/MyGenomics/MyGenomics.ServicesUnitTest/fakeReports/header.html";
             string pdfFilePath = "testReport.pdf";
 
-            _reportService.WritePDF(html, pdfFilePath, tocPath);
+            _reportService.WritePDF(html,headerPath, pdfFilePath, tocPath);
 
             //Assert.IsTrue(File.Exists(pdfFilePath));
             //File.Delete(pdfFilePath);

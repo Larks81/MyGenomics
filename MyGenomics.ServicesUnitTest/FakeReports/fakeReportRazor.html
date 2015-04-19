@@ -48,8 +48,7 @@
 
 </head>
 <body>
-    <h1>Questo è il report di @Model.ReportDetail.Title</h1>
-
+    
     @foreach (var chapter in Model.ReportDetail.ChaptersDetail)
     {
         <div class="page-breaker"></div>
@@ -61,11 +60,11 @@
         <div class="page-breaker"></div>
         foreach (var panel in chapter.PanelsDetail)
         {
-            <h1>@panel.Title</h1>
+            <h2>@panel.Title</h2>
 
             foreach (var panelContent in panel.PanelContents)
             {
-                <h2 class="panelTitle">@panelContent.Title</h2>
+                <h3 class="panelTitle">@panelContent.Title</h3>
                 <div class="panelText">@Html.Raw(panelContent.ShortText)</div>
                 <div class="panelText">@Html.Raw(panelContent.Text)</div>
 

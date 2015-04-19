@@ -61,6 +61,7 @@
     <Compile Include="Report\PanelContentDetail.cs" />
     <Compile Include="Report\PanelDetail.cs" />
     <Compile Include="Report\PanelItemList.cs" />
+    <Compile Include="Report\ReportHeaderItemList.cs" />
     <Compile Include="Report\SearchList.cs" />
     <Compile Include="Report\ReportDetail.cs" />
     <Compile Include="Report\ReportHeaderDetail.cs" />

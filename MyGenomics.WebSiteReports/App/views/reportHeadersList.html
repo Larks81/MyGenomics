@@ -1,0 +1,44 @@
+﻿<div ng-init="search()">
+    <div class="input-group">
+        <input type="text" ng-keyup="$event.keyCode == 13 ? search() : null" ng-model="filter" class="form-control" placeholder="Cerca una intestazione...">
+        <span class="input-group-btn">
+            <button ng-click="search()" class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+        </span>
+    </div>        
+
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Trovate {{searchResult.TotRec}} intestazioni</h3>
+                    <button class="btn btn-default right-aligned"><a href="/intestazioni/0">Crea nuova intestazione</a></button>
+                </div>
+                <div ng-show="searchResult.Results.length>0">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th style="width:70px;">Id</th>
+                                <th>Nome</th>                                
+                                <th style="width:70px;">Azioni</th>
+                            </tr>
+                            <tr ng-repeat="reportHeader in searchResult.Results">
+                                <td>{{reportHeader.Id}}</td>
+                                <td>{{reportHeader.Name}}</td>                                
+                                <td><a style="float:right;" href="/intestazioni/{{reportHeader.Id}}">Dettaglio</a></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li ng-class="{active: searchResult.CurrentPage==($index+1)}" ng-repeat="i in getNumber(searchResult.TotPag) track by $index">
+                                <a ng-click="search($index+1)">{{$index+1}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

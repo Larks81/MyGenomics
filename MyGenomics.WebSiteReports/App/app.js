@@ -67,9 +67,14 @@ app.config([
         })
         .when('/intestazioni/:param', {
             templateUrl: '/App/views/reportHeaderDetail.html',
-            controller: 'levelsController',
-            title: 'Livelli'
-        })        
+            controller: 'reportHeadersController',
+            title: 'Intestazioni'
+        })
+        .when('/intestazioni/', {
+            templateUrl: '/App/views/reportHeadersList.html',
+            controller: 'reportHeadersController',
+            title: 'Intestazioni'
+        })
         .otherwise({
             redirectTo: '/login'
         })

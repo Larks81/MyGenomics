@@ -8,6 +8,7 @@ namespace MyGenomics.DataModel
 {
     public class ReportHeader : ModelBase
     {
+        public string Name { get; set; }
         public string TextColor { get; set; }
         public string BaseColor { get; set; }
         public List<ReportHeaderTranslation> Translations { get; set; }

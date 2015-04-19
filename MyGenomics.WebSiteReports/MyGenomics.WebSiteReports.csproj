@@ -179,6 +179,7 @@
     <Content Include="App\directives\modal\modal.js" />
     <Content Include="App\services\authService.js" />
     <Content Include="App\services\services.js" />
+    <Content Include="App\views\reportHeadersList.html" />
     <Content Include="App\views\reportHeaderDetail.html" />
     <Content Include="App\views\levelDetail.html" />
     <Content Include="App\views\levelsList.html" />

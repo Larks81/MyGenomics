@@ -141,6 +141,7 @@ namespace MyGenomics.ServicesUnitTest
                                     Text = "Nuovo report di test testo",
                                     Title = "Titolo Nuovo report di test",
                                     Version = "1.0",
+                                    ReportHeaderId = 1,
                                     Chapters = new List<ChapterItemList>()
                                             {
                                                 new ChapterItemList()
@@ -232,7 +233,7 @@ namespace MyGenomics.ServicesUnitTest
         {
             BaseDataService.InitializeServices();
 
-            var reportService = new ReportService();
+            var reportService = new ReportHeaderService();
 
             //Test Insert new ITA
             var fakeReportHeader = new ReportHeaderDetail()

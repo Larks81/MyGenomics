@@ -48,6 +48,15 @@
                         <label>Versione</label>
                         <input type="text" ng-model="detail.Version" class="form-control" placeholder="Enter ..." />
                     </div>
+                    <label>Intestazione</label>
+                    <br />                    
+                    <select ng-model="detail.ReportHeaderId">
+                        <option value="{{reportHeader.Id}}" ng-repeat="reportHeader in allReportHeaders">
+                            {{reportHeader.Name}}
+                        </option>
+                    </select>
+                    <br />
+                    <br />
                     <label>Prodotto</label>
                     <br />
                     <select ng-model="detail.ProductId">

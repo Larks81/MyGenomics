@@ -43,6 +43,16 @@ appServices.factory('Report', [
     }
 ]);
 
+appServices.factory('ReportHeader', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/ReportHeaders', {}, {
+            get: { method: 'GET', isArray: false },
+            save: { method: 'POST', isArray: false },
+        });
+    }
+]);
+
 appServices.factory('Product', [
     '$resource', 'configs',
     function ($resource, configs) {

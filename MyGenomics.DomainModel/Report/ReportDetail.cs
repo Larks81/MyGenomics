@@ -13,6 +13,7 @@ namespace MyGenomics.DomainModel
         public int? TranslationId { get; set; }
         public string Version { get; set; }
         public int ProductId { get; set; }
+        public int ReportHeaderId { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public string FrontCover { get; set; }

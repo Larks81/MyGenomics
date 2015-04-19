@@ -8,6 +8,8 @@ namespace MyGenomics.DataModel
 {
     public class Report : ModelBase
     {
+        public ReportHeader ReportHeader { get; set; }
+        public int ReportHeaderId { get; set; }
         public Product Product { get; set; }
         public int ProductId { get; set; }
         public string Version { get; set; }

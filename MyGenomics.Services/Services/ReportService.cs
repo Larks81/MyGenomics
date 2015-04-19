@@ -487,7 +487,8 @@ namespace MyGenomics.Services.Services
                         ImageUri = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).ImageUri : null,
                         ProductId = p.ProductId,
                         Text = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Text : null,
-                        Version = p.Version
+                        Version = p.Version,
+                        ReportHeaderId = p.ReportHeaderId
                     })
                     .FirstOrDefault();
                 return a;
@@ -708,78 +709,6 @@ namespace MyGenomics.Services.Services
         }
         #endregion
 
-        public DomainModel.ReportHeaderDetail GetReportHeaderDetail(int languageId, int id)
-        {
-            using (var context = new MyGenomicsContext())
-            {
-                return context.ReportHeaders
-                    .Include(i => i.Translations)
-                    .Where(rh => rh.Id == id)
-                    .Select(p => new DomainModel.ReportHeaderDetail()
-                    {
-                        Id = p.Id,
-                        LanguageId = languageId,
-                        TranslationId = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).Id : (int?)null,
-                        FirstPage = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).FirstPage : null,
-                        SecondPage = p.Translations.Any(t => t.LanguageId == languageId) ? p.Translations.FirstOrDefault(t => t.LanguageId == languageId).SecondPage : null,
-                    })
-                    .FirstOrDefault();
-            }
-
-        }
-
-        public int AddOrUpdateReportHeader(DomainModel.ReportHeaderDetail reportHeader)
-        {
-            var languageId = reportHeader.LanguageId;
-            var reportHeaderMapped = Mapper.Map<DomainModel.ReportHeaderDetail, DataModel.ReportHeader>(reportHeader);
-            DataModel.ReportHeader originalReportHeader;
-
-            using (var context = new MyGenomicsContext())
-            {
-                originalReportHeader = context.ReportHeaders
-                    .Include(i => i.Translations)
-                    .FirstOrDefault(p => p.Id == reportHeaderMapped.Id);
-            }
-
-
-            using (var context = new MyGenomicsContext())
-            {
-
-                if (originalReportHeader != null)
-                {
-                    context.Entry(reportHeaderMapped).State = EntityState.Modified;
-
-                    //Translations
-                    foreach (var translation in reportHeaderMapped.Translations)
-                    {
-                        if (translation.Id > 0)
-                        {
-                            context.Entry(translation).State = EntityState.Modified;
-                        }
-                        else
-                        {
-                            context.Entry(translation).State = EntityState.Added;
-                        }
-                    }
-                }
-                else
-                {
-                    context.Entry(reportHeaderMapped).State = EntityState.Added;
-                }
-
-                context.SaveChanges();
-            }
-
-            return reportHeaderMapped.Id;
-        }
-
-        public void RemoveReportHeader(int reportHeaderId)
-        {
-            using (var context = new MyGenomicsContext())
-            {
-                context.ReportHeaders.Remove(context.ReportHeaders.FirstOrDefault(p => p.Id == reportHeaderId));
-                context.SaveChanges();
-            }
-        }
+        
     }
 }

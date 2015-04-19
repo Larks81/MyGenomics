@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyGenomics.DomainModel
 {
-    public class ReportHeaderDetail
+    public class ReportHeaderItemList
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int LanguageId { get; set; }
-        public int? TranslationId { get; set; }
-        public string FirstPage { get; set; }
-        public string SecondPage { get; set; }
+        public int ReportCount { get; set; }
     }
 }

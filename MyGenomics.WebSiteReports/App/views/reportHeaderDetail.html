@@ -17,7 +17,6 @@
     </div>
     <br />
     <br />
-
     <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-header">
@@ -32,20 +31,16 @@
                         <label>Nome</label>
                         <input type="text" ng-model="detail.Name" class="form-control" placeholder="Enter ..." />
                     </div>
+                    <br/>
                     <div class="form-group">
-                        <label>Valore</label>
-                        <input type="text" ng-model="detail.Value" class="form-control" placeholder="Enter ..." />
+                        <label>Prima pagina</label>
+                        <textarea froala ng-model="detail.FirstPage"></textarea>
                     </div>
+                    <br/>                    
                     <fieldset>
-                        <legend>Immagine</legend>
-                        <input ng-model="detail.ImageUri" class="form-control" placeholder="Enter ..."></input>
-                    </fieldset>
-                    <br />
-                    <fieldset>
-                        <legend>Testo</legend>
-                        <textarea froala ng-model="detail.Text"></textarea>
-                    </fieldset>
-
+                        <legend>Seconda pagina</legend>
+                        <textarea froala ng-model="detail.SecondPage"></textarea>
+                    </fieldset>                    
                 </form>
             </div>
         </div>

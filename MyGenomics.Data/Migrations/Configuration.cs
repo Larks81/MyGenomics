@@ -471,6 +471,7 @@ namespace MyGenomics.Data.Migrations
                              {
                                  Id = 1,
                                  ProductId = 1,
+                                 ReportHeaderId = 1,
                                  Chapters = new List<ReportsChapters>()
                                             {
                                                 new ReportsChapters(){

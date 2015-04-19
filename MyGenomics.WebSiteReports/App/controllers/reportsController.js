@@ -1,6 +1,6 @@
 ﻿angular.module('MyGenomicsApp')
-.controller('reportsController', ['$scope', '$rootScope', '$routeParams', 'Report', '$location', 'toastr', 'Chapter','Product',
-    function ($scope, $rootScope, $routeParams, Report, $location, toastr, Chapter, Product) {
+.controller('reportsController', ['$scope', '$rootScope', '$routeParams', 'Report', '$location', 'toastr', 'Chapter', 'Product', 'ReportHeader',
+    function ($scope, $rootScope, $routeParams, Report, $location, toastr, Chapter, Product, ReportHeader) {
 
         $scope.selectedId = $routeParams.param;
         $scope.searchResult = null;
@@ -8,6 +8,7 @@
         $scope.chapters = null;
         $scope.allChapters = null;
         $scope.allProducts = null;
+        $scope.allReportHeaders = null;
 
         $scope.search = function (page) {
 
@@ -66,6 +67,16 @@
             });
         };
 
+        $scope.getReportHeaders = function () {
+            ReportHeader.get({ filter: "", page: 1 }).$promise
+            .then(function (data) {
+                $scope.allReportHeaders = data.Results;
+                toastr.info('Intestazioni caricate correttamente', 'Info');
+            }, function (reason) {
+                toastr.error('Errore', reason);
+            });
+        };
+
         $scope.getNumber = function (num) {
             return new Array(num);
         };
@@ -114,8 +125,11 @@
 
         if ($routeParams.param > 0) {
             $scope.getProducts();
+            $scope.getReportHeaders();
             $scope.getDetail($scope.selectedId);
         } else if ($routeParams.param == 0) {
+            $scope.getProducts();
+            $scope.getReportHeaders();
             $scope.detail = new Report();
             $scope.detail.Chapters = new Array();
             $scope.detail.LanguageId = $rootScope.selectedLanguageId;

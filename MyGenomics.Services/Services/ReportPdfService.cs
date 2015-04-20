@@ -7,11 +7,19 @@ using AutoMapper;
 using MyGenomics.DomainModel;
 using MyGenomics.ReportTool;
 using Pechkin;
+using System.Configuration;
 
 namespace MyGenomics.Services.Services
 {
     public class ReportPdfService
     {
+        private string _wkHtmlToPdfPath;
+
+        public ReportPdfService(string wkHtmlToPdfPath)
+        {
+            _wkHtmlToPdfPath = wkHtmlToPdfPath;
+        }
+
         public ReportTemplate GetReportTemplateModel(int languageId, int reportId)
         {
             var _reportService = new ReportService();
@@ -81,21 +89,48 @@ namespace MyGenomics.Services.Services
         }
 
 
-        public void WritePDF(string HTML,string headerPath, string pdfOutputLocation, string tocFilePath)
-        {
-            string inFileName,
-                    outFileName,
-                    tempPath;
-            Process p;
+        public void WritePDF(List<string> HTML,string headerPath, string pdfOutputLocation, string tocFilePath)
+        {            
+            string baseDirectory = Path.GetDirectoryName(pdfOutputLocation);
+
+            //Save all htmls
+            var lstHtmlToConvert = new List<string>();
+            int nHtml = 0;
+            foreach (var html in HTML){
+                var fileName = baseDirectory + "html-" + nHtml + ".html";
+                File.WriteAllText(fileName, html);
+                lstHtmlToConvert.Add(fileName);
+                nHtml++;
+            }
+            
+            //Build the Arguments line
+            StringBuilder argumentsLine = new StringBuilder();
+            argumentsLine.Append("--header-html \""+headerPath+"\" ");
+            int pos=1;
+            int insertTocInpos=2;
+            foreach (var html in lstHtmlToConvert)
+            {
+                if (insertTocInpos == pos)
+                {
+                     argumentsLine.Append("toc --xsl-style-sheet "+tocFilePath);
+                     argumentsLine.Append(" ");
+                }
+
+                argumentsLine.Append(html);
+                argumentsLine.Append(" ");
+                pos++;
+            }
+            argumentsLine.Append(pdfOutputLocation);
+
+            //            
+            Process p = null;
             System.IO.StreamWriter stdin;
             ProcessStartInfo psi = new ProcessStartInfo();
 
-            tempPath = pdfOutputLocation;            
-            //outFileName = Session.SessionID + ".pdf";
-
+            
             // run the conversion utility
             psi.UseShellExecute = false;
-            psi.FileName = "c:\\wkhtmltopdf.exe";
+            psi.FileName = _wkHtmlToPdfPath;
             psi.CreateNoWindow = true;
             psi.RedirectStandardInput = true;
             psi.RedirectStandardOutput = true;
@@ -104,17 +139,19 @@ namespace MyGenomics.Services.Services
 
             // note that we tell wkhtmltopdf to be quiet and not run scripts
             // NOTE: I couldn't figure out a way to get both stdin and stdout redirected so we have to write to a file and then clean up afterwards            
-            psi.Arguments = string.Format("--header-html \"file:///{1}\" -q toc --xsl-style-sheet {2} -n - {0} ", pdfOutputLocation, headerPath, tocFilePath);
+            psi.Arguments = argumentsLine.ToString(); //string.Format("--header-html \"file:///{1}\" -q toc --xsl-style-sheet {2} -n - {0} ", pdfOutputLocation, headerPath, tocFilePath);
 
-            p = Process.Start(psi);
+            
 
             try
             {
-                StreamWriter utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8);
-                utf8Writer.AutoFlush = true;
+                p = Process.Start(psi);
 
-                utf8Writer.Write(HTML);
-                utf8Writer.Close();     
+                //StreamWriter utf8Writer = new StreamWriter(p.StandardInput.BaseStream, Encoding.UTF8);
+                //utf8Writer.AutoFlush = true;
+
+                //utf8Writer.Write(HTML);
+                //utf8Writer.Close();     
 
 
                 //stdin = p.StandardInput;
@@ -124,6 +161,7 @@ namespace MyGenomics.Services.Services
                 //stdin.Write(HTML,Encoding.UTF8);
                 //stdin.Close();               
             }
+            catch { }
             finally
             {
                 p.Close();

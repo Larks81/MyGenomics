@@ -32,25 +32,23 @@ namespace MyGenomics.ServicesUnitTest
         [TestMethod]
         public void TestReportCreateHtml()
         {
-            string WkHtmlToPdfPath = "C:/Users/Developer29/Documents/GitHub/MyGenomics/MyGenomics.ServicesUnitTest";//AppDomain.CurrentDomain.BaseDirectory;
-            WkHtmlToPdfPath += ConfigurationManager.AppSettings.Get("WkHtmlToPdfPath");            
-
+            
             BaseDataService.InitializeServices();
-            string template = File.ReadAllText("fakeReports/fakeReportRazor.html");                        
+            string templateChapter = File.ReadAllText("fakeReports/fakeReportChapter.html");                        
 
-            var _reportService = new ReportPdfService(WkHtmlToPdfPath);
+            var _reportService = new ReportPdfService();
             var model = _reportService.GetReportTemplateModel(1, 1);
             //string html = _reportService.GenerateHtml<ReportTemplate>(template, model);
             string tocPath = "fakeReports/toc.xsl";
             string headerPath = "fakeReports/header.html";
+            string footerPath = "fakeReports/footer.html";
             string pdfFilePath = "testReport.pdf";
 
-            var lstHtml = new List<string>(){
-                "<h1>Hello World</h1><p>Sta minchia</p>",
-                "<h1>Hello World 2</h1><p>Sta minchia 2</p>",
-            };
 
-            _reportService.WritePDF(lstHtml, headerPath, pdfFilePath, tocPath);
+
+            var lstHtml = _reportService.GetHtmlMergeByTemplates(model, "", templateChapter);
+
+            _reportService.WritePDF(lstHtml, headerPath,footerPath, pdfFilePath, tocPath);
 
             //Assert.IsTrue(File.Exists(pdfFilePath));
             //File.Delete(pdfFilePath);

@@ -1,10 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style type='text/css' media='screen,print'>                
-            .header {                    
-                background-color: green;                     
+            .header {                                                        
                 display: table-cell;
                 vertical-align: middle;
                 padding-right: 20px;
@@ -18,25 +17,38 @@
                 var vars={};
                 var x=document.location.search.substring(1).split('&');
                 for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-                var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                var x=['frompage','topage','page','webpage','section','subsection','subsubsection','title'];
                 for(var i in x) {
                     var y = document.getElementsByClassName(x[i]);
-                    for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-                }
-                
-                var y = document.getElementsByClassName('color');
-                for (var j = 0; j < y.length; ++j) y[j].textContent = vars[x[i]];
-                
+                    for (var j = 0; j < y.length; ++j) {
+                        if (x[i] == 'title') {
+                            if (vars[x[i]] == undefined || vars[x[i]] == "") {
+                                y[j].style.backgroundColor = 'grey';
+                            } else {
+                                y[j].style.backgroundColor = vars[x[i]];
+                            }
+
+                            if (parseInt(vars['page']) % 2 == 0) {
+                                y[j].style.cssFloat = 'right';
+                            } else {
+                                y[j].style.cssFloat = 'left';
+                            }
+
+                        } else {
+                            y[j].textContent = vars[x[i]];                            
+                        }                         
+                    }
+                }                                                
             }
         </script>
     </head>
     <body style="border:0; margin: 0;" onload="subst()">
         <br />
-        <table>
-            <tr>                
-                <td class="section header"></td>    
-            </tr>
-        </table>
+        <div class="title header">
+            <div class="section"></div>
+        </div>
         <br/>
+        <br />
+        <br />
     </body>
 </html>

@@ -108,7 +108,10 @@
     <Content Include="FakeReports\fakeReport.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="FakeReports\fakeReportRazor.html">
+    <Content Include="FakeReports\fakeReportChapter.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FakeReports\footer.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FakeReports\header.html">

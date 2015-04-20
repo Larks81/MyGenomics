@@ -20,6 +20,24 @@ namespace MyGenomics.Services.Services
             _wkHtmlToPdfPath = wkHtmlToPdfPath;
         }
 
+        public List<string> GetHtmlMergeByTemplates(ReportTemplate model, string headerTemplate, string chapterTemplate)
+        {
+            var htmls = new List<string>();
+
+            //Header
+            htmls.Add(GenerateHtml<ReportHeaderPrintable>(headerTemplate, model.ReportDetail.ReportHeaderDetail));
+
+            //Chapters
+            foreach (var chapter in model.ReportDetail.ChaptersDetail)
+            {
+                htmls.Add(GenerateHtml<ChapterPrintable>(chapterTemplate, chapter));
+            }
+
+
+            return htmls;
+        }
+
+
         public ReportTemplate GetReportTemplateModel(int languageId, int reportId)
         {
             var _reportService = new ReportService();

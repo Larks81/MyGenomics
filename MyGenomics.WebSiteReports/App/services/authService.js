@@ -10,7 +10,7 @@
 
         return {
             login: function(username,password) { 
-                var data = "grant_type=password&username=" + username + "demo&password=" + password;
+                var data = "grant_type=password&username=" + username + "&password=" + password;
                 data = data + "&client_id=127.0.0.1";
 
                 return Authorization.authenticate(data).$promise;

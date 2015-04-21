@@ -68,6 +68,7 @@
     <Compile Include="Services\ReportHeaderService.cs" />
     <Compile Include="Services\ReportPdfService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">

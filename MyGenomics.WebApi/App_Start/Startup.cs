@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using MyGenomics.Services;
 
 [assembly: OwinStartup(typeof(MyGenomics.Startup))]
 namespace MyGenomics
@@ -41,9 +42,6 @@ namespace MyGenomics
 
     }
 
-
-
-
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -55,15 +53,18 @@ namespace MyGenomics
         {
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            var userService = new UserService();
+            var userLogged = userService.CheckLogin(context.UserName, context.Password);
 
-            if(context.UserName !="demo" && context.Password!="demo"){
+            if (userLogged==null)
+            {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
                 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.UserData, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+            identity.AddClaim(new Claim(ClaimTypes.UserData, userLogged.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Role, ((int)userLogged.UserType).ToString()));
 
             context.Validated(identity);
 

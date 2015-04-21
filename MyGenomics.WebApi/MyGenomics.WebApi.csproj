@@ -205,6 +205,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\AuthWhereRole.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ReportHeadersController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -316,6 +317,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">
+      <Project>{05f6c81a-6f65-45e5-86c7-6b10b3081ca7}</Project>
+      <Name>MyGenomics.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyGenomics.DomainModel\MyGenomics.DomainModel.csproj">
       <Project>{9f3e2b37-5d61-4043-93c1-ef8cc6b0abdd}</Project>
       <Name>MyGenomics.DomainModel</Name>

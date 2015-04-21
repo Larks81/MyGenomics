@@ -19,6 +19,12 @@ namespace MyGenomics.Data.Migrations
 
         protected override void Seed(MyGenomics.Data.Context.MyGenomicsContext context)
         {
+            context.Users.AddOrUpdate(new User() { 
+                Id = 1,
+                UserName = "demo",
+                Password = "demo",
+                UserType = UserType.Administrator
+            });
 
             context.Languages.AddOrUpdate(new Language()
                                           {

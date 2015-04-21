@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201504171821112_ReportReportName.Designer.cs">
       <DependentUpon>201504171821112_ReportReportName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504211303083_subjects_users.cs" />
+    <Compile Include="Migrations\201504211303083_subjects_users.Designer.cs">
+      <DependentUpon>201504211303083_subjects_users.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -169,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504171821112_ReportReportName.resx">
       <DependentUpon>201504171821112_ReportReportName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504211303083_subjects_users.resx">
+      <DependentUpon>201504211303083_subjects_users.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

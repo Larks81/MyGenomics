@@ -29,6 +29,10 @@ namespace MyGenomics.Data.Context
         public DbSet<Package> Packages { get; set; }
         public DbSet<WebApiLog> WebApiLogs { get; set; }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Practitioner> Practitioners { get; set; }
+        public DbSet<Distributor> Distributors { get; set; }
+
         //Kreo
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<ChaptersPanels> ChaptersPanels { get; set; }
@@ -45,6 +49,9 @@ namespace MyGenomics.Data.Context
         public DbSet<ReportHeader> ReportHeaders { get; set; }
         public DbSet<ReportHeaderTranslation> ReportHeaderTranslations { get; set; }
         public DbSet<Snp> Snps { get; set; }
+        public DbSet<Kit> Kits { get; set; }
+        public DbSet<KitResult> KitResults { get; set; }
+        public DbSet<SnpGenotype> SnpGenotypes { get; set; }       
        
     }
 }

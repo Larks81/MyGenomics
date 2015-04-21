@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyGenomics.Attributes;
+using MyGenomics.Common.enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,7 +12,7 @@ namespace MyGenomics.Controllers
 {
     public class KitResultsController : ApiController
     {
-        [Authorize(Roles = "customer")]
+        [AuthorizeMultiple(UserType.Administrator)]
         public IEnumerable<string> Get()
         {
             var principal = Request.GetRequestContext().Principal as ClaimsPrincipal;

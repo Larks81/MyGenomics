@@ -162,6 +162,8 @@ namespace MyGenomics.Services
             Mapper.CreateMap<DomainModel.PanelDetail, DomainModel.PanelPrintable>();
             Mapper.CreateMap<DomainModel.PanelContentDetail, DomainModel.PanelContentPrintable>();
 
+            Mapper.CreateMap<DataModel.User, DomainModel.User>();
+
         }
     }
 }

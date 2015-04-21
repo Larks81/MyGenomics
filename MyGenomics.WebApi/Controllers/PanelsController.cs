@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Web.Http;
 using MyGenomics.DomainModel;
 using MyGenomics.Services.Services;
+using MyGenomics.Common.enums;
+using MyGenomics.Attributes;
 
 namespace MyGenomics.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AuthorizeMultiple(UserType.Administrator)]
     public class PanelsController : ApiController
     {
         private readonly ReportService _reportService = new ReportService();

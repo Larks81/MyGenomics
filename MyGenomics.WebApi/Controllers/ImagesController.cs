@@ -12,7 +12,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 
 namespace MyGenomics.Controllers
-{
+{    
     public class ImagesController : ApiController
     {
 

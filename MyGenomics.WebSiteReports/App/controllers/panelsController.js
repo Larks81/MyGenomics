@@ -1,6 +1,6 @@
 ﻿angular.module('MyGenomicsApp')
-.controller('panelsController', ['$scope', '$rootScope', '$routeParams', 'Panel', '$location', 'toastr', 'Level',
-    function ($scope, $rootScope, $routeParams, Panel, $location, toastr, Level) {
+.controller('panelsController', ['$scope', '$rootScope', '$routeParams', 'Panel', '$location', 'toastr', 'Level', 'Csv',
+    function ($scope, $rootScope, $routeParams, Panel, $location, toastr, Level, Csv) {
 
         $scope.selectedId = $routeParams.param;        
         $scope.searchResult = null;
@@ -63,6 +63,15 @@
         $scope.removePanelContent = function (contents, index) {
             if(confirm("Vuoi realmente eliminare questo contenuto?"))
             contents.splice(index, 1);
+        };
+
+        $scope.importSnps = function () {            
+            Csv.importSnps($scope.snpFileToImport, $scope.selectedId)
+            .then(function (data) {                
+                toastr.success("Import Snps effettuato correttamente", 'Ok');
+            }, function (reason) {
+                toastr.error('Errore', reason);
+            });
         };
 
         //Startup

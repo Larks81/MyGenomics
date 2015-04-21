@@ -175,6 +175,7 @@
     <Content Include="App\controllers\mainController.js" />
     <Content Include="App\controllers\panelsController.js" />
     <Content Include="App\directives\color-picker\color-picker.js" />
+    <Content Include="App\directives\fileUpload\fileModel.js" />
     <Content Include="App\directives\modal\modal.html" />
     <Content Include="App\directives\modal\modal.js" />
     <Content Include="App\services\authService.js" />

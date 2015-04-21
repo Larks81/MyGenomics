@@ -124,7 +124,11 @@ app.factory('authHttpResponseInterceptor', ['$rootScope', '$window', '$q', '$loc
                 if ($window.sessionStorage.token && $window.sessionStorage.token != "") {
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
                     if (config.url.indexOf("/api/") > -1) {
-                        config.url = config.url + '?languageId=' + $rootScope.selectedLanguageId;
+                        if (config.url.indexOf("?") == -1) {
+                            config.url = config.url + '?languageId=' + $rootScope.selectedLanguageId;
+                        } else {
+                            config.url = config.url + '&languageId=' + $rootScope.selectedLanguageId;
+                        }                        
                     }                        
                 }
                 return config;

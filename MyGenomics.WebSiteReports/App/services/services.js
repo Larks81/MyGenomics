@@ -81,4 +81,19 @@ appServices.factory('KitResult', [
     }
 ]);
 
-
+appServices.factory('Csv', [
+    '$resource', 'configs', '$http',
+    function ($resource, configs, $http) {
+        var importSnps = function(file,panelId) {
+            var fd = new FormData();
+            fd.append('file', file);
+            return $http.post(configs.baseWebApiUrl + 'api/Csv?panelId=' + panelId, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            });
+        };
+        return{
+            importSnps: importSnps
+        };
+    }    
+]);

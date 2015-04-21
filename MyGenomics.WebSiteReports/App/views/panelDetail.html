@@ -45,6 +45,13 @@
                     <label>Titolo</label>
                     <input type="text" ng-model="detail.Title" class="form-control" placeholder="Enter ..." />
                 </div>
+                <div class="form-group">
+                    <input type="file" filemodel="snpFileToImport" required>
+                </div>
+
+                <div class="form-group clearfix">
+                    <button class="btn btn-success pull-right" ng-click="importSnps()" type="button">Import</button>
+                </div>
             </form>
         </div>
     </div>

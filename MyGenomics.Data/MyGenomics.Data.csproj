@@ -111,6 +111,18 @@
     <Compile Include="Migrations\201504211303083_subjects_users.Designer.cs">
       <DependentUpon>201504211303083_subjects_users.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504211900113_Snps.cs" />
+    <Compile Include="Migrations\201504211900113_Snps.Designer.cs">
+      <DependentUpon>201504211900113_Snps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504222018301_Add_PractitionerReportKit_Entity.cs" />
+    <Compile Include="Migrations\201504222018301_Add_PractitionerReportKit_Entity.Designer.cs">
+      <DependentUpon>201504222018301_Add_PractitionerReportKit_Entity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504222023115_Add_Tags.cs" />
+    <Compile Include="Migrations\201504222023115_Add_Tags.Designer.cs">
+      <DependentUpon>201504222023115_Add_Tags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SugarCRM\Client.cs" />
@@ -176,6 +188,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504211303083_subjects_users.resx">
       <DependentUpon>201504211303083_subjects_users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504211900113_Snps.resx">
+      <DependentUpon>201504211900113_Snps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504222018301_Add_PractitionerReportKit_Entity.resx">
+      <DependentUpon>201504222018301_Add_PractitionerReportKit_Entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504222023115_Add_Tags.resx">
+      <DependentUpon>201504222023115_Add_Tags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

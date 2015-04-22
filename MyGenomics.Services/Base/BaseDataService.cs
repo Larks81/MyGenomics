@@ -164,6 +164,8 @@ namespace MyGenomics.Services
 
             Mapper.CreateMap<DataModel.User, DomainModel.User>();
 
+            Mapper.CreateMap<DomainModel.SnpDetail, DataModel.Snp>();
+
         }
     }
 }

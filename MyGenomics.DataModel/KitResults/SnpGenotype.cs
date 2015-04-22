@@ -11,9 +11,9 @@ namespace MyGenomics.DataModel
         public Kit Kit { get; set; }
         public int KitId { get; set; }
         public Panel Panel { get; set; }
-        public int PanelId { get; set; }
+        public int? PanelId { get; set; }
         public Snp Snp { get; set; }
-        public int SnpId { get; set; }
+        public int? SnpId { get; set; }
         public string Genotype { get; set; }
     }
 }

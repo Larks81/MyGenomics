@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using MyGenomics.Log;
 using MyGenomics.Services;
 using System.Net.Http.Formatting;
 using Newtonsoft.Json.Serialization;
@@ -32,7 +33,7 @@ namespace MyGenomics
             //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             
             BaseDataService.InitializeServices();
-
+            config.MessageHandlers.Add(new MessageHandler());
             //config.EnableSystemDiagnosticsTracing();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }

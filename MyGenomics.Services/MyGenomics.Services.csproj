@@ -43,6 +43,7 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -68,6 +69,7 @@
     <Compile Include="Services\ReportHeaderService.cs" />
     <Compile Include="Services\ReportPdfService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\SnpService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

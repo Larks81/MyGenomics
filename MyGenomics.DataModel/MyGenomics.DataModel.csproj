@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="KitResults\Kit.cs" />
     <Compile Include="KitResults\KitResult.cs" />
+    <Compile Include="KitResults\PractitionerReportKit.cs" />
     <Compile Include="KitResults\SnpGenotype.cs" />
+    <Compile Include="Report\Tag.cs" />
     <Compile Include="Subjects\Distributor.cs" />
     <Compile Include="Subjects\Practitioner.cs" />
     <Compile Include="Subjects\User.cs" />

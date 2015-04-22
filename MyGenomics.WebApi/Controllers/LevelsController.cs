@@ -11,7 +11,7 @@ using MyGenomics.Attributes;
 
 namespace MyGenomics.Controllers
 {
-    [AuthorizeMultiple(UserType.Administrator)]
+    [AuthorizeRoles(UserType.Administrator)]
     public class LevelsController : ApiController
     {
         private ReportService _reportService = new ReportService();

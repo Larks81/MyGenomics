@@ -72,6 +72,15 @@ appServices.factory('Level', [
     }
 ]);
 
+appServices.factory('Snp', [
+    '$resource', 'configs',
+    function ($resource, configs) {
+        return $resource(configs.baseWebApiUrl + 'api/Snps', {}, {
+            get: { method: 'GET', isArray: false }            
+        });
+    }
+]);
+
 appServices.factory('KitResult', [
     '$resource', 'configs',
     function ($resource, configs) {
@@ -87,7 +96,7 @@ appServices.factory('Csv', [
         var importSnps = function(file,panelId) {
             var fd = new FormData();
             fd.append('file', file);
-            return $http.post(configs.baseWebApiUrl + 'api/Csv?panelId=' + panelId, fd, {
+            return $http.post(configs.baseWebApiUrl + 'api/Csv/ImportSnpCsv?panelId=' + panelId, fd, {
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             });

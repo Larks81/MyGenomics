@@ -17,9 +17,8 @@ namespace MyGenomics.Controllers
     public class CsvController : ApiController
     {
 
-
         [System.Web.Http.HttpPost]
-        public async Task<object> Post(int panelId)
+        public async Task<object> ImportSnpCsv(int panelId)
         {
             var _snpService = new SnpService();
             var root = HttpContext.Current.Server.MapPath("~/App_Data");
@@ -28,13 +27,13 @@ namespace MyGenomics.Controllers
             {                
                 await Request.Content.ReadAsMultipartAsync(provider);
 
-                string encoded = "";
+                var imported = 0;
                 foreach (MultipartFileData fileData in provider.FileData)
                 {
                     var csv = File.ReadAllText(fileData.LocalFileName);
-                    _snpService.ImportSnpsFromCsv(csv, panelId);
-                }                
-                return new { link = "data:image/png;base64," + encoded };
+                    imported = _snpService.ImportSnpsFromCsv(csv, panelId);
+                }
+                return new { imported = imported };
             }
             catch (Exception e)
             {

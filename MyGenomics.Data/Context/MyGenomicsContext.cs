@@ -51,7 +51,9 @@ namespace MyGenomics.Data.Context
         public DbSet<Snp> Snps { get; set; }
         public DbSet<Kit> Kits { get; set; }
         public DbSet<KitResult> KitResults { get; set; }
-        public DbSet<SnpGenotype> SnpGenotypes { get; set; }       
+        public DbSet<SnpGenotype> SnpGenotypes { get; set; }
+        public DbSet<PractitionerReportKit> PractitionerReportKits { get; set; }
+        public DbSet<Tag> Tags { get; set; }    
        
     }
 }

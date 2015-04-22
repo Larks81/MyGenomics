@@ -427,6 +427,8 @@ namespace MyGenomics.Services.Services
                         .Include(i => i.Translations)
                         .Include(i => i.Product)
                         .Include(i => i.Chapters)
+                        .OrderBy(o=>o.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.ReportItemList()
                         {
                             Id = p.Id,
@@ -447,6 +449,8 @@ namespace MyGenomics.Services.Services
                         .Include(i => i.Product)
                         .Include(i => i.Chapters)
                         .Where(p => p.Translations.Any(t => t.Title.Contains(title) && t.LanguageId == languageId))
+                        .OrderBy(o => o.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.ReportItemList()
                         {
                             Id = p.Id,
@@ -603,7 +607,9 @@ namespace MyGenomics.Services.Services
                     result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
 
                     result.Results = context.Levels
-                        .Include(i => i.Translations)                        
+                        .Include(i => i.Translations)
+                        .OrderBy(o => o.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.LevelItemList()
                         {
                             Id = p.Id,
@@ -620,6 +626,8 @@ namespace MyGenomics.Services.Services
                     result.Results = context.Levels
                         .Include(i => i.Translations)
                         .Where(p => p.Name.Contains(name))
+                        .OrderBy(o => o.Id)
+                        .Skip(maxItemInPage * (page - 1)).Take(maxItemInPage)
                         .Select(p => new DomainModel.LevelItemList()
                         {
                             Id = p.Id,

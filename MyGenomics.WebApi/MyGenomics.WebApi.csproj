@@ -205,7 +205,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Attributes\AuthWhereRole.cs" />
+    <Compile Include="Attributes\AuthorizeRoles.cs" />
+    <Compile Include="Controllers\CsvController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ReportHeadersController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Controllers\LevelsController.cs" />
     <Compile Include="Controllers\PanelsController.cs" />
     <Compile Include="Controllers\QuestionnaireController.cs" />
+    <Compile Include="Controllers\SnpsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

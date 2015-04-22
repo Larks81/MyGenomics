@@ -9,16 +9,60 @@ using Microsoft.VisualBasic.FileIO;
 using MyGenomics.Data.Context;
 using MyGenomics.DataModel;
 using System.Data.Entity;
+using MyGenomics.DomainModel;
 
 namespace MyGenomics.Services.Services
 {
     public class SnpService
     {
+        private const int _maxItemInPage = 10;
 
-        public void ImportSnpsFromCsv(string csvContent, int panelId)
+        public SearchList<DomainModel.SnpItemList> GetSnps(int panelId, int? page)
+        {
+            var result = new SearchList<DomainModel.SnpItemList>();
+            var maxItemInPage = _maxItemInPage;
+
+            using (var context = new MyGenomicsContext())
+            {
+                if (panelId>0)
+                {
+                    result.TotRec = context.Snps.Count(p => p.PanelId == panelId);
+
+                    if (!page.HasValue)
+                    {
+                        maxItemInPage = result.TotRec;
+                        page = 1;
+                    }
+
+                    result.CurrentPage = page.Value;                    
+                    result.TotPag = (int)Math.Ceiling((decimal)result.TotRec / (decimal)maxItemInPage);
+
+                    result.Results = context.Snps
+                        .OrderBy(o => o.Id)
+                        .Skip(maxItemInPage * (page.Value - 1)).Take(maxItemInPage)
+                        .Where(s => s.PanelId == panelId)
+                        .Select(p => new DomainModel.SnpItemList()
+                        {
+                            Id = p.Id,
+                            Gene = p.Gene,
+                            Allelerisk = p.Allelerisk,
+                            OR_Beta = p.OR_Beta,
+                            P_value = p.P_value,
+                            SNPCode = p.SNPCode
+                        })
+                        .ToList();
+                }
+                
+            }
+            return result;
+        }
+
+
+        public int ImportSnpsFromCsv(string csvContent, int panelId)
         {
             var snps = ReadSnpsFromCsv(csvContent);
             AddRangeSnp(snps, panelId);
+            return snps.Count();
         }
 
         public void AddRangeSnp(List<DomainModel.SnpDetail> snps, int panelId)
@@ -29,16 +73,16 @@ namespace MyGenomics.Services.Services
             using (var context = new MyGenomicsContext())
             {
                 var panel = context.Panels
-                    .Include(i=>i.Snps)
+                    .Include(i => i.Snps)
                     .FirstOrDefault(p => p.Id == panelId);
 
                 if (panel != null)
                 {
-                    panel.Snps.Clear();
+                    context.Snps.RemoveRange(context.Snps.Where(s => s.PanelId == panelId));
                     panel.Snps.AddRange(snpMapped);
                     context.SaveChanges();
                 }
-                
+
             }
         }
 

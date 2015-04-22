@@ -44,14 +44,7 @@
                 <div class="form-group">
                     <label>Titolo</label>
                     <input type="text" ng-model="detail.Title" class="form-control" placeholder="Enter ..." />
-                </div>
-                <div class="form-group">
-                    <input type="file" filemodel="snpFileToImport" required>
-                </div>
-
-                <div class="form-group clearfix">
-                    <button class="btn btn-success pull-right" ng-click="importSnps()" type="button">Import</button>
-                </div>
+                </div>                                
             </form>
         </div>
     </div>
@@ -108,6 +101,67 @@
                         <button type="button" class="btn btn-danger" ng-click="removePanelContent(detail.PanelContents, $index)">Elimina contenuto</button>
                     </accordion-group>
                 </accordion>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Snps del pannello</h3>
+        </div>
+        <div class="box-body">
+            <form role="form">
+                <button class="btn btn-primary" ng-click="getSnps(1)">Aggiorna</button>
+                <button type="button" ng-click="showImportSnps=!showImportSnps" class="btn btn-success">Importa Snps da file Csv</button>
+                <br />
+                <br />
+                <div class="box" ng-show="showImportSnps">
+                    <div class="form-group">
+                        <label>File da Importare</label>
+                        <input type="file" filemodel="snpFileToImport" required>
+                    </div>
+
+                    <div class="form-group clearfix">
+                        <button class="btn btn-success" ng-click="importSnps()" type="button">Importa</button>
+                    </div>
+                </div>
+
+                <div class="box" ng-show="snps!=null">
+                    <div class="box-header">
+                        <h3 class="box-title">Trovati {{snps.TotRec}} Snps</h3>
+                    </div>
+                    <div ng-show="snps.Results.length>0">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th style="width: 10%;">Id</th>
+                                    <th style="width: 20%;">Codice</th>
+                                    <th style="width: 20%;">Gene</th>
+                                    <th style="width: 10%;">Allelerisk</th>
+                                    <th style="width: 20%;">OR-Beta</th>
+                                    <th style="width: 20%;">P-value</th>
+                                </tr>
+                                <tr ng-repeat="snp in snps.Results">
+                                    <td>{{snp.Id}}</td>
+                                    <td>{{snp.SNPCode}}</td>
+                                    <td>{{snp.Gene}}</td>
+                                    <td>{{snp.Allelerisk}}</td>
+                                    <td>{{snp.OR_Beta}}</td>
+                                    <td>{{snp.P_value}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="box-footer clearfix">
+                            <ul class="pagination pagination-sm no-margin pull-right">
+                                <li ng-class="{active: snps.CurrentPage==($index+1)}" ng-repeat="i in getNumber(snps.TotPag) track by $index">
+                                    <a ng-click="getSnps($index+1)">{{$index+1}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

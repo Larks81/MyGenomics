@@ -70,6 +70,9 @@
     <Compile Include="Report\ReportItemList.cs" />
     <Compile Include="Questionnaire\SubmitPersonQuestionnaire.cs" />
     <Compile Include="Log\WebApiLog.cs" />
+    <Compile Include="Report\SnpDetail.cs" />
+    <Compile Include="Report\SnpItemList.cs" />
+    <Compile Include="Report\Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGenomics.Common\MyGenomics.Common.csproj">

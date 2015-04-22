@@ -1,11 +1,12 @@
 ﻿angular.module('MyGenomicsApp')
-.controller('panelsController', ['$scope', '$rootScope', '$routeParams', 'Panel', '$location', 'toastr', 'Level', 'Csv',
-    function ($scope, $rootScope, $routeParams, Panel, $location, toastr, Level, Csv) {
+.controller('panelsController', ['$scope', '$rootScope', '$routeParams', 'Panel', '$location', 'toastr', 'Level', 'Csv','Snp',
+    function ($scope, $rootScope, $routeParams, Panel, $location, toastr, Level, Csv, Snp) {
 
         $scope.selectedId = $routeParams.param;        
         $scope.searchResult = null;
         $scope.detail = null;
         $scope.levels = null;
+        $scope.snps = null;
 
         $scope.search = function (page) {
 
@@ -25,7 +26,7 @@
             
             Panel.get({ id: id }).$promise
             .then(function (data) {
-                $scope.detail = data;
+                $scope.detail = data;                
                 toastr.info('Pannello caricato correttamnete', 'Info');
             }, function (reason) {
                 toastr.error('Errore', reason);
@@ -65,13 +66,34 @@
             contents.splice(index, 1);
         };
 
-        $scope.importSnps = function () {            
-            Csv.importSnps($scope.snpFileToImport, $scope.selectedId)
-            .then(function (data) {                
-                toastr.success("Import Snps effettuato correttamente", 'Ok');
+        $scope.getSnps = function(page) {
+            Snp.get({ panelId: $scope.selectedId, page: page }).$promise
+            .then(function (data) {
+                $scope.snps = data;
+                toastr.info('Snps caricati correttamnete', 'Info');
             }, function (reason) {
                 toastr.error('Errore', reason);
             });
+        };
+
+        $scope.importSnps = function () {
+
+            if (confirm("Sei sicuro di voler importare gli Snps?\n" +
+                "Si ricorda che questa azione comporterà la cancellazione " +
+                "dei risultati al quale questi Snp che sto per sostituire " +
+                "erano collegati\nFare questo caricamento solo se si " +
+                "è sicuri di quello che si sta facendo\nSe invece questo " +
+                "è il primo import per questo pannello, procedere tranquillamente")) {
+
+                Csv.importSnps($scope.snpFileToImport, $scope.selectedId)
+                    .then(function (data) {
+                        $scope.showImportSnps = false;
+                        $scope.getSnps(1);
+                        toastr.success("Import Snps effettuato correttamente", 'Ok');
+                    }, function(reason) {
+                        toastr.error('File non conforme', reason);
+                    });
+            }
         };
 
         //Startup
@@ -89,6 +111,7 @@
 
         if ($routeParams.param > 0) {
             $scope.getDetail($scope.selectedId);
+            $scope.getSnps(1);
         } else if ($routeParams.param == 0) {
             $scope.detail = new Panel();
             $scope.detail.PanelContents = new Array();

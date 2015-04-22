@@ -8,9 +8,9 @@ using System.Web.Http;
 namespace MyGenomics.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
-    public class AuthorizeMultipleAttribute : AuthorizeAttribute
+    public class AuthorizeRolesAttribute : AuthorizeAttribute
     {
-        public AuthorizeMultipleAttribute(params UserType[] roles)
+        public AuthorizeRolesAttribute(params UserType[] roles)
         {
             this.Roles = string.Join(",", roles.Select(r => ((int)r).ToString()));
         }

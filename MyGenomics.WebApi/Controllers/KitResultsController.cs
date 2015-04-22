@@ -12,7 +12,7 @@ namespace MyGenomics.Controllers
 {
     public class KitResultsController : ApiController
     {
-        [AuthorizeMultiple(UserType.Administrator)]
+        [AuthorizeRoles(UserType.Administrator)]
         public IEnumerable<string> Get()
         {
             var principal = Request.GetRequestContext().Principal as ClaimsPrincipal;

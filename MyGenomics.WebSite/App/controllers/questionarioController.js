@@ -93,7 +93,7 @@
             
             contactQuestionnaire.ContactId = questionnaire.ContactId;
             contactQuestionnaire.Contact = questionnaire.Contact;
-                        
+            contactQuestionnaire.Contact.BirthDate = convertToDate(contactQuestionnaire.Contact.BirthDate);
             contactQuestionnaire.GivenAnswers = new Array();
             
             var nQuestion = 0;
@@ -208,7 +208,7 @@
             var fieldInvalid = false;
             
             if ((typeof (contact) === "undefined") ||                
-                (contact.BirthDate == "" || typeof (contact.BirthDate) === "undefined" || $('#tbBirthDate').$invalid) ||
+                (contact.BirthDate == "" || typeof (contact.BirthDate) === "undefined" ) ||
                 (contact.Email == "" || typeof (contact.Email) === "undefined") ||
                 (contact.Gender == "" || typeof (contact.Gender) === "undefined"))
             {
@@ -220,8 +220,13 @@
                 if (!contact.PrivacyLawAgree) {
                     $scope.ContactErrorText = "* è necessario acconsentire alla legge sulla privacy";
                 } else {
-                    WizardHandler.wizard().next();
-                    $scope.ContactErrorText = "";
+
+                    if (!validateDate(contact.BirthDate)) {
+                        $scope.ContactErrorText = "* formato data non valido formato richiesto 'dd/mm/yyyy'";
+                    } else {
+                        WizardHandler.wizard().next();
+                        $scope.ContactErrorText = "";
+                    }
                 }
                 
             } else {
@@ -246,6 +251,7 @@
                         if (result.Id != "" && result.Id > 0) {
                             $scope.ContactQuestionnaireToFill.ContactId = result.Id;
                             $scope.ContactQuestionnaireToFill.Contact = result;
+                            $scope.ContactQuestionnaireToFill.Contact.BirthDate = getStringDate($scope.ContactQuestionnaireToFill.Contact.BirthDate);
                             WizardHandler.wizard().next();
                         } else {
                             $scope.ContactLoginErrorText = "* Login non valida!";
@@ -264,5 +270,34 @@
             WizardHandler.wizard().next();
         };
 
+        function getStringDate(date) {            
+            var dateStr = padStr(date.getDate()) + '/' +
+                          padStr(1 + date.getMonth()) + '/' +
+                          padStr(date.getFullYear());
+            return dateStr;
+        }
+
+        function padStr(i) {
+            return (i < 10) ? "0" + i : "" + i;
+        }
+
+        function validateDate(date) 
+        {                
+            var reg = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+            if (date.match(reg)) {
+                return true;
+            }
+            else {                
+                return false;
+            }
+        }
+        
+        function convertToDate(dateString) {
+            var parts = dateString.split("/");
+            return new Date(parseInt(parts[2], 10),
+                              parseInt(parts[1], 10) - 1,
+                              parseInt(parts[0], 10));
+        }
+        
 
     }]);

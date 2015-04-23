@@ -23,21 +23,7 @@
        
         $scope.getQuestionnaires = function () {
             var questionnaireDefault = "MYGENOMICS_IT";
-            $scope.selectQuestionnaire(questionnaireDefault);
-            //var questionnaireDefaultId;
-            //Questionnaire.query( function (data) {
-            //    $scope.Questionnaires = data;
-
-            //    for (quest = 0; quest < data.length; quest++) {
-            //        if (data[quest].Code == questionnaireDefault) {
-            //            questionnaireDefaultId = data[quest].Id;
-            //        }
-            //    }
-
-            //    if (questionnaireDefaultId > 0) {
-            //        $scope.selectQuestionnaire(questionnaireDefaultId);
-            //    }                
-            //});                        
+            $scope.selectQuestionnaire(questionnaireDefault);                         
         };
 
         $scope.selectQuestionnaire = function (questionnaireCode) {            
@@ -198,7 +184,8 @@
             }
 
             if (fieldInvalid == 0) {
-                WizardHandler.wizard().next();
+                window.scrollTo(0, 0);
+                WizardHandler.wizard().next();                
             }            
         };
 
@@ -225,6 +212,7 @@
                         $scope.ContactErrorText = "* formato data non valido formato richiesto 'dd/mm/yyyy'";
                     } else {
                         WizardHandler.wizard().next();
+                        window.scrollTo(0, 0);
                         $scope.ContactErrorText = "";
                     }
                 }
@@ -252,7 +240,8 @@
                             $scope.ContactQuestionnaireToFill.ContactId = result.Id;
                             $scope.ContactQuestionnaireToFill.Contact = result;
                             $scope.ContactQuestionnaireToFill.Contact.BirthDate = getStringDate($scope.ContactQuestionnaireToFill.Contact.BirthDate);
-                            WizardHandler.wizard().next();
+                            window.scrollTo(0, 0);
+                            WizardHandler.wizard().next();                            
                         } else {
                             $scope.ContactLoginErrorText = "* Login non valida!";
                         }
@@ -268,6 +257,7 @@
 
         $scope.continueWithoutLogin = function() {
             WizardHandler.wizard().next();
+            window.scrollTo(0, 0);
         };
 
         function getStringDate(date) {            
@@ -296,7 +286,7 @@
             var parts = dateString.split("/");
             return new Date(parseInt(parts[2], 10),
                               parseInt(parts[1], 10) - 1,
-                              parseInt(parts[0], 10));
+                              parseInt(parts[0], 10),12,0,0,0);
         }
         
 

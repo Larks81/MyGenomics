@@ -117,7 +117,7 @@ namespace MyGenomics.ImportTool
                 detail.QuestionType = GetQuestionTypeFromCode(wsDomande.GetValue(i, (int) Cell.TipoDomanda).ConvertToString());
                 detail.AnswerText = wsDomande.GetValue(i, (int)Cell.TestoRisposta).ConvertToString();
                 detail.AnswerType = GetAnswerTypeFromCode(wsDomande.GetValue(i, (int) Cell.TipoRisposta).ConvertToString());
-                detail.ContactTypeCode = wsDomande.GetValue(i, (int) Cell.TipoContacta).ConvertToString();
+                detail.ContactTypeCode = GetContactTypeCode(wsDomande.GetValue(i, (int)Cell.TipoContacta).ConvertToString());
                 detail.ProductCode = wsDomande.GetValue(i, (int) Cell.Prodotto).ConvertToString();
                 detail.FromValue = wsDomande.GetValue(i, (int) Cell.DaValore).ConvertToInt();
                 detail.ToValue = wsDomande.GetValue(i, (int) Cell.AValore).ConvertToInt();
@@ -146,6 +146,17 @@ namespace MyGenomics.ImportTool
                     return QuestionType.ValueOnly;
                 default:
                     return 0;
+            }
+        }
+
+        private string GetContactTypeCode(string code)
+        {
+            switch (code)
+            {
+                case "TUTTI":
+                    return "";                
+                default:
+                    return code;
             }
         }
 

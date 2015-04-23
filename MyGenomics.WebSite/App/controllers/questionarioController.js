@@ -210,7 +210,10 @@
 
                     if (!validateDate(contact.BirthDate)) {
                         $scope.ContactErrorText = "* formato data non valido formato richiesto 'dd/mm/yyyy'";
-                    } else {
+                    } else if (validateEmail(contact.Email)) {
+                        $scope.ContactErrorText = "* Indirizzo email non valido";
+                    }
+                    else {
                         WizardHandler.wizard().next();
                         window.scrollTo(0, 0);
                         $scope.ContactErrorText = "";
@@ -289,5 +292,9 @@
                               parseInt(parts[0], 10),12,0,0,0);
         }
         
+        function validateEmail(email) {
+            var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            return re.test(email);
+        }
 
     }]);

@@ -12,6 +12,24 @@
         font-weight: bold;
         color: #737373;
     }
+    *::-webkit-input-placeholder {        
+        font-style: oblique;
+    }
+
+    *:-moz-placeholder {
+        /* FF 4-18 */        
+        font-style: oblique;
+    }
+
+    *::-moz-placeholder {
+        /* FF 19+ */        
+        font-style: oblique;
+    }
+
+    *:-ms-input-placeholder {
+        /* IE 10+ */       
+        font-style: oblique;
+    }
 </style>
 
 <div ng-init="getQuestionnaires()" class="center">
@@ -22,32 +40,37 @@
         <wz-step title="">
             <div class="panel panel-default">
                 <div class="panel-heading">Questionario GenoTest</div>
-                <div class="panel-body" style="padding-left: 10px;">                    
-                    <div class="row">                        
-                        <div class="col-md-12">
-                            <fieldset>
-                                <legend>Sei già nostro cliente?</legend>                                                                                                                                       
-                                <div class="form-group col-md-7">
+                <div class="panel-body" style="padding-left: 20px;">                    
+                    <fieldset>
+                        <legend>Sei già nostro cliente?</legend>
+                        <div class="row">
+                            <div class="col-md-5">                                
+                                <div class="form-group">
                                     <label for="tbUsername">UserName</label><br />
-                                    <input id="tbUsername" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.UserName" />
-                                </div>     
-                                <br/>                                                                                              
-                                <div class="form-group col-md-7">
-                                    <label for="tbPassword">Password</label><br />
-                                    <input id="tbPassword" class="form-control" type="password" ng-model="ContactQuestionnaireToFill.Contact.Password" />
-                                </div>    
-                                <div class="form-group col-md-11">
-                                    <label style="color:Red;">{{ContactLoginErrorText}}</label>
-                                </div> 
-                                <div class="form-group col-md-11">
-                                    <input class="btn btn-success btn-lg" type="submit" value="Login" style="margin:0 auto;" ng-click="validateLogin(ContactQuestionnaireToFill.Contact)" />
-                                    <input class="btn btn-primary btn-lg" type="submit" value="Non sono vostro cliente" style="margin:0 auto;" ng-click="continueWithoutLogin()" />
+                                    <input id="tbUsername" class="form-control" placeholder="username" type="text" ng-model="ContactQuestionnaireToFill.Contact.UserName" />
                                 </div>
-                            </fieldset>                            
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="tbPassword">Password</label><br />
+                                    <input id="tbPassword" class="form-control" placeholder="password" type="password" ng-model="ContactQuestionnaireToFill.Contact.Password" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-11">
+                            <label style="color:Red;">{{ContactLoginErrorText}}</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <input class="btn btn-success btn-lg" type="submit" value="Login" style="margin:0 auto;" ng-click="validateLogin(ContactQuestionnaireToFill.Contact)" />
+                                <input class="btn btn-primary btn-lg" type="submit" value="Non sono vostro cliente" style="margin:0 auto;" ng-click="continueWithoutLogin()" />
+                            </div>
+                        </div> 
+                    </fieldset>                            
                 </div>
-            </div>
+            </div>            
         </wz-step>
         
         <wz-step title="">
@@ -63,13 +86,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="tbFirstName">Nome</label><br/>
-                                            <input id="tbFirstName" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.FirstName" />
+                                            <input id="tbFirstName" class="form-control" type="text" placeholder="es: Mario" ng-model="ContactQuestionnaireToFill.Contact.FirstName" />
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label for="tbLastName">Cognome</label><br />
-                                            <input id="tbLastName" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.LastName" />
+                                            <input id="tbLastName" class="form-control" type="text" placeholder="es: Rossi" ng-model="ContactQuestionnaireToFill.Contact.LastName" />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -84,13 +107,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="tbCity">Città di Residenza</label><br />
-                                            <input id="tbCity" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.City" />
+                                            <input id="tbCity" class="form-control" placeholder="es: Milano" type="text" ng-model="ContactQuestionnaireToFill.Contact.City" />
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label for="tbAddress">Indirizzo</label><br />
-                                            <input id="tbAddress" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.Address" />
+                                            <input id="tbAddress" class="form-control" placeholder="es: Via milano 999" type="text" ng-model="ContactQuestionnaireToFill.Contact.Address" />
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +128,7 @@
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label for="tbBirthCity">Città di nascita</label><br />
-                                            <input id="tbBirthCity" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.BirthCity" />
+                                            <input id="tbBirthCity" class="form-control" type="text" placeholder="es: Roma" ng-model="ContactQuestionnaireToFill.Contact.BirthCity" />
                                         </div>
                                     </div>
                                 </div>
@@ -114,13 +137,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="tbPhoneNumber">Numero di telefono</label><br />
-                                            <input id="tbPhoneNumber" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.PhoneNumber" />
+                                            <input id="tbPhoneNumber" class="form-control" type="text" placeholder="es: +39 312 123456789" ng-model="ContactQuestionnaireToFill.Contact.PhoneNumber" />
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label for="tbEmail">Email <a style="color:Red">*</a></label><br />
-                                            <input id="tbEmail" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.Email" />
+                                            <input id="tbEmail" class="form-control" placeholder="es: mario.rossi@email.com" type="text" ng-model="ContactQuestionnaireToFill.Contact.Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -129,12 +152,12 @@
 
                                         <div class="form-group">
                                             <label for="tbPersonalDoctor">Medico curante</label><br />
-                                            <input id="tbPersonalDoctor" class="form-control" type="text" ng-model="ContactQuestionnaireToFill.Contact.PersonalDoctor" />
+                                            <input id="tbPersonalDoctor" class="form-control" type="text" placeholder="es: dott. Bianchi Luigi" ng-model="ContactQuestionnaireToFill.Contact.PersonalDoctor" />
                                         </div>
                                     </div> 
                                 </div>
                                 <br />
-                                <input type="checkbox" ng-model="ContactQuestionnaireToFill.Contact.PrivacyLawAgree"> Acconsenso al trattamento dei dati contactali ai sensi dell'Art. 13 D.lgs. 196/2003
+                                <input type="checkbox" ng-model="ContactQuestionnaireToFill.Contact.PrivacyLawAgree"> Acconsenso al trattamento dei dati personali ai sensi dell'Art. 13 D.lgs. 196/2003
                                 <br />
                                 <label style="color:Red;">{{ContactErrorText}}</label>
                                 <br />

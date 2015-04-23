@@ -210,7 +210,7 @@
 
                     if (!validateDate(contact.BirthDate)) {
                         $scope.ContactErrorText = "* formato data non valido formato richiesto 'dd/mm/yyyy'";
-                    } else if (validateEmail(contact.Email)) {
+                    } else if (!validateEmail(contact.Email)) {
                         $scope.ContactErrorText = "* Indirizzo email non valido";
                     }
                     else {
